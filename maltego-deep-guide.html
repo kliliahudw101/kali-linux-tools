@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل Maltego التقني العميق للمبتدئين</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Tahoma', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e6e6e6;
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(25, 25, 45, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            color: #00ff88;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        h2 {
+            color: #00d4ff;
+            border-right: 5px solid #00d4ff;
+            padding-right: 15px;
+            margin: 30px 0 20px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        h2:hover {
+            color: #00ff88;
+            border-right-color: #00ff88;
+        }
+
+        h3 {
+            color: #ffaa00;
+            margin: 20px 0 10px 0;
+        }
+
+        .section {
+            background: rgba(30, 30, 50, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            border-color: #00d4ff;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+        }
+
+        .command-box {
+            background: #0d0d1a;
+            border: 1px solid #00ff88;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            color: #00ff88;
+            direction: ltr;
+            text-align: left;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .command-box::before {
+            content: "$ ";
+            color: #ffaa00;
+            font-weight: bold;
+        }
+
+        .example-box {
+            background: rgba(0, 255, 136, 0.1);
+            border-left: 4px solid #00ff88;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .warning-box {
+            background: rgba(255, 0, 0, 0.1);
+            border-left: 4px solid #ff0000;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .technical-box {
+            background: rgba(0, 212, 255, 0.1);
+            border-left: 4px solid #00d4ff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .why-box {
+            background: rgba(255, 255, 0, 0.1);
+            border-left: 4px solid #ffff00;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .option-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .option-table th {
+            background: #00d4ff;
+            color: #0d0d1a;
+            padding: 12px;
+            text-align: right;
+        }
+
+        .option-table td {
+            padding: 10px;
+            border-bottom: 1px solid #333;
+        }
+
+        .option-table tr:hover {
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        .button {
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            color: #0d0d1a;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .expand-icon {
+            display: inline-block;
+            margin-left: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .expanded .expand-icon {
+            transform: rotate(90deg);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🕵️ دليل Maltego التقني العميق للمبتدئين</h1>
+        
+        <div class="warning-box" style="font-size: 1.2em; text-align: center;">
+            <strong>⚠️ تحذير قانوني وأخلاقي:</strong> هذه الأداة لجمع المعلومات المفتوحة (OSINT) للاختبار المصرح به فقط. استخدامها لجمع بيانات حساسة أو التجسس دون إذن صريح يعتبر جريمة في معظم الدول. هدف هذا الدليل التعليمي فقط.
+        </div>
+
+        <!-- لماذا Maltego؟ -->
+        <div class="section">
+            <h3>❓ لماذا نحتاج Maltego؟ لماذا لا نستخدم Google فقط؟</h3>
+            <div class="why-box">
+                <strong>السؤال:</strong> المفتاح في "العلاقات" وليس "المعلومات". Google يعطيك معلومات منفصلة، لكن Maltego يرسم **خريطة علاقات** بينها.
+                <br><br>
+                <strong>المثال:</strong> إذا كنت تبحث عن "شركة XYZ"، Google يعطيك موقعها، Facebook، موظفين. لكن Maltego يربط:
+                <ul style="margin: 10px 20px; color: #ffff00;">
+                    <li>الموظف "أحمد" → بريده → حسابه على LinkedIn → شركته السابقة → تقنية استخدمها → ثغرة في تلك التقنية</li>
+                    <li>الموقع → IP → خادم يستخدمه → SSL certificate → تاريخ انتهاء → بريد مسؤول الخادم</li>
+                </ul>
+                <strong>النتيجة:</strong> ترى **مسار الهجوم** قبل تنفيذه!
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('basics')">
+            <span class="expand-icon">▶</span> الأساسيات: "لماذا نبدأ من هنا؟"
+        </h2>
+        <div id="basics" class="section hidden">
+            <h3>❓ لماذا نستخدم "Entity"؟ لماذا لا نكتب نصاً عادياً؟</h3>
+            <div class="section">
+                <h4>❓ لماذا Entity وليس مجرد نص؟</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> لماذا أضغط بزر الفأرة الأيمن وأختار "Domain" أو "Person" بدلاً من كتابة "google.com"؟
+                    <br><br>
+                    <strong>الإجابة التقنية:</strong> كل Entity لديها **خواص (Properties)** مخفية:
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+Entity: Domain "google.com"
+├── Property: fqdn = "google.com"
+├── Property: ip = "142.250.185.78"
+├── Property: whois = {registrar: MarkMonitor, org: Google LLC}
+└── Property: mx_records = ["aspmx.l.google.com", ...]
+
+Entity: Text "google.com" (بدون نوع)
+└── لا يوجد شيء - مجرد نص لا يُحلّل
+                    </pre>
+                    <strong>القيمة:</strong> عندما تُشغّل Transform على Domain، تعرف ماذا تبحث. إذا كان نصاً، لن تعرف!
+                </div>
+            </div>
+
+            <div class="section">
+                <h4>❓ لماذا "Transform"؟ لماذا لا أبحث بنفسي؟</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> لماذا أضغط "To IP Address [DNS]" بدلاً من فتح Terminal وكتابة <code>nslookup google.com</code>؟
+                    <br><br>
+                    <strong>الإجابة:</strong> 
+                    <br>1. **السرعة**: Transform يستعلم 100 دومين في ثانية واحدة. أنت تحتاج ساعة!
+                    <br>2. **الاستمرارية**: النتيجة تُربط تلقائياً بالدومين الأصلي. أنت تحتاج لنسخ ولصق يدويًا.
+                    <br>3. **الخطأ**: Transform لا يخطئ في كتابة IP. أنت قد تنسى رقمًا!
+                    <br>4. **التوثيق**: كل علاقة تُسجّل مع تاريخ وزمن. في Terminal، تُفقد هذه البيانات!
+                </div>
+            </div>
+
+            <div class="section">
+                <h4>❓ لماذا "Machine"؟ لماذا لا أشغّل Transform واحداً تلو الآخر؟</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> لماذا أضع Transform في "Machine" بدلاً من الضغط على كل Entity؟
+                    <br><br>
+                    <strong>الإجابة التقنية:</strong> Machine ليست مجرد أتمتة. هي **queue system** ذكي:
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+Queue: [Domain → To IP] → [IP → To Netblock] → [Netblock → To AS]
+├── تُنفذ بالتسلسل
+├── إذا فشلت خطوة، تتوقف البقية
+├── تُوزع على Transforms Servers المختلفة
+└── تحفظ النتائج المؤقتة في حال الإيقاف
+                    </pre>
+                    <strong>الميزة:</strong> إذا كان لديك 100 دومين، Machine تستعلم جميعها في **parallel** (موازاة)، لكن تنتظر كل مجموعة قبل الانتقال للخطوة التالية. هذا يحمي الخوادم من الحظر!
+                </div>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('entities')">
+            <span class="expand-icon">▶</span> أنواع الـ Entities: "لماذا هذا النوع تحديداً؟"
+        </h2>
+        <div id="entities" class="section hidden">
+            <h3>❓ لماذا نستخدم "Person" بدلاً من "Name"؟</h3>
+            <div class="section">
+                <h4>❓ Person vs Name - ما الفرق التقني؟</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> لماذا لا أكتب "أحمد محمد" كنص؟
+                    <br><br>
+                    <strong>الإجابة:</strong> Entity "Person" يحمل **خوارزميات بحث** مدمجة:
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+Person "أحمد محمد"
+├── Transform: "To Social Accounts"
+│   ├── يبحث في Pipl.com API
+│   ├── يبحث في Whitepages.com
+│   └── يبحث في Facebook Graph API
+└── Transform: "To Emails"
+    ├── يبحث في HaveIBeenPwned
+    └── يبحث في EmailRep.io
+
+Text "أحمد محمد"
+└── لا يوجد شيء - لا يستدعي أي API
+                    </pre>
+                    <strong>المقصد:</strong> المحرك لا يبحث عن النص، يبحث عن **الشخص** ككيان في قواعد بيانات!
+                </div>
+            </div>
+
+            <h3>❓ لماذا "Phrase" موجودة؟ لماذا لا نستخدم Domain دائماً؟</h3>
+            <div class="section">
+                <h4>❓ Phrase - الحالة الخاصة</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> أكتب "google.com" → لماذا أضعه كـ "Phrase"؟
+                    <br><br>
+                    <strong>الإجابة:</strong> Phrase تُستخدم عندما لا تعرف **نوع المعلومات** مسبقًا:
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+إدخال المستخدم: "google.com"
+├── إذا كان في خانة "Domain" → Transform: To IP → النتيجة: IP
+├── إذا كان في خانة "Phrase" → Transform: "To Entities [all]"
+│   ├── النتيجة 1: Domain → IP
+│   ├── النتيجة 2: Company → Google LLC
+│   └── النتيجة 3: Hashtag → #google
+                    </pre>
+                    <strong>القيمة:</strong> Phrase تُجرب **كل الاحتمالات**. مفيد عندما تجمع بيانات من مصادر غير منظمة (مثل محادثة شات أو ملف PDF)!
+                </div>
+            </div>
+
+            <h3>❓ لماذا "Image"؟ ماذا أفعل بصورة في OSINT؟</h3>
+            <div class="section">
+                <h4>❓ Image - أبعد من الصورة</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> لدي صورة شخص. لماذا أضعها في Maltego؟
+                    <br><br>
+                    <strong>الإجابة التقنية:</strong> Image Entity تستخدم **تحليل الصور**:
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+Image "profile.jpg"
+├── Transform: "To EXIF Data"
+│   ├── الموقع الجغرافي (GPS)
+│   ├── نوع الكاميرا
+│   └── تاريخ التصوير
+├── Transform: "To Facial Recognition"
+│   ├── يبحث في Clearview.ai API
+│   └── يُعيد أسماء أشخاص متطابقين
+└── Transform: "To Metadata"
+    ├── الموقع الذي رُفعت منه
+    └── البرنامج الذي عدّلها
+                    </pre>
+                    <strong>الهدف:</strong> الصورة ليست مجرد بكسل، هي **مصدر معلومات متعدد الطبقات**!
+                </div>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('transforms')">
+            <span class="expand-icon">▶</span> Transforms: "لماذا هذه الطريقة وليس غيرها؟"
+        </h2>
+        <div id="transforms" class="section hidden">
+            <h3>❓ لماذا Transform "To IP [DNS]"؟ لماذا لا "To IP [Ping]"؟</h3>
+            <div class="section">
+                <h4>❓ DNS vs Ping - اختيار البروتوكول</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> لماذا يستخدم Transform DNS فقط؟ لماذا لا يستخدم ping لمعرفة IP؟
+                    <br><br>
+                    <strong>الإجابة التقنية:</strong>
+                    <table class="option-table">
+                        <tr>
+                            <th>البروتوكول</th>
+                            <th>DNS</th>
+                            <th>Ping (ICMP)</th>
+                        </tr>
+                        <tr>
+                            <td>السرعة</td>
+                            <td>1-10 ms</td>
+                            <td>10-100 ms</td>
+                        </tr>
+                        <tr>
+                            <td>الحجب</td>
+                            <td>نادرًا</td>
+                            <td>شائع في جدرات الحماية</td>
+                        </tr>
+                        <tr>
+                            <td>المعلومات</td>
+                            <td>يبدل A/AAAA/CNAME/NS/MX</td>
+                            <td>IP فقط</td>
+                        </tr>
+                        <tr>
+                            <td>التزامن</td>
+                            <td>1000 استعلام/ثانية</td>
+                            <td>100 ping/ثانية (يُعتبر DoS)</td>
+                        </tr>
+                    </table>
+                    <br>
+                    <strong>لماذا DNS؟</strong> لأنه **أسرع**، **أمين**، **أغنى بالمعلومات**، و**لا يُحظر**!
+                </div>
+            </div>
+
+            <h3>❓ لماذا Transform "To Netblock [ARIN]"؟ ما علاقة ARIN بـ Domain؟</h3>
+            <div class="section">
+                <h4>❓ ARIN - لماذا هذه السلطة المسجلة؟</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> لماذا يبحث في ARIN (American Registry for Internet Numbers) عن IP؟ لماذا لا يبحث في قاعدة بيانات أخرى؟
+                    <br><br>
+                    <strong>الإجابة القانونية والتقنية:</strong>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+ARIN هو **سلطة تخصيص IP** في أمريكا الشمالية.
+├── لديه **سجل ملكية IP** قانوني
+├── يُظهر **نطاق IP** الذي يملكه الشركة (Netblock)
+└── يُظهر **AS Number** (Autonomous System) الخاص بها
+
+لماذا هذا مهم؟
+├── إذا عرفت Netblock (142.250.0.0/16):
+│   ├── تعرف **كل** IP تستخدمها Google
+│   └── يمكنك مسح 65,536 IP باستهداف واحد!
+└── إذا عرفت AS Number (AS15169):
+    ├── تعرف **كل** خادم تملكه Google عالميًا
+    └── تستطيع رسم خريطة شبكتها بالكامل!
+                    </pre>
+                    <strong>لماذا ARIN بالذات؟</strong> لأنه **السلطة القانونية** لتخصيص IP. البيانات مُجبرة على أن تكون دقيقة!
+                </div>
+            </div>
+
+            <h3>❓ لماذا Transform "To Email [Hunter.io]"؟ ما سر Hunter.io؟</h3>
+            <div class="section">
+                <h4>❓ Hunter.io - مصدر البيانات</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> كيف يحصل Transform على بريد الموظفين؟ هل يخترق الشركة؟
+                    <br><br>
+                    <strong>الإجابة:</strong> لا يخترق! يستخدم **بيانات عامة**:
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+Hunter.io يفهرس:
+├── مواقع الويب (صفحة "Contact Us")
+├── PDFs (سير ذاتية منشورة على الإنترنت)
+├── تقارير مالية عامة
+└── مؤتمرات (قوائم المتحدثين)
+
+لماذا هذا مهم؟
+├── **قانوني**: كل المعلومات مفتوحة المصدر (OSINT)
+├── **دقيق**: يحلل أنماط (firstname.lastname@company.com)
+└── **سريع**: API يُجيب في 200ms
+                    </pre>
+                    <strong>لماذا هذا Transform؟</strong> لأنه يوفر **100 ساعة بحث يدوي** في ثانية واحدة!
+                </div>
+            </div>
+        </h2>
+
+        <h2 onclick="toggleSection('machines')">
+            <span class="expand-icon">▶</span> Machines: "لماذا أتمتة التسلسل؟"
+        </h2>
+        <div id="machines" class="section hidden">
+            <h3>❓ لماذا لا أشغّل Transform واحداً تلو الآخر؟</h3>
+            <div class="section">
+                <h4>❓ المشكلة: 100 Domain × 10 Transforms</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> لدي قائمة بـ 100 دومين. لم لا أضغط على كل واحد و10 Transforms؟
+                    <br><br>
+                    <strong>الإجابة الرياضية:</strong>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+يدويًا:
+├── 100 دومين × 10 transforms = 1000 ضغطة فأرة
+├── كل Transform يأخذ 5 ثوانٍ = 5000 ثانية (1.4 ساعة)
+├── قد تنسى 3-5 Transforms
+├── قد تخطئ في 2-3 أدخال
+└── النتيجة: 83% دقة
+
+Machine:
+├── 1000 Transform تُنفذ تلقائيًا
+├── كل 10 Transforms تُشغّل parallel لكل دومين
+├── تتوقف تلقائيًا إذا فشلت خطوة
+├── تُحفظ النتائج كل 30 ثانية (checkpoint)
+└── النتيجة: 99.9% دقة في 15 دقيقة
+                    </pre>
+                    <strong>لماذا Machine؟</strong> **الوقت** و**الدقة** و**الاستمرارية**!
+                </div>
+            </div>
+
+            <h3>❓ لماذا "Checkpoint" في Machine؟</h3>
+            <div class="section">
+                <h4>❓ المشكلة: انقطاع الكهرباء</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> Machine تعمل لمدة ساعة، انقطعت الكهرباء. لماذا لا تبدأ من جديد؟
+                    <br><br>
+                    <strong>الإجابة التقنية:</strong>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+Machine تُحفظ حالتها كل 30 ثانية في:
+~/.maltego/machines/[machine_name].state
+├── {
+│   "progress": 45,
+│   "completed": ["domain1.com", "domain2.com"],
+│   "failed": ["domain3.com"],
+│   "queue": ["domain4.com", ...]
+│ }
+
+لماذا هذا مهم؟
+├── لا تدفع تكاليف API مرة ثانية لـ 45 دومين
+├── لا تنتظر 45 دقيقة مرة أخرى
+└── تستأنف من المكان الذي توقفت عنده
+                    </pre>
+                    <strong>لماذا Checkpoint؟</strong> لأن **الوقت = المال** و**API ليس مجانيًا**!
+                </div>
+            </div>
+        </h2>
+
+        <h2 onclick="toggleSection('cases')">
+            <span class="expand-icon">▶</span> Cases: "لماذا أحفظ المشروع؟"
+        </h2>
+        <div id="cases" class="section hidden">
+            <h3>❓ لماذا أحفظ Case؟ لماذا لا أُخرِج الصورة كصورة؟</h3>
+            <div class="section">
+                <h4>❓ Case vs Screenshot</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> لماذا أحفظ المشروع كملف .mtgl وليس كـ PNG؟
+                    <br><br>
+                    <strong>الإجابة:</strong>
+                    <table class="option-table">
+                        <tr>
+                            <th>PNG</th>
+                            <th>Case (.mtgl)</th>
+                        </tr>
+                        <tr>
+                            <td>مجرد صورة</td>
+                            <td>كل Entity مع Properties</td>
+                        </tr>
+                        <tr>
+                            <td>لا يمكن التعديل</td>
+                            <td>يمكن إضافة Entities جديدة</td>
+                        </tr>
+                        <tr>
+                            <td>لا تاريخ</td>
+                            <td>تاريخ كل عملية Transform</td>
+                        </tr>
+                        <tr>
+                            <td>لا يُصدّر</td>
+                            <td>يُصدّر إلى CSV, JSON, GraphML</td>
+                        </tr>
+                    </table>
+                    <br>
+                    <strong>لماذا Case؟</strong> لأنه **قابل للتحليل** وليس مجرد **لقطة شاشة**!
+                </div>
+            </div>
+
+            <h3>❓ لماذا "Export as CSV"؟ ما قيمة البيانات المنفصلة؟</h3>
+            <div class="section">
+                <h4>❓ CSV - التحليل الخارجي</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> لدي خريطة كاملة. لماذا أحتاج CSV؟
+                    <br><br>
+                    <strong>الإجابة:</strong>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+CSV يحتوي:
+├── Entity Name, Type, Value
+├── Link Type (e.g., "uses", "works for", "connected to")
+└── Properties كلها مفككة
+
+لماذا هذا مهم؟
+├── تستطيع استيرادها في Excel وعمل Pivot Tables
+├── تستطيع استخدام Python/pandas لتحليل البيانات
+├── تستطيع دمجها في قواعد بيانات SQL
+└── تستطيع عمل إحصائيات: "كم موظف لكل قسم؟"
+                    </pre>
+                    <strong>لماذا CSV؟</strong> لأن **التحليل الكمي** يتطلب بيانات منفصلة، لا رسومات!
+                </div>
+            </div>
+        </h2>
+
+        <h2 onclick="toggleSection('examples')">
+            <span class="expand-icon">▶</span> سيناريوهات عملية: "لماذا هذا المسار؟"
+        </h2>
+        <div id="examples" class="section hidden">
+            <h3>❓ لماذا نبدأ بـ "Company"؟ لماذا لا نبدأ بـ IP مباشرةً؟</h3>
+            <div class="section">
+                <h4>❓ سيناريو: اختبار اختراق لشركة</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> أريد اختراق شركة XYZ. لم لا أبدأ بـ IP الخاص بها؟
+                    <br><br>
+                    <strong>الإجابة الاستراتيجية:</strong>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+المسار الخاطئ:
+IP → To Open Ports → To Vulnerabilities
+├── قد تجد 2-3 ثغرات
+├── لا تعرف إن كانت حرجة
+└── تضيع 10 ساعات على IP غير مهم
+
+المسار الصحيح:
+Company → To Employees → To Emails → To Breached Accounts → To Passwords used
+├── تجد موظفًا استخدم كلمة سر "Spring2020!"
+├── تجد أنه يعمل في قسم "Financial"
+├── تستخدم تلك المعلومات في Social Engineering
+└── تحصل على access في 30 دقيقة
+
+لماذا؟ لأن **الإنسان** هو أضعف حلقة، ليس الخادم!
+                    </pre>
+                    <strong>الفلسفة:</strong> Maltego يُعلمك أن تبدأ بالـ **Social Layer** قبل الـ Network Layer!
+                </div>
+            </div>
+
+            <h3>❓ لماذا نستخدم "Hashtag" في OSINT؟ هل Twitter مهم؟</h3>
+            <div class="section">
+                <h4>❓ Hashtag - الاستخبارات الجماهيرية</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> أريد معلومات عن شركة. لماذا أبحث عن hashtag #XYZCompany؟
+                    <br><br>
+                    <strong>الإجابة:</strong>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+Hashtag #XYZCompany
+├── Transform: "To Recent Tweets"
+│   ├── موظف يشكو من "old firewall" (ثغرة محتملة)
+│   ├── موظف يتحدث عن "new VPN system" (تقنية معينة)
+│   └── موظف يُنشر صورة من المكتب (معلومات مكانية)
+├── Transform: "To Influencers"
+│   └── أشخاص يؤثرون على الشركة
+└── Transform: "To Sentiment Analysis"
+    └── هل الغضب موجه ضد الشركة؟ (هجوم اجتماعي ممكن)
+
+لماذا هذا مهم؟
+├── تُعرف **الثقافة الداخلية** للشركة
+├── تُعرف **تقنياتها** دون مسح تقني
+└── تُعرف **مواقعها** من الصور
+                    </pre>
+                    <strong>لماذا؟</strong> لأن **الموظفين يكشفون** أكثر مما تكشفه جدرات الحماية!
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="button" onclick="showAllSections()">إظهار كل الأسئلة</button>
+            <button class="button" onclick="hideAllSections()">إخفاء كل الأسئلة</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(id) {
+            const section = document.getElementById(id);
+            const header = section.previousElementSibling;
+            
+            section.classList.toggle('hidden');
+            header.classList.toggle('expanded');
+        }
+
+        function showAllSections() {
+            document.querySelectorAll('.section').forEach(section => section.classList.remove('hidden'));
+            document.querySelectorAll('h2').forEach(header => header.classList.add('expanded'));
+        }
+
+        function hideAllSections() {
+            document.querySelectorAll('.section').forEach(section => section.classList.add('hidden'));
+            document.querySelectorAll('h2').forEach(header => header.classList.remove('expanded'));
+        }
+
+        document.querySelectorAll('.command-box').forEach(box => {
+            box.addEventListener('click', function() {
+                const text = this.textContent.replace('$ ', '');
+                navigator.clipboard.writeText(text).then(() => {
+                    this.style.background = '#00ff88';
+                    this.style.color = '#0d0d1a';
+                    setTimeout(() => {
+                        this.style.background = '#0d0d1a';
+                        this.style.color = '#00ff88';
+                    }, 500);
+                });
+            });
+        });
+
+        window.addEventListener('load', () => {
+            document.getElementById('basics').classList.remove('hidden');
+            document.querySelector('h2[onclick*="basics"]').classList.add('expanded');
+        });
+    </script>
+</body>
+</html>
