@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل Netdiscover التقني العميق للمبتدئين</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Tahoma', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e6e6e6;
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(25, 25, 45, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            color: #00ff88;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        h2 {
+            color: #00d4ff;
+            border-right: 5px solid #00d4ff;
+            padding-right: 15px;
+            margin: 30px 0 20px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        h2:hover {
+            color: #00ff88;
+            border-right-color: #00ff88;
+        }
+
+        h3 {
+            color: #ffaa00;
+            margin: 20px 0 10px 0;
+        }
+
+        .section {
+            background: rgba(30, 30, 50, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            border-color: #00d4ff;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+        }
+
+        .command-box {
+            background: #0d0d1a;
+            border: 1px solid #00ff88;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            color: #00ff88;
+            direction: ltr;
+            text-align: left;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .command-box::before {
+            content: "$ ";
+            color: #ffaa00;
+            font-weight: bold;
+        }
+
+        .example-box {
+            background: rgba(0, 255, 136, 0.1);
+            border-left: 4px solid #00ff88;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .warning-box {
+            background: rgba(255, 0, 0, 0.1);
+            border-left: 4px solid #ff0000;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .technical-box {
+            background: rgba(0, 212, 255, 0.1);
+            border-left: 4px solid #00d4ff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .why-box {
+            background: rgba(255, 255, 0, 0.1);
+            border-left: 4px solid #ffff00;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .option-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .option-table th {
+            background: #00d4ff;
+            color: #0d0d1a;
+            padding: 12px;
+            text-align: right;
+        }
+
+        .option-table td {
+            padding: 10px;
+            border-bottom: 1px solid #333;
+        }
+
+        .option-table tr:hover {
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        .button {
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            color: #0d0d1a;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .expand-icon {
+            display: inline-block;
+            margin-left: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .expanded .expand-icon {
+            transform: rotate(90deg);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📡 دليل Netdiscover التقني العميق مع التدقيق الإملائي</h1>
+        
+        <div class="warning-box" style="font-size: 1.2em; text-align: center;">
+            <strong>⚠️ تحذير قانوني وأخلاقي:</strong> هذه الأداة لمسح الشبكات المحلية للاختبار المصرح به فقط. استخدامها على شبكات دون إذن صريح يعتبر جريمة في معظم الدول. هدف هذا الدليل التعليمي فقط.
+        </div>
+
+        <!-- لماذا ARP؟ -->
+        <div class="section">
+            <h3>❓ الجوهر: لماذا ARP وليس ICMP؟</h3>
+            <div class="why-box">
+                <strong>السؤال الحقيقي:</strong> لماذا يستخدم Netdiscover بروتوكول ARP بدلاً من ping (ICMP)؟
+                <br><br>
+                <strong>الإجابة التقنية العميقة:</strong>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+ARP (Address Resolution Protocol) يعمل على **Layer 2** (Data Link Layer)
+├── لا يمر عبر جدار الحماية (firewall) لأنه أساسي للاتصال LAN
+├── لا يمكن حظره لأن الجهاز سيُصبح غير قادر على التواصل
+├── أسرع بـ 10-50 مرة من ICMP (لا يحتاج routing)
+└── يُعيد MAC address (معلومات أكثر من IP)
+
+ICMP (Ping) يعمل على **Layer 3** (Network Layer)
+├── يُمكن حظره بـ iptables -A INPUT -p icmp --icmp-type 8 -j DROP
+├── يمر عبر جدار الحماية ويُمكن تصفيته
+├── يحتاج time-to-live (TTL) وقد يُفقد في الشبكات الكبيرة
+└── لا يُعيد MAC address
+
+لماذا ARP أفضل؟
+├── **الإجبار**: الجهاز يجب أن يستجيب لـ ARP
+├── **العمق**: MAC + IP + Vendor (OUI)
+└── **السرعة**: يعمل في الشبكة المحلية فقط، لا تسجيل
+                </pre>
+                <strong>الخلاصة:</strong> ARP هو **المرآة** التي لا يمكنك إخفاء نفسك منها في LAN!
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('modes')">
+            <span class="expand-icon">▶</span> الأوضاع: "لماذا Passive و Active؟"
+        </h2>
+        <div id="modes" class="section hidden">
+            <h3>❓ لماذا وضع Passive؟ هل هو مجرد خوف؟</h3>
+            <div class="section">
+                <h4>❓ Passive Mode (-p): الصمت التام</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> لماذا أستخدم -p إذا كان أبطأ؟
+                    <br><br>
+                    <strong>الإجابة الاستراتيجية:</strong>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+الوضع السلبي (Passive):
+netdiscover -p -i wlan0
+├── لا ترسل **أي** حزمة
+├── تستمع فقط على واجهة wlan0 في promiscuous mode
+├── تلتقط ARP requests/responses التي **تمر بالفعل**
+└── لا تُثير أنظمة IDS/IPS لأنك "غير موجود"
+
+متى نستخدمه؟
+├── في شبكات مراقبة (تخشى الاكتشاف)
+├── لرصد الأجهزة على مدى ساعات/أيام
+├── لالتقاط الأجهزة التي تبث sporadically (مثل IoT)
+└── لبناء baseline لحركة ARP الطبيعية
+
+لماذا هو أبطأ؟
+├── يجب انتظار الأجهزة تبث ARP (قد يستغرق ساعات)
+├── لا يجد أجهزة خاملة (sleep mode)
+└── قد يفوته أجهزة تبث نادرًا
+
+لماذا هو آمن؟
+├── لا يوجد مصدر (source) لك
+├── لا يوجد نمط (pattern) يُكشف
+└── لا يستهلك bandwidth (0 حزمة مرسلة)
+                    </pre>
+                    <strong>القيمة:</strong> **Stealth reconnaissance** - كأنك شبح في الشبكة!
+                </div>
+            </div>
+
+            <div class="section">
+                <h4>❓ Active Mode (افتراضي): السرعة بثمن</h4>
+                <div class="technical-box">
+                    <h4>🔧 ما يحدث:</h4>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+netdiscover -r 192.168.1.0/24
+
+1. يولّد قائمة IP: 192.168.1.1, 192.168.1.2, ... 192.168.1.254
+2. لكل IP، يبني حزمة ARP request:
+   ├── Ethernet Header: src MAC (your MAC), dst MAC (FF:FF:FF:FF:FF:FF)
+   ├── ARP Header:
+   │   ├── Sender IP: 192.168.1.100 (IPك)
+   │   ├── Sender MAC: your MAC
+   │   ├── Target IP: 192.168.1.X (الهدف)
+   │   └── Target MAC: 00:00:00:00:00:00 (unknown)
+   └── يُرسل على طبقة Ethernet broadcast
+
+3. الجهاز الوجيه (router) يُعيد broadcast إلى كل المنافذ
+4. إذا جهاز X موجود، يُعيد ARP reply مباشرةً إليك
+5. Legion يُسجّل: IP, MAC, Vendor
+
+لماذا سريع؟
+├── يستعلم 254 IP في 5-10 ثوانٍ
+├── لا ينتظر timeout طويل (ARP reply سريع)
+└── كل الـ replies تأتي مباشرة، لا تمر عبر router
+
+لماذا خطر؟
+├── 254 حزمة في 5 ثوانٍ = 50 pps (packets per second)
+├── بعض IDS يكتشفون هذا النمط
+└── يملأ جدول ARP cache لكل الأجهزة (قد يُسبب طفرة)
+                    </pre>
+                </div>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('options')">
+            <span class="expand-icon">▶</span> الخيارات المتقدمة: "لماذا -s و-c و-f؟"
+        </h2>
+        <div id="options" class="section hidden">
+            <h3>❓ لماذا -s time (sleep)؟ هل يُبطّل المسح؟</h3>
+            <div class="section">
+                <h4>❓ -s 1000: التنظيم الزمني</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> لماذا أنتظر بين كل حزمة؟
+                    <br><br>
+                    <strong>الإجابة الاستراتيجية:</strong>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+netdiscover -r 192.168.1.0/24 -s 1000
+├── 1000 ms = 1 ثانية بين كل حزمة
+├── إجمالي 254 IP × 1 ثانية = 4.2 دقيقة
+
+لماذا هذا مهم؟
+├── **Evasion**: 1 pps لا يُعتبر DoS attack
+├── **التحميل**: لا يُحمّل شبكة ضعيفة (قديمة)
+└── **الدقة**: أجهزة قديمة تستجيب ببطء، تُعطى وقتها
+
+بدون -s (افتراضي):
+├── 50 ms بين الحزم = 20 pps
+├── يُنهي في 12 ثانية
+└── قد يُفقد replies من أجهزة بطيئة
+
+متى نستخدمه؟
+├── شبكات قديمة (10 Mbps)
+├── أجهزة IoT (محدودة الموارد)
+└── عندما تخشى detection
+                    </pre>
+                    <strong>القيمة:</strong> **التخفي بدون فقدان البيانات**!
+                </div>
+            </div>
+
+            <h3>❓ لماذا -c count؟ هل مرة واحدة لا تكفي؟</h3>
+            <div class="section">
+                <h4>❓ -c 3: التكرار لموثوقية</h4>
+                <div class="technical-box">
+                    <h4>🔧 مشكلة Packet Loss:</h4>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+في شبكات لاسلكية سيئة:
+├── Packet loss قد يصل إلى 5-10%
+├── ARP request قد يُفقد
+└── reply قد لا يصل
+
+الحل:
+netdiscover -r 192.168.1.0/24 -c 3
+├── يرسل 3 ARP requests لكل IP
+├── ينتظر 3 replies (قد تتأخر)
+└── إذا لم يصل أي reply في 3 محاولات → يعتبرها down
+
+لماذا 3 وليس 10؟
+├── **التجربة**: 3 تكفي لـ 99.9% موثوقية
+├── **الوقت**: 10 × 254 = 2540 حزمة = ضغط على الشبكة
+└── **الحدس**: إذا لم يستجب بعد 3 محاولات في 5 ثوانٍ، فهو غير موجود
+
+الآيثار (trade-off):
+├── موثوقية vs سرعة
+├── دقة vs ضغط الشبكة
+└── النتيجة: 3 هو الأمثل
+                    </pre>
+                </div>
+            </div>
+
+            <h3>❓ لماذا -f (fast mode)؟ هل يُسرّع المسح؟</h3>
+            <div class="section">
+                <h4>❓ -f: اختصار ذكي</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> كيف يُسرّع -f المسح؟
+                    <br><br>
+                    <strong>الإجابة:</strong>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+بدون -f:
+netdiscover -r 192.168.1.0/24
+├── يرسل ARP request لـ 192.168.1.1
+├── ينتظر 50ms
+├── يرسل لـ 192.168.1.2
+├── ينتظر 50ms
+└── ... 254 مرّة
+
+مع -f:
+netdiscover -r 192.168.1.0/24 -f
+├── يكتشف **نطاق الشبكة** (network detection)
+├── إذا كان /24، يعرف أن 1-254 هم فقط المُستخدمون
+├── يستخدم **multi-threading**: 5 threads تُرسل في آنٍ واحد
+└── لا ينتظر reply قبل إرسال التالي
+
+لماذا هذا ممكن؟
+├── **ARP لا يعتمد على TCP**: لا توجد حلقة ثلاثية
+├── **Broadcast**: كل request يذهب لكل الأجهزة
+└── **Replies تأتي بشكل عشوائي**: لا يحتاج ترتيب
+
+الفرق:
+├── بدون -f: 12 ثانية
+├── مع -f: 3 ثوانٍ (4x أسرع)
+└── **التكلفة**: 5x bandwidth (50 pps → 250 pps)
+
+متى لا تستخدمه؟
+├── شبكات قديمة لا تتحمّل الطفرة
+├── عندما تخشى detection
+└── عندما تستخدم -p (passive لا يدعمه)
+                    </pre>
+                    <strong>القيمة: **Speed vs Stealth** - اختر بناءً على السيناريو!</strong>
+                </div>
+            </div>
+
+            <h3>❓ لماذا -S (hardcore mode)؟</h3>
+            <div class="section">
+                <h4>❓ -S: Suppression of Sleep</h4>
+                <div class="technical-box">
+                    <h4>⚠️ خطر الاستخدام:</h4>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #ff0000;">
+netdiscover -r 192.168.1.0/24 -S
+├── يرسل **دون أي انتظار**
+├── 1000+ pps (packets per second)
+├── يستهلك 100% CPU
+└── يملأ buffer وقد يُسقط NIC (Network Interface Card)
+
+لماذا يوجد؟
+├── **اختبار الضغط**: تريد معرفة حد الشبكة
+├── **الطوارئ**: لديك 10 ثوانٍ فقط قبل detection
+└── **شبكات محلية قوية**: 10 Gbps تتحمّل
+
+تحذير:
+├── يُعتبر **DoS attack** في بعض الأنظمة
+├── يُعطّل أجهزة قديمة (تتجمد)
+└── لا تستخدمه إلا في **اختبارك الشخصي**
+                    </pre>
+                </div>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('output')">
+            <span class="expand-icon">▶</span> خيارات المخرجات: "لماذا -P و-L و-N؟"
+        </h2>
+        <div id="output" class="section hidden">
+            <h3>❓ لماذا -P (parseable)؟ هل يُخرج نصاً غير واضح؟</h3>
+            <div class="section">
+                <h4>❓ -P: الربط بالسكربتات</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> لماذا أحتاج نصاً يمكن parsing؟
+                    <br><br>
+                    <strong>الإجابة:</strong>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+الخرج العادي:
+192.168.1.1     00:11:22:33:44:55      1      60  Router Manufacturer
+
+مع -P:
+192.168.1.1,00:11:22:33:44:55,Router Manufacturer
+
+لماذا مهم؟
+├── **CSV format**: يصلح لـ Excel, Python pandas
+├── **Sed/Awk**: يمكنك معالجته في Bash:
+    awk -F, '{print $1}' | while read ip; do nmap $ip; done
+├── **Integration**: تربطه بـ Legion, Metasploit
+└── **Logging**: تخزنه في قاعدة بيانات
+
+الحدود:
+├── لا يُظهر Count وLen (غير مهم لـ parsing)
+├── يتوقف بعد المسح (لا يتابع listening)
+└── لا يُظهر محرك البحث (header)
+
+المثال العملي:
+netdiscover -r 192.168.1.0/24 -P > hosts.txt
+while IFS=, read ip mac vendor; do
+    echo "Scanning $ip"
+    nmap -sV $ip
+done < hosts.txt
+                    </pre>
+                    <strong>القيمة:</strong> **الأتمتة** بدون يد!
+                </div>
+            </div>
+
+            <h3>❓ -L (listen after scan): متابعة مستمرة</h3>
+            <div class="section">
+                <h4>❓ -L: الانتقال من Active إلى Passive</h4>
+                <div class="technical-box">
+                    <h4>🔄 كيف يعمل:</h4>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+netdiscover -r 192.168.1.0/24 -L
+├── Phase 1 (Active): يرسل ARP requests → يجمع قائمة أولية
+├── Phase 2 (Passive): يتوقف عن الإرسال → يستمر في الاستماع
+└── Phase 3: أي جهاز جديد يبث ARP → يُضاف تلقائيًا
+
+لماذا هذا مفيد؟
+├── **رصد**: تريد معرفة من يدخل/يخرج من الشبكة
+├── **حماية**: تكتشف أجهزة غير مصرح بها تُوصل لاحقاً
+└── **تسجيل**: تُسجل جميع الأجهزة على مدى ساعات
+
+المواصفات:
+├── يستمر حتى تضغط Ctrl+C
+├── يُخرج parseable format (مثل -P)
+├── لا يستهلك CPU بعد الانتقال (1% فقط)
+└── يُضيف فقط (لا يحذف أجهزة غادرت)
+
+الفرق عن -P:
+├── -P: ينتهي بعد المسح
+├── -L: يستمر إلى الأبد
+└── -P+P (معاً): مسح + استماع مستمر
+                    </pre>
+                </div>
+            </div>
+
+            <h3>❓ -N: إخفاء الـ Header</h3>
+            <div class="section">
+                <h4>❓ -N: النظافة</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> لماذا أخفي العناوين؟
+                    <br><br>
+                    <strong>الإجابة:</strong>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+بدون -N:
+Currently scanning: Finished!   |   Screen View: Unique Hosts
+4 Captured ARP Req/Rep packets, from 4 hosts.   Total size: 240
+_____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname
+-----------------------------------------------------------------------------
+192.168.1.1     00:11:22:33:44:55      1      60  Router Manufacturer
+
+مع -N:
+192.168.1.1     00:11:22:33:44:55      1      60  Router Manufacturer
+
+لماذا مهم؟
+├── **Sed**: sed '1,5d' (حذف أول 5 سطور) تصبح غير لازمة
+├── **Grep**: grep -v "Currently" غير لازم
+└── **Neatness**: ناتج نظيف فقط للـ pipeline
+
+لا يعمل إلا مع -P أو -L
+├── netdiscover -P -N (صحيح)
+├── netdiscover -N (خطأ، لا يُطبّق)
+└── netdiscover -L -N (صحيح)
+                    </pre>
+                    <strong>القيمة:</strong> **النظافة** و**التوفير في معالجة النص**!
+                </div>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('limitations')">
+            <span class="expand-icon">▶</span> القيود والمشكلات: "لماذا لا يعمل هنا؟"
+        </h2>
+        <div id="limitations" class="section hidden">
+            <h3>❓ لماذا لا يجد الأجهزة عبر NAT؟</h3>
+            <div class="section">
+                <h4>❓ NAT: القاتل الصامت</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> أنا في VMWare NAT، لماذا لا أرى سوى الجهاز المضيف؟
+                    <br><br>
+                    <strong>الإجابة التقنية:</strong>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+NAT (Network Address Translation):
+├── VMWare/host يُنشئ subnet منفصل (192.168.56.0/24)
+├── ARP broadcast **لا تمر** من VM إلى الشبكة الحقيقية
+├── الحزم تُترجم (masquerade) عبر NAT engine
+└── الـ ARP table الخاص بالـ VM يعرف فقط gateway
+
+اختبار:
+netdiscover -r 192.168.1.0/24
+├── في VM NAT: 1 host (gateway فقط)
+├── في VM Bridged: 20-50 host (كل الشبكة)
+└── في VM Host-Only: 2-3 hosts (VMs فقط)
+
+الحل:
+├── استخدم **Bridged Mode** للوصول الكامل
+├── أو استخدم **Host-Only + router** إذا كنت تختبر
+└── لا تستخدم NAT عند اختبار شبكات حقيقية
+
+لماذا لا يُصلح؟
+├── ARP هو Layer 2 (محلي)
+├── NAT يعمل على Layer 3 (عالمي)
+└── لا يوجد طريقة للعبور
+                    </pre>
+                    <strong>الخلاصة: **ARP لا يتخطى Broadcast domain**!</strong>
+                </div>
+            </div>
+
+            <h3>❓ لماذا يحتاج root؟ هل هو شرط تقني؟</h3>
+            <div class="section">
+                <h4>❓ Root vs Capabilities</h4>
+                <div class="technical-box">
+                    <h4>🔧 الحد الأدنى لـ Raw Sockets:</h4>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+الفحص:
+netdiscover -r 192.168.1.0/24
+Error: cannot open eth0 (Permission denied)
+
+لماذا؟
+├── libpcap تحتاج إلى **CAP_NET_RAW** capability
+├── بدون root، لا يمكن إنشاء raw socket
+└── ARP هو Ethernet frame raw، لا يمكن ارساله عبر socket عادي
+
+الحلول:
+1. sudo netdiscover (الأبسط)
+2. sudo setcap cap_net_raw=+ep /usr/bin/netdiscover
+   ├── يُعطي البرنامج capability دون root
+   └── لا ينصح (ثغرة أمنية)
+3. adduser $USER wireshark
+   ├── group wireshark يملك /dev/eth0
+   └── لا يكفي لـ libpcap
+
+لماذا لا يُصلح بـ chmod +s؟
+├── setuid خطير جداً
+├── يُعطي root لأي شخص
+└── netdiscover يُنفّذ system() → ثغرة Command Injection
+
+**التوصية**: استخدم **sudo** فقط!
+                    </pre>
+                </div>
+            </div>
+
+            <h3>❓ لماذا لا يجد كل الأجهزة؟</h3>
+            <div class="section">
+                <h4>❓ الأسباب المخفية</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> لدي 50 جهاز، لكن netdiscover يجد 43 فقط. لماذا؟
+                    <br><br>
+                    <strong>الإجابة:</strong>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+الأسباب:
+
+1. **Sleep Mode** (وضع السكون):
+├── أجهزة تُوضع في standby (TV, printer)
+├── لا تستجيب لـ ARP حتى يوقظها حركة
+└── الحل: استخدم -c 10 (أرسل 10 مرات على مدى دقيقة)
+
+2. **Static ARP** (جدول ARP ثابت):
+├── الجهاز لا يبث ARP request أبداً
+├── يعتمد على ARP cache مبني يدوياً
+└── الحل: لا يمكن! استخدم Nmap -sn
+
+3. **Firewall (ARP Filtering)**:
+├── Windows Firewall (مع بعض الإعدادات) يحظر ARP replies
+├── بعض أجهزة IoT تُعطّل ARP responses
+└── الحل: استخدم -p (passive) لتلتقط requests التي يبثها
+
+4. **VLANs** (شبكات افتراضية):
+├── أنت في VLAN 10، الجهاز في VLAN 20
+├── ARP broadcast لا يتخطى VLAN
+└── الحل: اجلب واجهة في VLAN 20 أو استخدم router
+
+5. **Switch Security (Port Security)**:
+├── يحظر MAC addresses غير معروفة
+├── لا يُعيد broadcast لـ ports غير مصرح بها
+└── الحل: اجلب واجهة مباشرة من Switch
+
+6. **Packet Loss**:
+├── 5-10% loss في WiFi مزدحم
+├── -c 3 لا يكفي
+└── الحل: -c 10 أو -s 2000 (زمن أكبر)
+
+الإحصائية:
+├── 90% أجهزة تُكتشف في المسح الأول
+├── 8% تحتاج إلى -c 5-10
+└── 2% لا يمكن اكتشافها بـ ARP فقط (استخدم Nmap)
+                    </pre>
+                    <strong>الخلاصة:</strong> Netdiscover ** يساعد ** لكنه ** ليس كاملاً ** - استخدم Nmap كاحتياط!
+                </div>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('advanced')">
+            <span class="expand-icon">▶</span> اعتبارات عملية: "لماذا يعمل هكذا؟"
+        </h2>
+        <div id="advanced" class="section hidden">
+            <h3>❓ لماذا يستخدم OUI table؟ هل هو مجرد اسم؟</h3>
+            <div class="section">
+                <h4>❓ OUI: قوة التحليل</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> لماذا يُظهر "Router Manufacturer"؟
+                    <br><br>
+                    <strong>الإجابة:</strong>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+OUI (Organizationally Unique Identifier):
+├── أول 3 بايت من MAC (xx:xx:xx)
+├── تُخصصها IEEE لكل شركة
+└── Netdiscover يحمل ملف: /usr/share/netdiscover/oui.txt
+    ├── 50,000+ قاعدة بيانات
+    ├── يُطابق أول 6 أحرف (XX:XX:XX)
+    └── يُعيد اسم الشركة
+
+لماذا هذا مهم؟
+├── **التصنيف**: "HP", "Cisco", "Xiaomi" → تعرف نوع الجهاز
+├── **الثغرات**: Cisco router لديه CVEs مختلفة عن HP printer
+└── **الأمن**: جهاز "VMware" في شبكة إنتاج → غير مصرح به!
+
+التحديث:
+├── sudo apt-get update netdiscover
+└── يجلب آخر OUI list من IEEE
+
+مثال:
+MAC: 00:0c:29:3a:cb:5b
+└── 00:0c:29 → VMware, Inc. → تعرفه VM
+                    </pre>
+                    <strong>القيمة: ** OSINT داخلي ** من MAC address!</strong>
+                </div>
+            </div>
+
+            <h3>❓ لماذا ARP لا يتخطى Broadcast Domain؟</h3>
+            <div class="section">
+                <h4>❓ Layer 2 vs Layer 3</h4>
+                <div class="technical-box">
+                    <h4>📡 الحدود:</h4>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+Broadcast Domain:
+├── Switch يُرسل broadcast إلى كل ports في VLAN
+├── Router ** يقطع ** broadcast (default gateway)
+├── VLAN = broadcast domain منفصل
+└── Netdiscover يعمل فقط داخل VLAN
+
+اختبار:
+netdiscover -r 10.0.0.0/8
+├── إذا كنت في 192.168.1.0/24 → لا يجد شيئاً
+├── لأن router لا يُعيد broadcast إلى 10.0.0.0
+└── الحل: استخدم Nmap -sn (يعمل على Layer 3)
+
+لماذا هذا التصميم؟
+├── ** الأمان **: لا تملأ كل الشبكة بـ broadcast
+├── ** الأداء **: broadcast يُبطئ الشبكة
+└── ** المعمارية **: كل VLAN منفصل لسبب
+
+الحلول:
+├── اجلب واجهة في كل VLAN
+├── استخدام IP helper في router (تمرير ARP)
+└── استخدام Nmap for cross-subnet
+                    </pre>
+                </div>
+            </div>
+
+            <h3>❓ المقارنة مع arp-scan: لماذا netdiscover؟</h3>
+            <div class="section">
+                <h4>❓ arp-scan vs netdiscover</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> arp-scan أسرع. لماذا netdiscover؟
+                    <br><br>
+                    <strong>الإجابة:</strong>
+                    <table class="option-table">
+                        <tr>
+                            <th>الميزة</th>
+                            <th>netdiscover</th>
+                            <th>arp-scan</th>
+                        </tr>
+                        <tr>
+                            <td>الوضع السلبي</td>
+                            <td>✅ نعم (-p)</td>
+                            <td>❌ لا</td>
+                        </tr>
+                        <tr>
+                            <td>OUI Table</td>
+                            <td>✅ نعم (مُدمج)</td>
+                            <td>❌ لا (يحتاج --ouifile)</td>
+                        </tr>
+                        <tr>
+                            <td>الراحة</td>
+                            <td>✅ أمر واحد</td>
+                            <td>❌ أمر معقد</td>
+                        </tr>
+                        <tr>
+                            <td>السرعة</td>
+                            <td>متوسطة (12 ثانية)</td>
+                            <td>سريعة (3 ثوانٍ)</td>
+                        </tr>
+                        <tr>
+                            <td>الاعتماد على libpcap</td>
+                            <td>✅ نعم</td>
+                            <td>✅ نعم</td>
+                        </tr>
+                    </table>
+                    <br>
+                    <strong>متى netdiscover؟</strong> عندما تريد **passive** أو **تحليل vendor**!<br>
+                    <strong>متى arp-scan؟</strong> عندما تريد **السرعة** فقط!
+                </div>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('scenarios')">
+            <span class="expand-icon">▶</span> سيناريوهات عملية: "لماذا هذا المسار؟"
+        </h2>
+        <div id="scenarios" class="section hidden">
+            <h3>❓ سيناريو 1: حماية شبكتك المنزلية</h3>
+            <div class="section">
+                <h4>❓ الهدف: كشف الأجهزة المجهولة</h4>
+                <div class="example-box">
+                    <strong>الإعداد:</strong>
+                    <div class="command-box">sudo netdiscover -p -L -P -N > /var/log/network.log</div>
+                    <p>**لماذا هذا المسار؟**</p>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+-p: لا ترسل حزم (لا تُعطّل الشبكة)
+-L: يستمر في الاستماع (24/7)
+-P -N: يخرج CSV نظيف لـ log
+> /var/log/network.log: يحفظ كل شيء
+
+التحليل لاحقاً:
+grep -v "MyLaptop" log | grep -v "MyPhone"
+└── يُظهر الأجهزة الغريبة
+
+لماذا هذا الأمثل؟
+├── يعمل في الخلفية دون تدخل
+├── لا يستهلك bandwidth
+└── تكتشف المتسللين تلقائياً
+                    </pre>
+                </div>
+            </div>
+
+            <h3>❓ سيناريو 2: اختبار اختراق شركة</h3>
+            <div class="section">
+                <h4>❓ الهدف: خريطة سريعة قبل Nmap</h4>
+                <div class="example-box">
+                    <strong>الإعداد:</strong>
+                    <div class="command-box">sudo netdiscover -f -r 10.0.0.0/8 -c 5</div>
+                    <p>**لماذا هذا المسار؟**</p>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+-f: سريع (تُنهي 16 مليون IP في 15 دقيقة!)
+-r 10.0.0.0/8: تُغطي كل الشبكة الداخلية
+-c 5: تضمن الدقة (بعض أجهزة Cisco تستجيب ببطء)
+
+النتيجة:
+├── 500+ host في 10 دقائق
+├── تقسمهم إلى VLANs
+└── تُغذي Nmap بقائمة IP
+
+لماذا قبل Nmap؟
+├── لا تُثير IDS (ARP يبدو طبيعياً)
+├── تحصل على MAC → تعرف الأنواع (printer, router, PC)
+└── تكتشف أجهزة لا تستجيب لـ ICMP (MS Windows)
+
+الخطوة التالية:
+nmap -iL hosts.txt -sV -O
+└── مسح عميق فقط للأجهزة الحية
+                    </pre>
+                </div>
+            </div>
+
+            <h3>❓ سيناريو 3: محاكاة طفرة DoS</h3>
+            <div class="section">
+                <h4>❓ الهدف: اختبار تحمّل Switch</h4>
+                <div class="warning-box">
+                    <strong>⚠️ تحذير:</strong> استخدم في بيئة معزولة فقط!
+                </div>
+                <div class="command-box">sudo netdiscover -r 192.168.1.0/24 -S</div>
+                <p>**لماذا هذا؟**</p>
+                <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+-S: يُرسل بدون توقف (1000 pps)
+├── يُحمّل ARP table في Switch (قد يحمل 1000 entry)
+├── يختبر **Port Security** (هل يُغلق الـ port؟)
+└── يُحسب **CPU usage** في Switch (هل يتجاوز 80%؟)
+
+النتيجة:
+├── Switch يتجمد → اشتري switch أقوى
+├── Port يُغلق → Port Security يعمل
+└── لا يتأثر → Switch جيد
+
+لماذا لا تستخدمه في إنتاج؟
+├── **يعطل الشبكة** (DoS حقيقي)
+├── قد يُسقط أجهزة قديمة
+└── **يُسجّل في logs** (تُكتشف)
+                </pre>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="button" onclick="showAllSections()">إظهار كل الأسئلة</button>
+            <button class="button" onclick="hideAllSections()">إخفاء كل الأسئلة</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(id) {
+            const section = document.getElementById(id);
+            const header = section.previousElementSibling;
+            
+            section.classList.toggle('hidden');
+            header.classList.toggle('expanded');
+        }
+
+        function showAllSections() {
+            document.querySelectorAll('.section').forEach(section => section.classList.remove('hidden'));
+            document.querySelectorAll('h2').forEach(header => header.classList.add('expanded'));
+        }
+
+        function hideAllSections() {
+            document.querySelectorAll('.section').forEach(section => section.classList.add('hidden'));
+            document.querySelectorAll('h2').forEach(header => header.classList.remove('expanded'));
+        }
+
+        document.querySelectorAll('.command-box').forEach(box => {
+            box.addEventListener('click', function() {
+                const text = this.textContent.replace('$ ', '');
+                navigator.clipboard.writeText(text).then(() => {
+                    this.style.background = '#00ff88';
+                    this.style.color = '#0d0d1a';
+                    setTimeout(() => {
+                        this.style.background = '#0d0d1a';
+                        this.style.color = '#00ff88';
+                    }, 500);
+                });
+            });
+        });
+
+        window.addEventListener('load', () => {
+            document.getElementById('basics').classList.remove('hidden');
+            document.querySelector('h2[onclick*="basics"]').classList.add('expanded');
+        });
+    </script>
+</body>
+</html>
