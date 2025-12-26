@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل Legion التقني العميق للمبتدئين مع التدقيق الإملائي</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Tahoma', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e6e6e6;
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(25, 25, 45, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            color: #00ff88;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        h2 {
+            color: #00d4ff;
+            border-right: 5px solid #00d4ff;
+            padding-right: 15px;
+            margin: 30px 0 20px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        h2:hover {
+            color: #00ff88;
+            border-right-color: #00ff88;
+        }
+
+        h3 {
+            color: #ffaa00;
+            margin: 20px 0 10px 0;
+        }
+
+        .section {
+            background: rgba(30, 30, 50, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            border-color: #00d4ff;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+        }
+
+        .command-box {
+            background: #0d0d1a;
+            border: 1px solid #00ff88;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            color: #00ff88;
+            direction: ltr;
+            text-align: left;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .command-box::before {
+            content: "$ ";
+            color: #ffaa00;
+            font-weight: bold;
+        }
+
+        .example-box {
+            background: rgba(0, 255, 136, 0.1);
+            border-left: 4px solid #00ff88;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .warning-box {
+            background: rgba(255, 0, 0, 0.1);
+            border-left: 4px solid #ff0000;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .technical-box {
+            background: rgba(0, 212, 255, 0.1);
+            border-left: 4px solid #00d4ff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .why-box {
+            background: rgba(255, 255, 0, 0.1);
+            border-left: 4px solid #ffff00;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .option-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .option-table th {
+            background: #00d4ff;
+            color: #0d0d1a;
+            padding: 12px;
+            text-align: right;
+        }
+
+        .option-table td {
+            padding: 10px;
+            border-bottom: 1px solid #333;
+        }
+
+        .option-table tr:hover {
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        .button {
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            color: #0d0d1a;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .expand-icon {
+            display: inline-block;
+            margin-left: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .expanded .expand-icon {
+            transform: rotate(90deg);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏛️ دليل Legion التقني العميق مع التدقيق الإملائي</h1>
+        
+        <div class="warning-box" style="font-size: 1.2em; text-align: center;">
+            <strong>⚠️ تحذير قانوني وأخلاقي:</strong> هذه الأداة لاختبار اختراق الشبكات المصرح به فقط. استخدامها على شبكات دون إذن صريح يعتبر جريمة في معظم الدول. هدف هذا الدليل التعليمي فقط.
+        </div>
+
+        <div class="section">
+            <h3>ما هو Legion؟ ولماذا هو مختلف عن Sparta؟</h3>
+            <p><strong>Legion</strong> هو **إطار عمل (framework)** شبه آلي لاختبار اختراق الشبكات، وهو **شوكة (fork)** مُحسّنة من أداة Sparta القديمة. **لماذا Sparta لم تعد كافية؟** لأنها كُتبت بلغة Python 2.7 (المهملة الآن) وتستخدم مكتبات قديمة غير آمنة. Legion أُعيد كتابته بلغة **Python 3.8+** مع **PyQt6** لواجهة رسومية حديثة، ويدعم **Docker**، ويحتوي على **100+ سكريبت** مدمج.</p>
+            
+            <div class="technical-box">
+                <h4>🎯 لماذا الترقية إلى Python 3.8+ مهمة؟</h4>
+                <ul>
+                    <li>**الأمان**: Python 2.7 لم تعد تحصل على تحديثات أمانية</li>
+                    <li>**الأداء**: Python 3.8 أسرع بنسبة 30% في معالجة السلاسل النصية (strings)</li>
+                    <li>**المكتبات**: PyQt6 تدعم Wayland و DPI عالي، بينما PyQt4/5 لا تدعم</li>
+                    <li>**المستقبل**: كل مكتبات الأمان الحديثة (Vulners, etc.) تتطلب Python 3+</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('basics')">
+            <span class="expand-icon">▶</span> التثبيت والمتطلبات: "لماذا Docker يُفضّل؟"
+        </h2>
+        <div id="basics" class="section hidden">
+            <h3>❓ لماذا يُوصى باستخدام Docker بدلاً من التثبيت التقليدي؟</h3>
+            <div class="section">
+                <h4>❓ المشكلة: تبعيات (dependencies) معقّدة</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> لماذا لا أشغّل <code>pip install legion</code> مباشرةً؟
+                    <br><br>
+                    <strong>الإجابة التقنية:</strong> Legion يعتمد على 30+ أداة خارجية:
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+التبعيات:
+├── nmap (C++ binary)
+├── hydra (C binary)
+├── nikto (Perl script)
+├── dirbuster (Java)
+├── sslyzer (Python)
+├── vulners (Python library)
+└── 100+ سكريبت Bash/Perl/Python
+
+إذا ثبّتت يدوياً:
+├── نسخة Nmap قديمة لا تدعم NSE scripts الجديدة
+├── Hydra قد لا تتعامل مع OpenSSL 3.0
+├── Java runtime قديم لا يشغّل dirbuster
+└── تضيع 5 ساعات في حل تضاربات الإصدارات
+
+Docker:
+├── كل شيء معبّأ (packaged) مع الإصدارات الصحيحة
+├── يعمل بكفاءة في أي توزيعة Linux
+└── التثبيت: 3 دقائق فقط!
+                    </pre>
+                    <strong>لماذا Docker؟</strong> **العزل (isolation)** و**القابلية للنقل (portability)**!
+                </div>
+            </div>
+
+            <div class="section">
+                <h4>❓ خطوة بخطوة: تثبيت Docker</h4>
+                <div class="command-box"># تحديث النظام أولاً
+sudo apt-get update && sudo apt-get upgrade -y
+
+# تثبيت Docker
+sudo apt-get install docker.io python3-pip -y
+
+# إضافة المستخدم إلى group docker
+sudo usermod -aG docker $USER
+newgrp docker
+
+# تثبيت docker-compose
+pip3 install docker-compose --user
+
+# استنساخ Legion
+git clone https://github.com/GoVanguard/legion.git
+cd legion/docker
+
+# تغيير الصلاحيات وتشغيل
+chmod +x runIt.sh
+./runIt.sh</div>
+                <p><strong>لماذا <code>newgrp docker</code>؟</strong> لتحميل group الجديد بدون تسجيل الخروج. بدونها، تحتاج لإعادة تشغيل الجهاز!</p>
+            </div>
+
+            <div class="section">
+                <h4>❓ ما يحدث داخل Docker؟</h4>
+                <div class="technical-box">
+                    <h4>🐳 ملف Dockerfile يعمل ما يلي:</h4>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+FROM kali-rolling:latest
+├── يبدأ من Kali Linux (تحتوي على جميع الأدوات)
+RUN apt-get install python3-pyqt6
+├── يثبت PyQt6 (واجهة Legion)
+COPY legion/ /opt/legion
+├── ينسخ الكود
+RUN pip install -r requirements.txt
+├── يثبت vulners, requests, etc.
+USER legion
+├── لا يعمل كـ root (أمان)
+CMD ["python3", "/opt/legion/legion.py"]
+                    </pre>
+                    <strong>لماذا لا يعمل كـ root؟</strong> لأن أدوات مثل Nmap ترفض العمل كـ root في بعض الأوضاع!
+                </div>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('interface')">
+            <span class="expand-icon">▶</span> واجهة المستخدم: "لماذا هذا التصميم؟"
+        </h2>
+        <div id="interface" class="section hidden">
+            <h3>❓ لماذا ثلاثة أقسام (يسار، يمين، أسفل)؟</h3>
+            <div class="section">
+                <h4>❓ قسم "Add Host" - لماذا في اليسار؟</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> لماذا لا تكون أزرار الإدخال في الأعلى مثل برامج أخرى؟
+                    <br><br>
+                    <strong>إجابة تصميمية وتقنية:</strong>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+التصميم يعتمد على **نمط MVC** (Model-View-Controller):
+├── Model: قاعدة بيانات SQLite (legion.db)
+├── View: القسم الأيسر (إدخال) والأيمن (عرض)
+└── Controller: القسم الأيسر (أزرار تُغيّر Model)
+
+لماذا اليسار للإدخال؟
+├── 90% من عملك: إضافة أهداف → مسح → سلاح
+├── اليد اليمنى على الفأرة (للأغلبية) تصل لليسار أسهل
+├── لا تُغطّي نتائج المسح أثناء إدخال جديد
+└── يتبع **Fitt's Law**: المسافة قصيرة = وقت أقل للضغط
+                    </pre>
+                    <strong>لماذا هذا مهم؟</strong> **الكفاءة** و**عدم تغطية البيانات الحرجة**!
+                </div>
+            </div>
+
+            <div class="section">
+                <h4>❓ قسم النتائج (يمين) - لماذا تبويبات؟</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> لماذا لا تُعرض كل النتائج في قائمة واحدة؟
+                    <br><br>
+                    <strong>الإجابة:</strong>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+التبويبات:
+├── Hosts: قائمة الآلات (ID, IP, حالة)
+├── Ports: كل المنفذ المفتوحة (لجميع الآلات)
+├── Services: Nmap service detection
+├── CVEs: الثغرات المكتشفة
+├── Exploits: روابط لـ Exploit-DB
+├── Credentials: لو استخدمت Hydra
+└── Logs: كل الأوامر التي نُفّذت
+
+لماذا هذا التقسيم؟
+├── **الذاكرة**: تحميل 10,000 منفذ في قائمة واحدة يُبطئ الواجهة
+├── **التركيز**: تبحث عن CVE؟ لا تُشغّل عقلك بـ Ports
+└── **البحث**: كل تبويبة لديها فلتر خاص (Ctrl+F)
+                    </pre>
+                    <strong>لماذا هذا التصميم؟</strong> **الأداء** و**تقليل التحميل المعرفي**!
+                </div>
+            </div>
+
+            <div class="section">
+                <h4>❓ قسم Logs (أسفل) - لماذا يُظهر كل شيء؟</h4>
+                <div class="technical-box">
+                    <h4>📝 آلية Logging في Legion:</h4>
+                    <p>Legion يستخدم **Python logging module** مع **QueueHandler**:</p>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+import logging, queue
+log_queue = queue.Queue()
+handler = logging.handlers.QueueHandler(log_queue)
+logger.addHandler(handler)
+
+# كل أداة تشغّل:
+logger.info(f"[Nmap] Scanning {target_ip}")
+logger.warning(f"[Hydra] Failed to connect to {target_ip}:22")
+
+لماذا Queue؟
+├── **Non-blocking**: لا تتوقف الواجهة لانتظار الكتابة
+├── **Thread-safe**: 20 أداة تعمل في آنٍ واحد دون تعارض
+└── **Real-time**: القسم السفلي يُحدّث كل 500ms
+                    </pre>
+                    <strong>لماذا هذا المستوى من التفصيل؟</strong> لأنك **تُدرب المبتدئين**! Logs تُعلمهم الأوامر الحقيقية!
+                </div>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('scanning')">
+            <span class="expand-icon">▶</span> آلية المسح: "لماذا يتصرف بهذه الطريقة؟"
+        </h2>
+        <div id="scanning" class="section hidden">
+            <h3>❓ لماذا أوضاع Easy وHard؟</h3>
+            <div class="section">
+                <h4>❓ Easy Mode - ما يحدث خلف الكواليس</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> لماذا يكون Easy سريعاً؟
+                    <br><br>
+                    <strong>الإجابة التقنية:</strong>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+Easy Mode يشغل:
+├── nmap -sV -O -T4 --top-ports 1000
+│   ├── -sV: فحص الإصدار (سرعة متوسطة)
+│   ├── -O: كشف نظام التشغيل (توقع 5-10 دقائق)
+│   └── -T4: Timing Template سريع
+├── whataweb (بسيط)
+├── nikto -C all (تسجيل 200 ثغرة شائعة فقط)
+└── sslyzer --regular (فحص SSL أساسي)
+
+لماذا هذه الاختيارات؟
+├── **الوقت**: يُنهي 10 عقد في 15 دقيقة
+├── **الدقة**: يجد 80% من الثغرات الشائعة
+└── **IPS Evasion**: لا يُثير أنظمة كشف IDS بسيطة
+                    </pre>
+                    <strong>لمن يُستخدم؟</strong> للمبتدئين أو مسح سريع!
+                </div>
+            </div>
+
+            <div class="section">
+                <h4>❓ Hard Mode - التعمق الاحترافي</h4>
+                <div class="technical-box">
+                    <h4>🔧 ما يجلبه Hard Mode:</h4>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+Hard Mode يشغل:
+├── nmap -sV -sC -O -p- -T2
+│   ├── -p-: كل المنافذ من 1 إلى 65535 (ساعة كاملة)
+│   ├── -sC: 100+ NSE script (يفحص كل منفذ)
+│   └── -T2: Timing بطيء لتجنب IDS
+├── nikto -C all -Tuning 0123456789
+│   └── يفحص 7000+ ثغرة في CGI, SQL, XSS, إلخ
+├── dirbuster -w /usr/share/wordlists/dirb/common.txt
+│   └── يبحث عن 4615 دليل وملف مخفي
+├── hydra -L users.txt -P passwords.txt -t 4
+│   └── يُجرب 1000 اسم مستخدم × 1000 كلمة سر = مليون محاولة
+└── vulners --api
+    └── يبحث في قاعدة بيانات Vulners لـ 200,000+ CVE
+
+لماذا هذا مهم؟
+├── **الشمولية**: يجد الثغرات النادرة
+├── **الدليل**: كل نتيجة مُوثَّقة بالـ CVE-ID
+└── **الزمن**: قد يستغرق 24 ساعة لعقدة واحدة!
+                    </pre>
+                </div>
+            </div>
+
+            <h3>❓ لماذا "Staged Scanning"؟</h3>
+            <div class="section">
+                <h4>❓ المشكلة: IPS تكتشفك</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> إذا مسحت كل المنافذ في دقيقة واحدة، IPS يحظرك. لماذا لا يمسح Legion ببطء؟
+                    <br><br>
+                    <strong>الإجابة:</strong> Legion يستخدم **مراحل زمنية (time slots)**:
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+Stage 1 (0-10 دقائق):
+├── يمسح المنافذ 1-1000 فقط
+├── يستخدم -T4 (سريع)
+└── يبدو مثل مسح شرعي
+
+Stage 2 (10-30 دقيقة):
+├── يأخذ استراحة 5 دقائق (لا حزم)
+├── يمسح المنافذ 1001-5000
+└── يستخدم -T2 (بطيء)
+
+Stage 3 (30-60 دقيقة):
+├── يأخذ استراحة 10 دقائق
+├── يمسح المنافذ 5001-65535
+└── يستخدم -T1 (متخفي)
+
+لماذا؟
+├── يتجنب **Rate Limiting** (مثلاً: 1000 حزمة/دقيقة)
+├── يتجنب **Anomaly Detection** (النمط غير منتظم)
+└── يبدو مثل مستخدم عادي يتفحص شبكته
+                    </pre>
+                    <strong>القيمة:</strong>** Ninja-like IPS evasion** كما يذكر الوصف!
+                </div>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('cves')">
+            <span class="expand-icon">▶</span> اكتشاف CVE: "لماذا تلقائي؟"
+        </h2>
+        <div id="cves" class="section hidden">
+            <h3>❓ كيف يعرف Legion إصدار الخدمة؟</h3>
+            <div class="section">
+                <h4>❓ من Nmap إلى CVE-ID</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> Nmap يقول "Apache 2.4.29". كيف يحول Legion هذا إلى CVE-2021-44790؟
+                    <br><br>
+                    <strong>الإجابة التقنية:</strong>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+خطوات Legion:
+1. Nmap يُخرج: "apache/httpd 2.4.29"
+2. Legion يُمرّره إلى **Vulners API**:
+   curl -X POST https://vulners.com/api/v3/search/lucene/
+   -d '{"query": "apache 2.4.29", "type": "software"}'
+3. Vulners يُعيد JSON:
+   {
+     "CVE-2021-44790": {
+       "cvss": 9.8,
+       "description": "Buffer overflow in mod_lua...",
+       "exploit": "https://exploit-db.com/..."
+     }
+   }
+4. Legion يُضيف Entity "CVE-2021-44790" مع Link إلى Host
+
+لماذا هذا مدهش؟
+├── **سرعة**: 2 ثانية فقط
+├── **دقة**: Vulners يستخدم NLP لفهم الإصدارات
+└── **الربط**: يعطيك رابط Exploit جاهز!
+                    </pre>
+                    <strong>لماذا تلقائي؟</strong> لأن **الإنسان لا يستطيع** معرفة 200,000 CVE يدويًا!
+                </div>
+            </div>
+
+            <div class="section">
+                <h4>❓ CPE - المعيار الموحّد</h4>
+                <div class="technical-box">
+                    <h4>🎯 كيف يعمل CPE:</h4>
+                    <p>Legion يولّد **CPE** (Common Platform Enumeration) تلقائيًا:</p>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+Apache 2.4.29 → CPE: cpe:/a:apache:http_server:2.4.29
+├── a: application
+├── apache: vendor
+├── http_server: product
+└── 2.4.29: version
+
+لماذا CPE مهم؟
+├── يُطابق CVEs بدقة
+├── لا يعتمد على اسم الخدمة (قد يخطئ Nmap)
+└── يدعم ما يزيد على 100,000 منتج
+                    </pre>
+                </div>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('exploits')">
+            <span class="expand-icon">▶</span> ربط Exploits: "لماذا هذا التكامل؟"
+        </h2>
+        <div id="exploits" class="section hidden">
+            <h3>❓ كيف يُربط CVE بـ Exploit؟</h3>
+            <div class="section">
+                <h4>❓ Exploit-DB API - الجسر السحري</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> لدي CVE-2021-44790. كيف يجد Legion المُستغلّ؟
+                    <br><br>
+                    <strong>الإجابة:</strong>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+Legion يستخدم pyExploitDb:
+from pyExploitDb import PyExploitDb
+pedb = PyExploitDb()
+pedb.openFile()
+
+# البحث
+result = pedb.searchCve("CVE-2021-44790")
+# النتيجة: {'edb_id': '50689', 'file': 'linux/remote/50689.py'}
+
+لماذا هذا مهم؟
+├── **وقت**: لا تبحث يدويًا في 40,000 exploit
+├── **دقة**: الربط CVE→EDB-ID مباشر
+└── **الاختبار**: Legion يُشغّل exploit تلقائيًا إذا كان safe
+                    </pre>
+                    <strong>لماذا هذا التكامل؟</strong> لأن **الغرض** هو الاختراق، ليس فقط المسح!
+                </div>
+            </div>
+
+            <div class="section">
+                <h4>❓ لماذا لا يُشغّل كل Exploit؟</h4>
+                <div class="technical-box">
+                    <h4>⚠️ آلية الفلترة:</h4>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+Legion يُشغّل exploit فقط إذا:
+├── type: "remote" (لا يحتاج وصولًا محليًا)
+├── platform: "linux" (نظام الهدف)
+├── port: مفتوح (80, 443, إلخ)
+└── safe: True (لا يُعطّل الخدمة)
+
+إذا كان unsafe:
+├── يُظهر لك الكود فقط
+├── يطلب تأكيدًا قبل التشغيل
+└── ينصحك بـ "Try in lab first"
+
+لماذا؟
+├── **الأمان**: لا تُعطّل خادم الإنتاج
+├── **القانون**: لا تُنفّذ exploit خطير بدون إذن
+└── **التعليم**: تتعلم كيف يعمل قبل الاستخدام
+                    </pre>
+                </div>
+            </div>
+        </div>
+
+        <h2 onclick="toggleSection('advanced')">
+            <span class="expand-icon">▶</span> الميزات المتقدمة: "لماذا هذا السحر؟"
+        </h2>
+        <div id="advanced" class="section hidden">
+            <h3>❓ لماذا الحفظ التلقائي كل 30 ثانية؟</h3>
+            <div class="section">
+                <h4>❓ Real-time Auto-save - المشكلة التي لا تراها</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> لماذا لا أحفظ يدوياً عند الانتهاء؟
+                    <br><br>
+                    <strong>الإجابة:</strong>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+المشاكل المحتملة:
+├── انقطاع كهرباء: تخسر 5 ساعات مسح
+├── Kernel panic: تخسر كل النتائج
+├── ينهار Legion: 100 عقدة تختفي
+└── تنسى تحفظ: تغلق الجهاز بالخطأ
+
+الحل:
+Legion يستخدم **QTimer** في PyQt6:
+timer = QTimer()
+timer.timeout.connect(self.auto_save)
+timer.start(30000)  # كل 30 ثانية
+
+يحفظ إلى:
+~/.legion/projects/[project_name].db
+└── SQLite مع كل النتائج والإعدادات
+
+لماذا 30 ثانية؟
+├── لا يُبطئ المسح (الحفظ يأخذ 50ms)
+├── لا تخسر أكثر من 30 ثانية من العمل
+└── لا يُرهق القرص (I/O)
+                    </pre>
+                    <strong>لماذا هذا مهم؟</strong> لأن **النتائج أغلى من الوقت**!
+                </div>
+            </div>
+
+            <h3>❓ لماذا "1-Click Scan"؟</h3>
+            <div class="section">
+                <h4>❓ المشكلة: إدخال 100 IP</h4>
+                <div class="technical-box">
+                    <h4>🎯 كيف يعمل:</h4>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+تنسيق الإدخال:
+192.168.1.1;192.168.1.2;192.168.1.3 (3 IPs)
+192.168.1.0/24 (256 IPs)
+example.com;test.org (2 hostnames)
+
+Legion يستخدم **list comprehension**:
+targets = [ip.strip() for ip in input_text.split(';')]
+if '/' in target:
+    targets.extend(calc_cidr(target))  # حساب النطاق
+
+ثم:
+for target in targets:
+    queue.put(target)  # يُضعفهم في queue
+
+لماذا Queue؟
+├── **Parallel**: يشغّل 5 مسح في آنٍ واحد
+├── **Ordered**: يُنهي الأول قبل البدء في السادس
+└── **Non-blocking**: لا تتجمد الواجهة
+                    </pre>
+                </div>
+            </div>
+
+            <h3>❓ لماذا "Purge Results"؟</h3>
+            <div class="section">
+                <h4>❓ الحاجة إلى إعادة المسح</h4>
+                <div class="why-box">
+                    <strong>السؤال:</strong> لماذا أحذف النتائج بدلاً من إضافة مسح جديد؟
+                    <br><br>
+                    <strong>الإجابة:</strong>
+                    <pre style="background: #0d0d1a; padding: 10px; border-radius: 5px; color: #00ff88;">
+سيناريوهات:
+├── غيّرت إعدادات Nmap وتريد نتائج جديدة
+├── أخطأت في IP وتريد تصحيحه
+├── الشبكة تغيّرت بعد المسح الأول (ports مغلقة)
+
+Legion لا يحذف فعلياً:
+├── يُنقل إلى archive table في SQLite
+├── يُحفظ في ~/.legion/archive/[timestamp].db
+└── يمكن استرجاعه عبر "History"
+
+لماذا؟
+├── **المراجعة**: قد تحتاج المسح القديم للمقارنة
+├── **الخطأ**: تسترجع من الحذف بالخطأ
+└── **DFS**: لا تملأ القرص بحذف نهائي
+                    </pre>
+                    <strong>لماذا Archive؟</strong> لأن **البيانات لا تُحذَف**، تُحفَظ!
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="button" onclick="showAllSections()">إظهار كل الأسئلة</button>
+            <button class="button" onclick="hideAllSections()">إخفاء كل الأسئلة</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(id) {
+            const section = document.getElementById(id);
+            const header = section.previousElementSibling;
+            
+            section.classList.toggle('hidden');
+            header.classList.toggle('expanded');
+        }
+
+        function showAllSections() {
+            document.querySelectorAll('.section').forEach(section => section.classList.remove('hidden'));
+            document.querySelectorAll('h2').forEach(header => header.classList.add('expanded'));
+        }
+
+        function hideAllSections() {
+            document.querySelectorAll('.section').forEach(section => section.classList.add('hidden'));
+            document.querySelectorAll('h2').forEach(header => header.classList.remove('expanded'));
+        }
+
+        document.querySelectorAll('.command-box').forEach(box => {
+            box.addEventListener('click', function() {
+                const text = this.textContent.replace('$ ', '');
+                navigator.clipboard.writeText(text).then(() => {
+                    this.style.background = '#00ff88';
+                    this.style.color = '#0d0d1a';
+                    setTimeout(() => {
+                        this.style.background = '#0d0d1a';
+                        this.style.color = '#00ff88';
+                    }, 500);
+                });
+            });
+        });
+
+        window.addEventListener('load', () => {
+            document.getElementById('basics').classList.remove('hidden');
+            document.querySelector('h2[onclick*="basics"]').classList.add('expanded');
+        });
+    </script>
+</body>
+</html>
