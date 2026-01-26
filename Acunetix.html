@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل Acunetix الشامل مع الامتحان التفاعلي</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Tahoma', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e6e6e6;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .signature {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 0.7em;
+            font-family: monospace;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(25, 25, 45, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header h1 {
+            color: #00ff88;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .section {
+            background: rgba(30, 30, 50, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .section:hover { border-color: #00d4ff; box-shadow: 0 0 15px rgba(0, 212, 255, 0.2); }
+
+        .section h2 {
+            color: #f78166;
+            border-right: 4px solid #f78166;
+            padding-right: 16px;
+            margin: 32px 0 16px 0;
+            cursor: pointer;
+            font-size: 1.5em;
+            transition: all 0.2s ease;
+        }
+
+        .section h2:hover { color: #58a6ff; border-right-color: #58a6ff; }
+
+        .section h3 { color: #7ee787; margin: 24px 0 12px 0; font-size: 1.2em; }
+
+        .section-content { transition: all 0.3s ease; }
+
+        .expand-icon { display: inline-block; margin-right: 8px; transition: transform 0.2s ease; }
+
+        .command-box {
+            background: #0d0d1a;
+            border: 1px solid #00ff88;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 12px 0;
+            font-family: monospace;
+            color: #00ff88;
+            direction: ltr;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .command-box::before { content: "$ "; color: #f78166; }
+
+        .example-box {
+            background: rgba(126, 231, 135, 0.1);
+            border-left: 4px solid #7ee787;
+            padding: 16px;
+            margin: 12px 0;
+            border-radius: 6px;
+        }
+
+        .warning-box {
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid #ff0000;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .technical-box {
+            background: rgba(88, 166, 255, 0.1);
+            border-left: 4px solid #58a6ff;
+            padding: 16px;
+            margin: 12px 0;
+            border-radius: 6px;
+        }
+
+        .self-question {
+            background: rgba(255, 170, 0, 0.1);
+            border-right: 4px solid #ffaa00;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .self-question h4 { color: #ffaa00; margin-bottom: 10px; }
+
+        .option-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+        }
+
+        .option-table th {
+            background: #0d0d1a;
+            color: #58a6ff;
+            padding: 12px;
+            text-align: right;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .option-table td { padding: 10px; border-bottom: 1px solid #30363d; }
+
+        .option-table tr:hover { background: rgba(88, 166, 255, 0.05); }
+
+        /* ==== صور ==== */
+        .tool-image {
+            width: 100%;
+            max-width: 800px;
+            border-radius: 10px;
+            margin: 20px auto;
+            display: block;
+            border: 2px solid #333;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .image-caption {
+            text-align: center;
+            color: #aaa;
+            font-size: 0.9em;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .exam-button {
+            background: linear-gradient(45deg, #ff6b00, #ffaa00);
+            color: #0d0d1a;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.3em;
+            margin: 30px auto;
+            display: block;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.4);
+        }
+
+        .exam-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 0, 0.6);
+        }
+
+        .lesson-card {
+            background: rgba(30, 30, 50, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .lesson-title {
+            color: #00d4ff;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            border-right: 5px solid #00d4ff;
+            padding-right: 15px;
+        }
+
+        .quiz-section {
+            background: rgba(40, 40, 60, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #444;
+        }
+
+        .quiz-question {
+            color: #ffaa00;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .quiz-options { display: grid; gap: 10px; margin-bottom: 20px; }
+
+        .quiz-option {
+            background: #2a2a3a;
+            border: 2px solid #555;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1em;
+        }
+
+        .quiz-option:hover { border-color: #00d4ff; background: rgba(0, 212, 255, 0.1); }
+
+        .quiz-option.correct { border-color: #00ff88; background: rgba(0, 255, 136, 0.2); }
+
+        .quiz-option.incorrect { border-color: #ff0000; background: rgba(255, 0, 0, 0.2); }
+
+        .quiz-option.disabled { cursor: not-allowed; opacity: 0.6; }
+
+        .feedback {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: rgba(0, 255, 136, 0.1);
+            border-left: 4px solid #00ff88;
+            color: #00ff88;
+        }
+
+        .feedback.incorrect {
+            background: rgba(255, 0, 0, 0.1);
+            border-left: 4px solid #ff0000;
+            color: #ff6666;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            color: #0d0d1a;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4); }
+
+        .btn:disabled { background: #555; cursor: not-allowed; }
+
+        .btn-success { background: linear-gradient(45deg, #00ff88, #008800); }
+
+        .difficulty-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .difficulty-easy { background: #00ff88; color: #000; }
+        .difficulty-medium { background: #ffaa00; color: #000; }
+        .difficulty-hard { background: #ff6b00; color: #fff; }
+        .difficulty-expert { background: #ff0000; color: #fff; }
+
+        .consequences-box {
+            background: rgba(255, 0, 0, 0.15);
+            border-left: 4px solid #ff0000;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 6px;
+        }
+
+        .hidden { display: none !important; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in { animation: fadeIn 0.5s ease; }
+
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            .header h1 { font-size: 1.8em; }
+            .lesson-title { font-size: 1.4em; }
+            .nav-buttons { flex-direction: column; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="signature">Kali@~linux</div>
+    <div class="container">
+        <!-- ==== رأس الصفحة ==== -->
+        <div class="header">
+            <h1>دليل Acunetix الشامل مع الامتحان التفاعلي</h1>
+            <p style="color: #00d4ff; font-size: 1.2em;">دليل شامل مع اختبار تفاعلي تدريجي من المبتدئ إلى الخبير</p>
+        </div>
+
+        <!-- ==== تحذير قانوني ==== -->
+        <div class="warning-box">
+            <h3>⚠️ تحذير قانوني وأخلاقي</h3>
+            <p>هذا التطبيق للتعليم فقط. استخدام Acunetix على مواقع دون إذن صريح يعتبر جريمة في معظم الدول.</p>
+        </div>
+
+        <!-- ==== قسم مقدمة Acunetix ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🔍 ما هو Acunetix؟
+            </h2>
+            <div class="section-content hidden">
+                <p><strong>Acunetix</strong> هو أداة فحص ثغرات تطبيقات الويب (Web Vulnerability Scanner) تُستخدم لاكتشاف الثغرات الأمنية في المواقع والتطبيقات الويب. تم تطويره منذ عام 2005 وهو من أوائل الأدوات المتخصصة في هذا المجال.</p>
+                
+                <img src="https://kimi-web-img.moonshot.cn/img/cdn.acunetix.com/427569a9d9c8dddd7417ff34c2eb532f70e2ae35.png" alt="Acunetix Dashboard" class="tool-image">
+                <div class="image-caption">لوحة تحكم Acunetix الرئيسية تُظهر إحصائيات الثغرات</div>
+
+                <h3>🎯 الفرق بين Acunetix وأدوات الفحص الأخرى</h3>
+                <ul>
+                    <li>✅ <strong>تخصص:</strong> Acunetix مُصمم خصيصاً لتطبيقات الويب، بينما Nessus يُركز على الشبكات</li>
+                    <li>✅ <strong>السرعة:</strong> محرك مكتوب بـ C++ يجعله الأسرع في السوق</li>
+                    <li>✅ <strong>DeepScan:</strong> يفهم JavaScript وSPA (Single Page Applications)</li>
+                    <li>✅ <strong>AcuSensor:</strong> تقنية IAST فريدة تُعطي دقة 100%</li>
+                </ul>
+
+                <div class="self-question">
+                    <h4>🤔 لماذا لا يكفي Nessus لفحص تطبيقات الويب؟</h4>
+                    <p><strong>الجواب:</strong> Nessus يبحث عن الثغرات على مستوى الشبكة (open ports, outdated services). لكنه لا يفهم منطق التطبيق الويب. مثلاً: Nessus لا يكتشف SQL Injection في form login لأنه لا يُحاول إدخال بيانات خبيثة وتحليل الاستجابة. Acunetix يفعل ذلك بالضبط - يتصرف مثل hacker حقيقي.</p>
+                </div>
+
+                <div class="example-box">
+                    <strong>💡 مثال عملي:</strong> Nessus قد يجد أنك تستخدم Apache 2.4.41 ويُحذرك من ثغرة معروفة. لكن Acunetix يجد أنك تستخدم Apache 2.4.41 AND لديك SQL Injection في صفحة login.php AND XSS في comment section. الفرق هو العمق.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==== قسم SmartScan و DeepScan ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> ⚡ SmartScan و DeepScan: سرعة وعمق
+            </h2>
+            <div class="section-content hidden">
+                <h3>🧠 SmartScan Algorithm</h3>
+                <p>خوارزمية فريدة تجد <strong>80% من الثغرات في أول 20% من وقت الفحص</strong>. كيف؟</p>
+                <ul>
+                    <li>تبدأ بالصفحات الأكثر زيارة (homepage, login)</li>
+                    <li>تستخدم heuristic analysis لتقدير أين توجد inputs خطرة</li>
+                    <li>تُعطي أولوية للـ parameters التي تُظهر behavior مشبوه</li>
+                </ul>
+
+                <div class="self-question">
+                    <h4>🤔 لماذا 80% في 20% من الوقت مهم؟</h4>
+                    <p><strong>الجواب:</strong> لأن معظم الثغرات الحرجة توجد في أماكن واضحة (login forms, search boxes, contact forms). SmartScan يستهدف هذه أولاً. إذا وجد SQL Injection في login، لا حاجة لقضاء ساعات في فحث صفحات static HTML. هذا يُعطيك نتائج سريعة للتصرف.</p>
+                </div>
+
+                <h3>🔍 DeepScan Technology</h3>
+                <p>محرك JavaScript حقيقي يفهم:</p>
+                <ul>
+                    <li>✅ Angular, React, Vue, Ember</li>
+                    <li>✅ AJAX calls و dynamic content loading</li>
+                    <li>✅ Single Page Applications (SPAs)</li>
+                    <li>✅ WebSockets و Web Workers</li>
+                </ul>
+
+                <img src="https://kimi-web-img.moonshot.cn/img/img2.helpnetsecurity.com/2961b3caf8b2a6078be24eac76ff7432026d43af.jpg" alt="Acunetix DeepScan Results" class="tool-image">
+                <div class="image-caption">نتائج DeepScan تُظهر تفاصيل crawling العميق</div>
+
+                <div class="self-question">
+                    <h4>🤔 لماذا معظم الماسحات تفشل مع SPA؟</h4>
+                    <p><strong>الجواب:</strong> لأن SPA (مثل Gmail أو Facebook) لا تحتوي على روابط HTML تقليدية. المحتوى يُحمّل ديناميكياً عبر JavaScript. الماسحات القديمة ترى صفحة واحدة فارغة. DeepScan يُنفذ JavaScript مثل متصفح حقيقي، ينتظر AJAX calls، ويكتشف routes المخفية.</p>
+                </div>
+
+                <div class="technical-box">
+                    <strong>🛠️ التقنية:</strong> DeepScan يستخدم محرك Chromium (نفس Chrome) headless لكن مُحسّن للـ security scanning. يتتبع XHR requests, WebSocket messages, و even Service Workers.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==== قسم AcuSensor IAST ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🎯 AcuSensor: تقنية IAST المتقدمة
+            </h2>
+            <div class="section-content hidden">
+                <p><strong>AcuSensor</strong> يحول Acunetix من DAST (Black Box) إلى IAST (Grey Box) - وهذا يعني دقة 100% وتفاصيل دقيقة.</p>
+
+                <img src="https://kimi-web-img.moonshot.cn/img/cdn.acunetix.com/a9b66057727e30959d7f49f4df44de6c2252982b.png" alt="Acunetix Scan Results" class="tool-image">
+                <div class="image-caption">قائمة الفحوصات مع تفاصيل الثغرات المكتشفة</div>
+
+                <h3>💡 كيف يعمل؟</h3>
+                <ol>
+                    <li>تُثبت sensor صغير على خادم الويب (PHP, Java, ASP.NET, Node.js)</li>
+                    <li>عندما يفحص Acunetix، الـ sensor يراقب الكود أثناء التنفيذ</li>
+                    <li>يُخبر Acunetix بالضبط: أي سطر في الكود يحتوي على الثغرة</li>
+                </ol>
+
+                <div class="self-question">
+                    <h4>🤔 لماذا IAST أفضل من DAST وحده؟</h4>
+                    <p><strong>الجواب:</strong> DAST يُرسل payload ويحلل الاستجابة. قد يُعطي false positive إذا كان الرد مشابهاً لثغرة لكنه ليس كذلك. IAST يرى الكود يتنفذ فعلياً. إذا وصل payload إلى دالة SQL وتم تنفيذه، يُؤكد 100% أنها ثغرة حقيقية. لا مجال للتخمين.</p>
+                </div>
+
+                <h3>📊 ما الذي يضيفه AcuSensor؟</h3>
+                <table class="option-table">
+                    <thead>
+                        <tr>
+                            <th>بدون AcuSensor</th>
+                            <th>مع AcuSensor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>SQL Injection موجودة في /login.php</td>
+                            <td>SQL Injection في login.php السطر 45، الدالة authenticate()، المتغير $username</td>
+                        </tr>
+                        <tr>
+                            <td>Confidence: 85%</td>
+                            <td>Confidence: 100%</td>
+                        </tr>
+                        <tr>
+                            <td>لا يجد الملفات المخفية</td>
+                            <td>يجد كل الملفات حتى غير المرتبطة</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="warning-box">
+                    <p>⚠️ <strong>متى لا تستخدم AcuSensor؟</strong> لا تُثبته على production! يستهلك موارد إضافية. استخدمه في staging أو CI/CD فقط.
+                </p></div>
+            </div>
+        </div>
+
+        <!-- ==== قسم أنواع الفحوصات ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🔧 أنواع الفحوصات والتكوين
+            </h2>
+            <div class="section-content hidden">
+                <h3>📋 أنواع الفحوصات</h3>
+                <ul>
+                    <li><strong>Full Scan:</strong> فحص شامل شامل crawling + all vulnerability checks</li>
+                    <li><strong>High Risk Scan:</strong> فحص سريع للثغرات الحرجة فقط</li>
+                    <li><strong>Crawl Only:</strong> mapping فقط بدون اختبار الثغرات</li>
+                    <li><strong>Authenticated Scan:</strong> فحص مع تسجيل دخول (للمناطق المحمية)</li>
+                </ul>
+
+                <img src="https://kimi-web-img.moonshot.cn/img/cdn.acunetix.com/dd68d80222f2c15d61596bf10234071e34804ee5.png" alt="Acunetix Network Scanner" class="tool-image">
+                <div class="image-caption">واجهة فحص الشبكة المتكاملة مع OpenVAS</div>
+
+                <div class="self-question">
+                    <h4>🤔 لماذا Crawl Only مفيد؟</h4>
+                    <p><strong>الجواب:</strong> قبل إطلاق فحص كامل يستغرق ساعات، تريد التأكد أن Acunetix وجد كل الصفحات. Crawl Only يُظهر هيكل الموقع. إذا وجدت أنه فاته قسماً مهماً، تُعدل الإعدادات (مثل Login Sequence) قبل الفحص الحقيقي.</p>
+                </div>
+
+                <h3>🔐 Login Sequence Recorder (LSR)</h3>
+                <p>أداة تسجيل تفاعلية للدخول إلى مناطق محمية:</p>
+                <ul>
+                    <li>تسجل خطوات تسجيل الدخول (click, type, submit)</li>
+                    <li>تدعم Multi-step authentication</li>
+                    <li>تتعامل مع CAPTCHAs (بمساعدة يدوية)</li>
+                    <li>تدعم Single Sign-On (SSO)</li>
+                </ul>
+
+                <div class="example-box">
+                    <strong>💡 سيناريو:</strong> موقع يتطلب: 1) username/password 2) SMS code 3) Security question. LSR يسجل كل هذه الخطوات ويُعيدها تلقائياً أثناء الفحص.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==== قسم التكامل والتقارير ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🔗 التكامل مع CI/CD والتقارير
+            </h2>
+            <div class="section-content hidden">
+                <h3>⚙️ التكامل مع DevOps</h3>
+                <p>Acunetix يندمج مباشرة مع:</p>
+                <ul>
+                    <li><strong>CI/CD:</strong> Jenkins, GitLab CI, Azure DevOps, GitHub Actions</li>
+                    <li><strong>Issue Trackers:</strong> Jira, GitHub Issues, GitLab Issues</li>
+                    <li><strong>WAFs:</strong> Imperva, F5, Cloudflare</li>
+                </ul>
+
+                <div class="self-question">
+                    <h4>🤔 لماذا التكامل مع CI/CD مهم؟</h4>
+                    <p><strong>الجواب:</strong> بدلاً من فحص التطبيق مرة واحدة في الشهر، يتم فحص كل commit تلقائياً. إذا أضاف مطور code جديد يحتوي على SQL Injection، يتم اكتشافه في غضون دقائق وإنشاء ticket في Jira تلقائياً. هذا يمنع الثغرات من الوصول إلى production.</p>
+                </div>
+
+                <h3>📊 أنواع التقارير</h3>
+                <ul>
+                    <li><strong>Executive Summary:</strong> للإدارة - charts وإحصائيات عامة</li>
+                    <li><strong>Developer Report:</strong> للمطورين - تفاصيل تقنية وخطوط الكود</li>
+                    <li><strong>Compliance Reports:</strong> PCI DSS, ISO 27001, OWASP Top 10</li>
+                </ul>
+
+                <img src="https://kimi-web-img.moonshot.cn/img/cdn.acunetix.com/ff4d6f887dccc4179c3f5f88d26a417b59ec567f.png" alt="Acunetix Scan Details" class="tool-image">
+                <div class="image-caption">تفاصيل فحص مع معلومات الـ target والـ alerts</div>
+
+                <div class="technical-box">
+                    <strong>🎯 نصيحة:</strong> استخدم API لاستخراج النتائج برمجياً. يمكنك بناء dashboard مخصص يربط Acunetix بأدوات أخرى.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==== قسم AcuMonitor ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 📡 AcuMonitor: Out-of-Band Detection
+            </h2>
+            <div class="section-content hidden">
+                <p><strong>AcuMonitor</strong> يكتشف ثغرات لا تظهر مباشرة في الاستجابة:</p>
+                <ul>
+                    <li><strong>Blind XSS:</strong> payload يُنفذ في متصفح admin لاحقاً</li>
+                    <li><strong>XXE (XML External Entity):</strong> يُرسل بيانات سرية إلى خادم خارجي</li>
+                    <li><strong>SSRF:</strong> Server-Side Request Forgery</li>
+                    <li><strong>Command Injection:</strong> يُنفذ أوامر في الخلفية</li>
+                </ul>
+
+                <div class="self-question">
+                    <h4>🤔 كيف يكتشف Blind XSS بدون رؤية الاستجابة؟</h4>
+                    <p><strong>الجواب:</strong> AcuMonitor يُرسل payload يحتوي على callback إلى bxss.me (خادم Acunetix). payload يُخزن في database (مثلاً في تعليق). عندما يقرأ admin التعليق، المتصفح يُنفذ JavaScript ويُرسل cookie إلى bxss.me. AcuMonitor يرى هذا ويُبلغك: "Blind XSS موجود في حقل comment".</p>
+                </div>
+
+                <div class="warning-box">
+                    <p>⚠️ <strong>هام:</strong> AcuMonitor يتطلب اتصالاً بـ bxss.me. إذا كنت في بيئة معزولة (air-gapped)، لن يعمل Out-of-Band detection.
+                </p></div>
+            </div>
+        </div>
+
+        <!-- ==== زر الامتحان ==== -->
+        <div class="section fade-in" style="text-align: center; padding: 40px;">
+            <button class="exam-button" onclick="startExam()">🎮 بدء الامتحان التفاعلي (20 سؤال)</button>
+            <p style="margin-top: 15px; color: #aaa;">5 أسئلة سهلة • 9 أسئلة صعبة • 6 أسئلة خبير</p>
+        </div>
+
+        <!-- ==== حاوية الامتحان ==== -->
+        <div id="examContainer" class="hidden"></div>
+
+    </div>
+
+    <script>
+        // ==== دوال الدليل التوضيحي ====
+        function toggleSection(element) {
+            const content = element.nextElementSibling;
+            const icon = element.querySelector('.expand-icon');
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.innerHTML = '▼';
+            } else {
+                content.classList.add('hidden');
+                icon.innerHTML = '▶';
+            }
+        }
+
+        function copyCommand(element) {
+            const text = element.textContent.trim().replace('$ ', '');
+            navigator.clipboard.writeText(text).then(() => {
+                element.style.background = '#00ff88';
+                element.style.color = '#0d0d1a';
+                setTimeout(() => {
+                    element.style.background = '#0d0d1a';
+                    element.style.color = '#00ff88';
+                }, 500);
+            });
+        }
+
+        // ==== بيانات الامتحان (20 سؤال) ====
+        let currentLesson = 1;
+        let score = 0;
+        let mistakes = [];
+        let examStarted = false;
+
+        const examQuestions = [
+            // --- 5 أسئلة سهلة (3 خيارات) ---
+            {
+                difficulty: "easy",
+                question: "ما هو الغرض الأساسي من Acunetix؟",
+                options: [
+                    { text: "فحص ثغرات تطبيقات الويب", correct: true },
+                    { text: "فحص ثغرات الشبكات فقط", correct: false },
+                    { text: "تشفير البيانات", correct: false }
+                ],
+                correctExplanation: "Acunetix هو ماسح ثغرات تطبيقات الويب (Web Vulnerability Scanner) متخصص في اكتشاف SQL Injection, XSS, وثغرات OWASP Top 10.",
+                wrongExplanation: "Acunetix لا يقتصر على الشبكات (هذا Nessus) ولا يشفر البيانات. هو أداة فحص أمني.",
+                consequences: "إذا استخدمت Acunetix لغرض خاطئ، لن تحصل على النتائج المرجوة وقد تُهدد أمان أنظمتك."
+            },
+            {
+                difficulty: "easy",
+                question: "ما هي تقنية DeepScan في Acunetix؟",
+                options: [
+                    { text: "محرك يفهم JavaScript وSPA", correct: true },
+                    { text: "تقنية تشفير", correct: false },
+                    { text: "أداة فحص الشبكة", correct: false }
+                ],
+                correctExplanation: "DeepScan هو محرك JavaScript يُنفذ الكود مثل المتصفح الحقيقي لاكتشاف ثغرات في تطبيقات SPA الحديثة.",
+                wrongExplanation: "DeepScan ليس للتشفير أو الشبكات. هو للتعامل مع JavaScript المعقد.",
+                consequences: "بدون فهم DeepScan، ستفشل في فحص تطبيقات React/Angular الحديثة."
+            },
+            {
+                difficulty: "easy",
+                question: "ما هو AcuSensor؟",
+                options: [
+                    { text: "تقنية IAST تُثبت على الخادم لدقة 100%", correct: true },
+                    { text: "جدار حماية", correct: false },
+                    { text: "مضاد فيروسات", correct: false }
+                ],
+                correctExplanation: "AcuSensor هو sensor يُثبت على خادم الويب (PHP/Java/ASP.NET) ليُعطي Acunetix رؤية داخل الكود (IAST).",
+                wrongExplanation: "AcuSensor ليس firewall أو antivirus. هو أداة رؤية داخلية للكود.",
+                consequences: "إذا لم تفهم AcuSensor، ستفوتك الفرصة للحصول على دقة 100% في الفحص."
+            },
+            {
+                difficulty: "easy",
+                question: "ما هو SmartScan Algorithm؟",
+                options: [
+                    { text: "يجد 80% من الثغرات في 20% من الوقت", correct: true },
+                    { text: "يُشفر الاتصالات", correct: false },
+                    { text: "يُسرع الشبكة", correct: false }
+                ],
+                correctExplanation: "SmartScan يعطي أولوية للصفحات الأكثر خطورة فيبدأ بها أولاً لإعطاء نتائج سريعة.",
+                wrongExplanation: "SmartScan ليس للتشفير أو الشبكة. هو خوارزمية ذكاء اصطناعي لترتيب الفحص.",
+                consequences: "بدون SmartScan، ستضيع وقتك في فحث صفحات static بينما الثغرات في login forms."
+            },
+            {
+                difficulty: "easy",
+                question: "أي من هذه ليست ميزة في Acunetix؟",
+                options: [
+                    { text: "فحص ثغرات الطابعات", correct: true },
+                    { text: "فحص SQL Injection", correct: false },
+                    { text: "فحص XSS", correct: false }
+                ],
+                correctExplanation: "Acunetix يفحص تطبيقات الويب (SQL Injection, XSS) وليس أجهزة الطابعات. هذا مجال Nessus.",
+                wrongExplanation: "SQL Injection و XSS هما من أهم ما يفحصه Acunetix.",
+                consequences: "إذا توقعت من Acunetix فحص أجهزة، ستكون خيبة أمل. كل أداة لها تخصصها."
+            },
+
+            // --- 9 أسئلة صعبة (5 خيارات) ---
+            {
+                difficulty: "hard",
+                question: "ما هو الفرق الرئيسي بين DAST و IAST في Acunetix؟",
+                options: [
+                    { text: "DAST أسرع دائماً", correct: false },
+                    { text: "IAST يتطلب تعديل source code", correct: false },
+                    { text: "IAST يُعطي line number دقيق والـ confidence 100%", correct: true },
+                    { text: "DAST لا يعمل مع HTTPS", correct: false },
+                    { text: "IAST لا يجد XSS", correct: false }
+                ],
+                correctExplanation: "IAST (عبر AcuSensor) يرى الكود يتنفذ فيلتقط الـ line number والدالة والمتغير. DAST يخمن من الاستجابة الخارجية.",
+                wrongExplanation: "DAST ليس أسرع دائماً. IAST لا يتطلب تعديل source code. DAST يعمل مع HTTPS. IAST يجد XSS.",
+                consequences: "إذا استخدمت DAST فقط في تقرير رسمي، قد تُعطي false positives ولا تعرف أين يوجد الخلل في الكود."
+            },
+            {
+                difficulty: "hard",
+                question: "لماذا DeepScan أفضل من crawlers التقليدية مع SPA؟",
+                options: [
+                    { text: "لأنه يستخدم AI فقط", correct: false },
+                    { text: "لأنه يُنفذ JavaScript ويتتبع AJAX", correct: true },
+                    { text: "لأنه أسرع فقط", correct: false },
+                    { text: "لأنه لا يحتاج لـ URL", correct: false },
+                    { text: "لأنه يتجاوز authentication", correct: false }
+                ],
+                correctExplanation: "DeepScan يستخدم Chromium engine headless ليُنفذ JS حقيقياً ويرى DOM بعد التغييرات الديناميكية. Crawlers القديمة ترى HTML static فقط.",
+                wrongExplanation: "DeepScan ليس AI فقط. السرعة ليست السبب الرئيسي. يحتاج URL. لا يتجاوز authentication.",
+                consequences: "بدون DeepScan، ستفشل في فحص 70% من التطبيقات الحديثة المبنية على React/Angular."
+            },
+            {
+                difficulty: "hard",
+                question: "متى يجب NOT تثبيت AcuSensor؟",
+                options: [
+                    { text: "على staging servers", correct: false },
+                    { text: "في CI/CD pipeline", correct: false },
+                    { text: "على production servers", correct: true },
+                    { text: "على development VMs", correct: false },
+                    { text: "في بيئات الاختبار", correct: false }
+                ],
+                correctExplanation: "AcuSensor يستهلك موارد إضافية (CPU/RAM) وقد يُبطئ production. يُستخدم في staging أو CI/CD فقط.",
+                wrongExplanation: "staging, CI/CD, dev VMs, وبيئات الاختبار كلها مناسبة. المشكلة هي production.",
+                consequences: "إذا ثبّتت AcuSensor على production، قد تُبطئ الموقع وتُسبب downtime - كارثة في بيئة حية."
+            },
+            {
+                difficulty: "hard",
+                question: "كيف يكتشف AcuMonitor Blind XSS؟",
+                options: [
+                    { text: "بقراءة database مباشرة", correct: false },
+                    { text: "باستخدام callback إلى bxss.me عند تنفيذ payload", correct: true },
+                    { text: "بتحليل response فوراً", correct: false },
+                    { text: "بفحص source code", correct: false },
+                    { text: "باستخدام AI prediction", correct: false }
+                ],
+                correctExplanation: "AcuMonitor يُرسل payload يحتوي على <script src='bxss.me/...'> عندما يُنفذ (مثلاً في admin panel)، يتصل بـ bxss.me ويُبلغ Acunetix.",
+                wrongExplanation: "لا يقرأ database. لا يحلل response فوراً (Blind!). لا يفحص source code. ليس AI prediction.",
+                consequences: "بدون فهم AcuMonitor، ستفوتك Blind XSS التي تُنفذ في أماكن لا تراها مباشرة (مثل admin panels)."
+            },
+            {
+                difficulty: "hard",
+                question: "ما هي فائدة Login Sequence Recorder (LSR)؟",
+                options: [
+                    { text: "يُسرع الفحص فقط", correct: false },
+                    { text: "يسجل خطوات تسجيل الدخول للوصول للمناطق المحمية", correct: true },
+                    { text: "يكسر كلمات المرور", correct: false },
+                    { text: "يُشفر الاتصال", correct: false },
+                    { text: "يُنشئ تقارير تلقائياً", correct: false }
+                ],
+                correctExplanation: "LSR يسجل تفاعل المستخدم (click, type, submit) ليتمكن Acunetix من تسجيل الدخول تلقائياً و فحص المناطق المحمية.",
+                wrongExplanation: "LSR ليس للسرعة أو كسر passwords أو التشفير أو التقارير. هو للـ authenticated scanning.",
+                consequences: "بدون LSR، لن تستطيع فحص 80% من التطبيق (المناطق الداخلية بعد login) وسيفوتك معظم الثغرات."
+            },
+            {
+                difficulty: "hard",
+                question: "لماذا SmartScan يبدأ بالصفحات الأكثر زيارة؟",
+                options: [
+                    { text: "لأنها أسهل تقنياً", correct: false },
+                    { text: "لأن الثغرات الحرجة غالباً في homepage و login", correct: true },
+                    { text: "لأنها أسرع في الـ crawling", correct: false },
+                    { text: "لأن المستخدم يطلب ذلك", correct: false },
+                    { text: "لأنها لا تحتاج لـ authentication", correct: false }
+                ],
+                correctExplanation: "المنطق: معظم الهجمات تستهدف نقاط الدخول الرئيسية (login, search, contact). إذا وجدت SQL Injection في login، لا حاجة لقضاء ساعات في صفحات static.",
+                wrongExplanation: "ليس لأنها أسهل. ليست أسرع في crawling. ليس طلب المستخدم. قد تحتاج authentication.",
+                consequences: "بدون هذه الاستراتيجية، ستضيع ساعات في فحث صفحات لا تحتوي على inputs بينما تفوتك الثغرات الحرجة."
+            },
+            {
+                difficulty: "hard",
+                question: "ما هو الفرق بين Full Scan و High Risk Scan؟",
+                options: [
+                    { text: "Full Scan أسرع", correct: false },
+                    { text: "High Risk Scan يفحص الثغرات الحرجة فقط للسرعة", correct: true },
+                    { text: "High Risk Scan يجد أكثر ثغرات", correct: false },
+                    { text: "Full Scan لا يفحص XSS", correct: false },
+                    { text: "لا فرق بينهما", correct: false }
+                ],
+                correctExplanation: "High Risk Scan يستهدف Critical و High severity فقط. Full Scan يفحص كل شيء (Critical, High, Medium, Low, Informational).",
+                wrongExplanation: "Full Scan أبطأ. High Risk لا يجد أكثر. Full Scan يفحص XSS. هناك فرق كبير.",
+                consequences: "إذا استخدمت High Risk في تقرير شامل، ستفوتك ثغرات Medium قد تكون جسراً للـ Critical. إذا استخدمت Full Scan للـ emergency، ستضيع وقت ثمين."
+            },
+            {
+                difficulty: "hard",
+                question: "كيف يُساعد Acunetix في CI/CD pipeline؟",
+                options: [
+                    { text: "يُشفر الكود تلقائياً", correct: false },
+                    { text: "يفحص كل commit ويُنشئ تذاكر Jira للثغرات", correct: true },
+                    { text: "يُسرع compile time", correct: false },
+                    { text: "يُستبدل المطورين", correct: false },
+                    { text: "يُصدر التطبيقات", correct: false }
+                ],
+                correctExplanation: "عبر API و webhooks، يتم فحص كل push تلقائياً. إذا وجدت ثغرة، تُنشأ issue في Jira/GitHub تلقائياً مع تفاصيل الإصلاح.",
+                wrongExplanation: "لا يشفر الكود. لا يُسرع compile. لا يُستبدل المطورين. لا يُصدر التطبيقات. هو أداة أمان.",
+                consequences: "بدون هذا التكامل، ستكتشف الثغرات بعد أشهر في production بدلاً من دقائق في development."
+            },
+            {
+                difficulty: "hard",
+                question: "ما هي 'Confidence %' في نتائج Acunetix؟",
+                options: [
+                    { text: "نسبة سرعة الفحص", correct: false },
+                    { text: "درجة اليقين أن الثغرة حقيقية (100% مع AcuSensor)", correct: true },
+                    { text: "نسبة استخدام الـ CPU", correct: false },
+                    { text: "عدد الصفحات المفحوصة", correct: false },
+                    { text: "درجة خطورة الثغرة", correct: false }
+                ],
+                correctExplanation: "Confidence % تُظهر مدى تأكد Acunetix من وجود الثغرة. 100% تعني تأكد تام (عادةً مع AcuSensor أو AcuMonitor). أقل من 100% قد يحتاج manual verification.",
+                wrongExplanation: "ليس سرعة أو CPU أو عدد صفحات. Severity مختلفة عن Confidence.",
+                consequences: "إذا رأيت 85% confidence واعتبرتها ثغرة مؤكدة، قد تُبلغ false positive في تقريرك وتفقد المصداقية."
+            },
+
+            // --- 6 أسئلة خبير (5 خيارات) ---
+            {
+                difficulty: "expert",
+                question: "لماذا قد يُعطي Acunetix false positive رغم دقته العالية؟",
+                options: [
+                    { text: "WAF يُعدّل الاستجابة", correct: false },
+                    { text: "Custom error pages تُظهر نفس رسائل SQL error", correct: true },
+                    { text: "الموقع يستخدم HTTP/2", correct: false },
+                    { text: "الفحص تم في الليل", correct: false },
+                    { text: "Acunetix به bug", correct: false }
+                ],
+                correctExplanation: "إذا كان الموقع يُظهر 'Error in your SQL syntax' لأي خطأ (حتى 404)، قد يظن Acunetix أنه SQL Injection. هذا false positive بسبب poor error handling.",
+                wrongExplanation: "WAF قد يمنع لكن لا يُسبب false positive. HTTP/2 لا علاقة. وقت الفحص لا يهم. Acunetix stable.",
+                consequences: "إذا لم تتحقق من false positives، ستُبلغ ثغرات خاطئة للعميل وتضيع وقته في إصلاح شيء غير موجود."
+            },
+            {
+                difficulty: "expert",
+                question: "كيف تتعامل مع تطبيق يستخدم WebSockets في Acunetix؟",
+                options: [
+                    { text: "DeepScan لا يدعم WebSockets", correct: false },
+                    { text: "DeepScan يتتبع WebSocket messages كـ inputs", correct: true },
+                    { text: "يجب تعطيل WebSockets يدوياً", correct: false },
+                    { text: "Acunetix يتجاوز WebSockets", correct: false },
+                    { text: "يُستخدم Nessus بدلاً", correct: false }
+                ],
+                correctExplanation: "DeepScan يفهم WebSockets. يتتبع messages ويعاملها كـ inputs محتملة. يُرسل payloads عبر WebSocket ويرى الاستجابة.",
+                wrongExplanation: "DeepScan يدعم WebSockets. لا حاجة لتعطيلها. لا يتجاوزها. Nessus لا يفهم WebSockets في تطبيقات الويب.",
+                consequences: "إذا لم تكن تعرف أن DeepScan يدعم WebSockets، ستفوتك ثغرات حقنة عبر WebSocket (مثل SQL Injection عبر real-time chat)."
+            },
+            {
+                difficulty: "expert",
+                question: "ما هي استراتيجية 'Incremental Scan' في Acunetix؟",
+                options: [
+                    { text: "فحص كامل كل مرة", correct: false },
+                    { text: "فحص التغييرات فقط منذ آخر فحص", correct: true },
+                    { text: "فحص أسرع بنفس التغطية", correct: false },
+                    { text: "فحص يدوي", correct: false },
+                    { text: "فحص للـ APIs فقط", correct: false }
+                ],
+                correctExplanation: "Incremental يقارن مع الفحص السابق ويفحص فقط الصفحات التي تغيرت. هذا يُوفّر 90% من الوقت في التطبيقات الكبيرة.",
+                wrongExplanation: "ليس كاملاً. ليس أسرع بنفس التغطية. ليس يدوياً. ليس للـ APIs فقط.",
+                consequences: "بدون Incremental، ستضيع ساعات في إعادة فحث 10,000 صفحة لم تتغير للعثور على صفحة واحدة جديدة."
+            },
+            {
+                difficulty: "expert",
+                question: "كيف يكتشف Acunetix 'Zombie APIs'؟",
+                options: [
+                    { text: "بقراءة documentation", correct: false },
+                    { text: "عبر AcuSensor يرى endpoints غير المستخدمة في الكود", correct: true },
+                    { text: "بـ brute force", correct: false },
+                    { text: "بسؤال المطورين", correct: false },
+                    { text: "لا يكتشفها", correct: false }
+                ],
+                correctExplanation: "AcuSensor يرى routing table في الكود. يجد endpoints موجودة في الكود لكنها غير مرتبطة في frontend (Zombie APIs). هذه خطيرة لأنها قديمة وغير مُحماة.",
+                wrongExplanation: "لا يقرأ documentation. ليس brute force. لا يسأل المطورين. يكتشفها فعلاً.",
+                consequences: "Zombie APIs غير المكتشفة قد تحتوي على ثغرات خطيرة (مثل SQL Injection) ولا أحد يعلم بوجودها لأنها غير مستخدمة رسمياً."
+            },
+            {
+                difficulty: "expert",
+                question: "ما هو التحدي الرئيسي في فحص تطبيقات GraphQL؟",
+                options: [
+                    { text: "GraphQL لا يحتوي على ثغرات", correct: false },
+                    { text: "DeepScan يجب أن يفهم schema وintrospection", correct: true },
+                    { text: "GraphQL يستخدم HTTP/3", correct: false },
+                    { text: "Acunetix لا يدعم GraphQL", correct: false },
+                    { text: "GraphQL يتطلب authentication دائماً", correct: false }
+                ],
+                correctExplanation: "GraphQL يستخدم endpoint واحد (/graphql) مع queries معقدة. DeepScan يجب أن يفهم schema (عبر introspection) ليعرف أي queries/mutations يمكن إرسالها وما الـ types المتوقعة.",
+                wrongExplanation: "GraphQL يحتوي على ثغرات. لا يستخدم HTTP/3. Acunetix يدعمه. لا يتطلب authentication دائماً.",
+                consequences: "بدون فهم GraphQL، ستفوتك ثغرات Injection في queries (مثل SQL Injection عبر GraphQL arguments) التي لا تظهر في REST APIs التقليدية."
+            },
+            {
+                difficulty: "expert",
+                question: "كيف تُقلل false positives في تقرير رسمي؟",
+                options: [
+                    { text: "تثق في كل نتيجة Acunetix", correct: false },
+                    { text: "تستخدم AcuSensor للـ 100% confidence وتحقق يدوياً من الباقي", correct: true },
+                    { text: "تُخفي الثغرات المنخفضة", correct: false },
+                    { text: "تستخدم إعدادات افتراضية فقط", correct: false },
+                    { text: "تفحص مرة واحدة", correct: false }
+                ],
+                correctExplanation: "AcuSensor يُعطي 100% confidence - استخدمها مباشرة. للباقي، افتح الـ HTTP request/response في التقرير وتحقق يدوياً. هذا يُنتج تقرير احترافي.",
+                wrongExplanation: "لا تثق بكل شيء. لا تُخفي - غير أخلاقي. الإعدادات الافتراضية قد لا تكفي. فحص واحد غير كافٍ.",
+                consequences: "إذا قدمت false positives للعميل، سيفقد ثقته بك. إذا قدمت تقريراً غير دقيق، قد يُقاضى على الإهمال المهني."
+            }
+        ];
+
+        // ==== دوال الامتحان ====
+        function startExam() {
+            examStarted = true;
+            currentLesson = 1;
+            score = 0;
+            mistakes = [];
+            
+            document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+            document.querySelector('.exam-button').classList.add('hidden');
+            
+            renderExam();
+        }
+
+        function getShuffledOptions() {
+            const q = examQuestions[currentLesson-1];
+            const optionCount = q.options.length;
+            const correctIndex = q.options.findIndex(o => o.correct);
+            
+            // نُنشئ array من المواضع العشوائية
+            let positions = Array.from({length: optionCount}, (_, i) => i);
+            
+            // نُبدّل المواضع عشوائياً
+            for (let i = positions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [positions[i], positions[j]] = [positions[j], positions[i]];
+            }
+            
+            // نُعيد ترتيب الخيارات حسب المواضع الجديدة
+            const shuffled = positions.map(pos => q.options[pos]);
+            
+            // نجد أين أصبحت الإجابة الصحيحة
+            const newCorrectIndex = shuffled.findIndex(o => o.correct);
+            
+            return { shuffled, newCorrectIndex };
+        }
+
+        function renderExam() {
+            const container = document.getElementById('examContainer');
+            container.classList.remove('hidden');
+            
+            const q = examQuestions[currentLesson-1];
+            const progress = (currentLesson / examQuestions.length) * 100;
+            
+            const { shuffled, newCorrectIndex } = getShuffledOptions();
+            
+            container.innerHTML = `
+                <div class="header">
+                    <h1>🎮 الامتحان التفاعلي</h1>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${progress}%"></div>
+                    </div>
+                    <div class="progress-text">التقدم: ${Math.round(progress)}% (${currentLesson} من ${examQuestions.length} أسئلة)</div>
+                </div>
+
+                <div class="lesson-card fade-in" id="question${currentLesson}">
+                    <h2 class="lesson-title">
+                        السؤال رقم ${currentLesson}: 
+                        <span class="difficulty-badge difficulty-${q.difficulty}">
+                            ${q.difficulty === 'easy' ? 'سهل' : 
+                              q.difficulty === 'medium' ? 'متوسط' : 
+                              q.difficulty === 'hard' ? 'صعب' : 'خبير'}
+                        </span>
+                    </h2>
+                    
+                    <div class="lesson-content">
+                        <p><strong>${q.question}</strong></p>
+                    </div>
+
+                    <div class="quiz-section">
+                        <div class="quiz-question">🎯 اختر الإجابة الصحيحة:</div>
+                        <div class="quiz-options" id="options${currentLesson}">
+                            ${shuffled.map((opt, idx) => `
+                                <div class="quiz-option" data-correct="${idx === newCorrectIndex}" onclick="checkAnswer(this)">
+                                    ${opt.text}
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="feedback" id="feedback${currentLesson}"></div>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button class="btn" ${currentLesson === 1 ? 'disabled' : ''} onclick="previousQuestion()">← السابق</button>
+                        <button class="btn" id="nextBtn" disabled onclick="nextQuestion()">
+                            ${currentLesson === examQuestions.length ? 'عرض النتائج النهائية' : 'التالي →'}
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function checkAnswer(element) {
+            const isCorrect = element.dataset.correct === "true";
+            const feedback = document.getElementById(`feedback${currentLesson}`);
+            const nextBtn = document.getElementById('nextBtn');
+            
+            document.querySelectorAll(`#options${currentLesson} .quiz-option`).forEach(opt => {
+                opt.classList.add('disabled');
+                if (opt.dataset.correct === "true") {
+                    opt.classList.add('correct');
+                } else {
+                    opt.classList.add('incorrect');
+                }
+            });
+
+            feedback.style.display = 'block';
+            feedback.classList.add(isCorrect ? 'correct' : 'incorrect');
+            
+            const q = examQuestions[currentLesson-1];
+            
+            if (isCorrect) {
+                feedback.innerHTML = `
+                    <strong>✅ إجابة صحيحة!</strong><br>
+                    ${q.correctExplanation}
+                `;
+                score++;
+            } else {
+                feedback.innerHTML = `
+                    <strong>❌ إجابة خاطئة!</strong><br>
+                    ${q.wrongExplanation}
+                    <div class="consequences-box">
+                        <strong>⚠️ تبعات الخطأ في الواقع:</strong><br>
+                        ${q.consequences}
+                    </div>
+                `;
+                
+                mistakes.push({
+                    question: q.question,
+                    wrongAnswer: element.textContent.trim(),
+                    correctAnswer: q.options.find(o => o.correct).text
+                });
+            }
+            
+            nextBtn.disabled = false;
+        }
+
+        function nextQuestion() {
+            if (currentLesson === examQuestions.length) {
+                showFinalResults();
+                return;
+            }
+            
+            currentLesson++;
+            renderExam();
+        }
+
+        function previousQuestion() {
+            if (currentLesson > 1) {
+                currentLesson--;
+                renderExam();
+            }
+        }
+
+        function showFinalResults() {
+            const container = document.getElementById('examContainer');
+            const scorePercent = (score / examQuestions.length) * 100;
+            
+            let message = "";
+            let level = "";
+            
+            if (scorePercent >= 90) {
+                level = "خبير Acunetix";
+                message = "🎉 ممتاز! أنت جاهز لاستخدام Acunetix في بيئات الإنتاج وتحليل معقد.";
+            } else if (scorePercent >= 70) {
+                level = "متقدم";
+                message = "👍 جيد جداً! لكن راجع الأخطاء المتقدمة قبل العمل على مشاريع حقيقية.";
+            } else if (scorePercent >= 50) {
+                level = "متوسط";
+                message = "⚠️ جيد، لكن تحتاج مزيداً من التدريب على الميزات المتقدمة.";
+            } else {
+                level = "مبتدئ";
+                message = "❌ تحتاج لقراءة الدليل مرة أخرى. الأخطاء قد تكلفك في بيئة عمل حقيقية.";
+            }
+            
+            container.innerHTML = `
+                <div class="lesson-card fade-in">
+                    <h2 class="lesson-title">🎊 النتائج النهائية</h2>
+                    
+                    <div style="text-align: center; margin: 30px 0;">
+                        <div style="font-size: 3em; color: ${scorePercent >= 70 ? '#00ff88' : '#ffaa00'}; margin-bottom: 20px;">
+                            ${score} من ${examQuestions.length}
+                        </div>
+                        <div style="font-size: 1.5em; color: #00d4ff; margin-bottom: 10px;">
+                            ${level}
+                        </div>
+                        <div style="font-size: 1.1em; color: #aaa;">
+                            ${message}
+                        </div>
+                    </div>
+
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${scorePercent}%"></div>
+                    </div>
+
+                    ${mistakes.length > 0 ? `
+                        <div style="margin-top: 30px;">
+                            <h3 style="color: #ffaa00; margin-bottom: 20px;">📚 مراجعة الأخطاء:</h3>
+                            ${mistakes.map((m, idx) => `
+                                <div class="example-box" style="margin-bottom: 15px;">
+                                    <h4 style="color: #ff6666;">❌ خطأ ${idx + 1}:</h4>
+                                    <p><strong>السؤال:</strong> ${m.question}</p>
+                                    <p><strong>إجابتك الخاطئة:</strong> <span style="color: #ff6666;">${m.wrongAnswer}</span></p>
+                                    <p><strong>الإجابة الصحيحة:</strong> <span style="color: #00ff88;">${m.correctAnswer}</span></p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : `
+                        <div class="example-box" style="margin-top: 30px; text-align: center;">
+                            <h3 style="color: #00ff88;">🎉 لا أخطاء! أداء مثالي.</h3>
+                        </div>
+                    `}
+
+                    <div class="nav-buttons" style="margin-top: 30px;">
+                        <button class="btn" onclick="location.reload()">🔄 إعادة التعلم من البداية</button>
+                        <button class="btn btn-success" onclick="window.open('https://www.acunetix.com/')">📖 موقع Acunetix الرسمي</button>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
