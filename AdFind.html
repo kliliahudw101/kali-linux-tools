@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل AdFind الشامل مع الامتحان التفاعلي</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Tahoma', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e6e6e6;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .signature {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 0.7em;
+            font-family: monospace;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(25, 25, 45, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header h1 {
+            color: #00ff88;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .section {
+            background: rgba(30, 30, 50, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .section:hover { border-color: #00d4ff; box-shadow: 0 0 15px rgba(0, 212, 255, 0.2); }
+
+        .section h2 {
+            color: #f78166;
+            border-right: 4px solid #f78166;
+            padding-right: 16px;
+            margin: 32px 0 16px 0;
+            cursor: pointer;
+            font-size: 1.5em;
+            transition: all 0.2s ease;
+        }
+
+        .section h2:hover { color: #58a6ff; border-right-color: #58a6ff; }
+
+        .section h3 { color: #7ee787; margin: 24px 0 12px 0; font-size: 1.2em; }
+
+        .section-content { transition: all 0.3s ease; }
+
+        .expand-icon { display: inline-block; margin-right: 8px; transition: transform 0.2s ease; }
+
+        .command-box {
+            background: #0d0d1a;
+            border: 1px solid #00ff88;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 12px 0;
+            font-family: monospace;
+            color: #00ff88;
+            direction: ltr;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .command-box::before { content: "$ "; color: #f78166; }
+
+        .example-box {
+            background: rgba(126, 231, 135, 0.1);
+            border-left: 4px solid #7ee787;
+            padding: 16px;
+            margin: 12px 0;
+            border-radius: 6px;
+        }
+
+        .warning-box {
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid #ff0000;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .technical-box {
+            background: rgba(88, 166, 255, 0.1);
+            border-left: 4px solid #58a6ff;
+            padding: 16px;
+            margin: 12px 0;
+            border-radius: 6px;
+        }
+
+        .self-question {
+            background: rgba(255, 170, 0, 0.1);
+            border-right: 4px solid #ffaa00;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .self-question h4 { color: #ffaa00; margin-bottom: 10px; }
+
+        .tool-image {
+            width: 100%;
+            max-width: 800px;
+            border-radius: 10px;
+            margin: 20px auto;
+            display: block;
+            border: 2px solid #333;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .image-caption {
+            text-align: center;
+            color: #aaa;
+            font-size: 0.9em;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .exam-button {
+            background: linear-gradient(45deg, #ff6b00, #ffaa00);
+            color: #0d0d1a;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.3em;
+            margin: 30px auto;
+            display: block;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.4);
+        }
+
+        .exam-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 0, 0.6);
+        }
+
+        .lesson-card {
+            background: rgba(30, 30, 50, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .lesson-title {
+            color: #00d4ff;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            border-right: 5px solid #00d4ff;
+            padding-right: 15px;
+        }
+
+        .quiz-section {
+            background: rgba(40, 40, 60, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #444;
+        }
+
+        .quiz-question {
+            color: #ffaa00;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .quiz-options { display: grid; gap: 10px; margin-bottom: 20px; }
+
+        .quiz-option {
+            background: #2a2a3a;
+            border: 2px solid #555;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1em;
+        }
+
+        .quiz-option:hover { border-color: #00d4ff; background: rgba(0, 212, 255, 0.1); }
+
+        .quiz-option.correct { border-color: #00ff88; background: rgba(0, 255, 136, 0.2); }
+
+        .quiz-option.incorrect { border-color: #ff0000; background: rgba(255, 0, 0, 0.2); }
+
+        .quiz-option.disabled { cursor: not-allowed; opacity: 0.6; }
+
+        .feedback {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: rgba(0, 255, 136, 0.1);
+            border-left: 4px solid #00ff88;
+            color: #00ff88;
+        }
+
+        .feedback.incorrect {
+            background: rgba(255, 0, 0, 0.1);
+            border-left: 4px solid #ff0000;
+            color: #ff6666;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            color: #0d0d1a;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4); }
+
+        .btn:disabled { background: #555; cursor: not-allowed; }
+
+        .btn-success { background: linear-gradient(45deg, #00ff88, #008800); }
+
+        .difficulty-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .difficulty-easy { background: #00ff88; color: #000; }
+        .difficulty-medium { background: #ffaa00; color: #000; }
+        .difficulty-hard { background: #ff6b00; color: #fff; }
+        .difficulty-expert { background: #ff0000; color: #fff; }
+
+        .consequences-box {
+            background: rgba(255, 0, 0, 0.15);
+            border-left: 4px solid #ff0000;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 6px;
+        }
+
+        .hidden { display: none !important; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in { animation: fadeIn 0.5s ease; }
+
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            .header h1 { font-size: 1.8em; }
+            .lesson-title { font-size: 1.4em; }
+            .nav-buttons { flex-direction: column; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="signature">Kali@~linux</div>
+    <div class="container">
+        <!-- ==== رأس الصفحة ==== -->
+        <div class="header">
+            <h1>دليل AdFind الشامل مع الامتحان التفاعلي</h1>
+            <p style="color: #00d4ff; font-size: 1.2em;">دليل شامل مع اختبار تفاعلي تدريجي من المبتدئ إلى الخبير</p>
+        </div>
+
+        <!-- ==== تحذير قانوني ==== -->
+        <div class="warning-box">
+            <h3>⚠️ تحذير قانوني وأخلاقي</h3>
+            <p>هذا التطبيق للتعليم فقط. استخدام AdFind على Active Directory دون إذن صريح يعتبر جريمة. الأداة مدرجة في MITRE ATT&CK (S0552).</p>
+        </div>
+
+        <!-- ==== قسم مقدمة AdFind ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🔍 ما هو AdFind؟
+            </h2>
+            <div class="section-content hidden">
+                <p><strong>AdFind</strong> هو أداة سطر أوامر (command-line) لاستعلام Active Directory عبر LDAP. طورها <strong>Joe Richards</strong> منذ عام 2003 وهي من أشهر أدوات الـ enumeration في عالم Active Directory.</p>
+                
+                <img src="https://kimi-web-img.moonshot.cn/img/dest1ny-1258677480.cos.ap-chengdu.myqcloud.com/02b881564bd46f374e08b3e264058cb06fe01805.png" alt="AdFind Output" class="tool-image">
+                <div class="image-caption">مخرجات AdFind تُظهر معلومات مفصلة عن كائنات Active Directory</div>
+
+                <h3>🎯 ما يميز AdFind</h3>
+                <ul>
+                    <li>✅ <strong>لا يتطلب installation:</strong> ملف exe واحد يعمل مباشرة</li>
+                    <li>✅ <strong>سريع جداً:</strong> مكتوب بـ C++ ويستخدم LDAP بكفاءة</li>
+                    <li>✅ <strong>دعم LDAP filters:</strong> يدعم كل أنواع الـ filters المعقدة</li>
+                    <li>✅ <strong>تصدير متعدد:</strong> LDIF, CSV, TSV, وغيرها</li>
+                    <li>✅ <strong>Shortcuts جاهزة:</strong> -sc, -default, -schema, إلخ</li>
+                </ul>
+
+                <div class="self-question">
+                    <h4>🤔 لماذا AdFind أفضل من dsquery و dsget؟</h4>
+                    <p><strong>الجواب:</strong> dsquery و dsget هما أدوات Microsoft الرسمية لكنها محدودة. AdFind يدعم LDAP filters معقدة، يُصدّر بصيغ متعددة، يتعامل مع binary attributes (مثل objectSid, GUID)، ويدعم constructed attributes. dsquery لا يستطيع مثلاً استخراج lastLogonTimestamp لجميع المستخدمين بسهولة. AdFind يفعل ذلك بأمر واحد.</p>
+                </div>
+
+                <div class="example-box">
+                    <strong>💡 مثال عملي:</strong> dsquery user -limit 0 | dsget user -samid -email يفشل مع كائنات كثيرة. AdFind -f "objectcategory=person" samaccountname mail يعمل بسرعة ويُعطي نتائج دقيقة.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==== قسم التثبيت والأساسيات ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🔧 التثبيت والأوامر الأساسية
+            </h2>
+            <div class="section-content hidden">
+                <h3>📥 التثبيت</h3>
+                <p>AdFind لا يتطلب تثبيت. فقط حمل الملف من موقع Joeware:</p>
+                <div class="command-box" onclick="copyCommand(this)"># تحميل من: www.joeware.net/freetools/tools/adfind/</div>
+                <div class="command-box" onclick="copyCommand(this)">adfind.exe -h</div>
+
+                <img src="https://kimi-web-img.moonshot.cn/img/www.microsoft.com/2a9ddcef0bd04fa4995bc953adf3a9898554f963.png" alt="LDAP Query Detection" class="tool-image">
+                <div class="image-caption">Microsoft Defender يكشف استعلامات LDAP المشبوهة من AdFind</div>
+
+                <h3>🎯 الأوامر الأساسية</h3>
+                <div class="command-box" onclick="copyCommand(this)">adfind -default -f "objectcategory=person" cn</div>
+                <p>يبحث في الـ default naming context عن جميع الأشخاص ويُظهر الـ common name.</p>
+
+                <div class="self-question">
+                    <h4>🤔 ما هو -default؟</h4>
+                    <p><strong>الجواب:</strong> -default هو shortcut يُخبر AdFind باستخدام الـ default naming context للـ domain. بدلاً من كتابة -b "dc=company,dc=com"، تستخدم -default وAdFind يكتشف الـ domain تلقائياً. هذا مفيد في environments متعددةDomains.</p>
+                </div>
+
+                <h3>🔍 استعلامات شائعة</h3>
+                <div class="command-box" onclick="copyCommand(this)">adfind -sc u:administrator</div>
+                <p>يبحث عن مستخدم بـ sAMAccountName معين (shortcut).</p>
+
+                <div class="command-box" onclick="copyCommand(this)">adfind -f "objectcategory=computer" cn operatingSystem</div>
+                <p>يستخرج جميع الأجهزة وأنظمة التشغيل.</p>
+            </div>
+        </div>
+
+        <!-- ==== قسم LDAP Filters ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🎛️ LDAP Filters المتقدمة
+            </h2>
+            <div class="section-content hidden">
+                <h3>🎯 بناء الـ Filter</h3>
+                <p>LDAP filters تستخدم syntax معين:</p>
+                <ul>
+                    <li><strong>(attribute=value)</strong> - مساواة</li>
+                    <li><strong>(attribute=*value*)</strong> - wildcard</li>
+                    <li><strong>(attribute>=value)</strong> - أكبر من أو يساوي</li>
+                    <li><strong>&(filter1)(filter2)</strong> - AND</li>
+                    <li><strong>|(filter1)(filter2)</strong> - OR</li>
+                    <li><strong>!(filter)</strong> - NOT</li>
+                </ul>
+
+                <div class="command-box" onclick="copyCommand(this)">adfind -f "&(objectcategory=person)(userAccountControl:1.2.840.113556.1.4.803:=512)" cn</div>
+                <p>يبحث عن مستخدمين عاديين (NORMAL_ACCOUNT flag).</p>
+
+                <div class="self-question">
+                    <h4>🤔 ما هو :1.2.840.113556.1.4.803:؟</h4>
+                    <p><strong>الجواب:</strong> هذا OID (Object Identifier) لـ LDAP_MATCHING_RULE_BIT_AND. userAccountControl هو bitmask. للتحقق من bit معين (مثل 512 للـ NORMAL_ACCOUNT)، نستخدم هذا الـ matching rule. بدونه، لن نستطيع فحص flags بشكل صحيح.</p>
+                </div>
+
+                <h3>🔎 فحص Privileged Accounts</h3>
+                <div class="command-box" onclick="copyCommand(this)">adfind -f "&(objectcategory=person)(adminCount=1)" cn</div>
+                <p>يجد accounts محمية بـ AdminSDHolder (Domain Admins, Enterprise Admins, إلخ).</p>
+
+                <div class="command-box" onclick="copyCommand(this)">adfind -f "&(objectcategory=group)(cn=Domain Admins)" member</div>
+                <p>يستخرج أعضاء مجموعة Domain Admins.</p>
+
+                <div class="technical-box">
+                    <strong>🛠️ نصيحة:</strong> استخدم -bit مع userAccountControl لفحص bits بسهولة: <code>adfind -f "userAccountControl:AND:=65536" cn</code> (للـ DONT_EXPIRE_PASSWORD).
+                </div>
+            </div>
+        </div>
+
+        <!-- ==== قسم BloodHound Integration ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🩸 التكامل مع BloodHound
+            </h2>
+            <div class="section-content hidden">
+                <h3>📊 إنشاء ملفات BloodHound</h3>
+                <p>AdFind يستطيع إنشاء ملفات JSON لـ BloodHound:</p>
+                
+                <div class="command-box" onclick="copyCommand(this)">adfind -f "objectcategory=person" -bloodhound > users.json</div>
+                <div class="command-box" onclick="copyCommand(this)">adfind -f "objectcategory=group" -bloodhound > groups.json</div>
+
+                <div class="self-question">
+                    <h4>🤔 لماذا BloodHound مهم؟</h4>
+                    <p><strong>الجواب:</strong> BloodHound يُحلل العلاقات بين الكائنات في Active Directory ويُظهر مسارات الهجوم (attack paths). بدلاً من قراءة آلاف السطور من AdFind، ترى graph بصري يُظهر: "Domain User → Member of Group X → Local Admin on Server Y → Has session as Domain Admin". AdFind يجمع البيانات، BloodHound يُحللها.</p>
+                </div>
+
+                <h3>🎯 استخراج ACLs</h3>
+                <div class="command-box" onclick="copyCommand(this)">adfind -f "objectcategory=*" nTSecurityDescriptor -sddl</div>
+                <p>يستخرج Access Control Lists لجميع الكائنات. هذا ضروري لاكتشاف misconfigurations مثل GenericAll على Domain Admin.</p>
+
+                <div class="example-box">
+                    <strong>💡 سيناريو:</strong> AdFind يجد أن User1 لديه WriteDacl على Group1. BloodHound يُظهر أن Group1 لديه AdminTo على DC1. النتيجة: User1 يستطيع امتلاك Domain Controller عبر إضافة نفسه لـ Group1.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==== قسم Enumeration المتقدم ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🕵️ Enumeration متقدم للـ Pentest
+            </h2>
+            <div class="section-content hidden">
+                <h3>🔑 البحث عن Service Accounts</h3>
+                <div class="command-box" onclick="copyCommand(this)">adfind -f "&(objectcategory=person)(servicePrincipalName=*)" cn servicePrincipalName</div>
+                <p>يجد accounts بـ SPNs (Service Principal Names) - أهداف Kerberoasting.</p>
+
+                <div class="self-question">
+                    <h4>🤔 لماذا SPNs مهمة للمهاجم؟</h4>
+                    <p><strong>الجواب:</strong> أي account بـ SPN يدعم Kerberos authentication. يمكن طلب TGS ticket لهذا account ومحاولة تكسيرها offline (Kerberoasting). Service accounts غالباً لها passwords قديمة وقوية، لكنها تستحق المحاولة.</p>
+                </div>
+
+                <h3>🎯 Accounts بدون Expiration</h3>
+                <div class="command-box" onclick="copyCommand(this)">adfind -f "&(objectcategory=person)(userAccountControl:AND:=65536)" cn pwdLastSet</div>
+                <p>يجد accounts بـ DONT_EXPIRE_PASSWORD flag - غالباً service accounts خطرة.</p>
+
+                <h3>🔍 Delegation Enumeration</h3>
+                <div class="command-box" onclick="copyCommand(this)">adfind -f "(userAccountControl:AND:=524288)" cn</div>
+                <p>يجد accounts بـ TRUSTED_FOR_DELEGATION (Unconstrained Delegation) - أهداف ذهبية!</p>
+
+                <div class="command-box" onclick="copyCommand(this)">adfind -f "(msDS-AllowedToDelegateTo=*)" cn msDS-AllowedToDelegateTo</div>
+                <p>يجد Constrained Delegation configurations.</p>
+
+                <div class="warning-box">
+                    <p>⚠️ <strong>Unconstrained Delegation = خطر قصوي.</strong> أي account على هذه القائمة يمكن استغلاله للوصول لـ TGTs لأي مستخدم يتصل به.
+                </p></div>
+            </div>
+        </div>
+
+        <!-- ==== قسم GPO و Domain Trusts ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🌐 GPOs و Domain Trusts
+            </h2>
+            <div class="section-content hidden">
+                <h3>📜 استعلام GPOs</h3>
+                <div class="command-box" onclick="copyCommand(this)">adfind -schema -f "objectcategory=groupPolicyContainer" displayName gPCFileSysPath</div>
+                <p>يستخرج Group Policy Objects ومساراتها.</p>
+
+                <div class="self-question">
+                    <h4>🤔 لماذا GPOs مهمة؟</h4>
+                    <p><strong>الجواب:</strong> GPOs تحتوي على سياسات الأمان. قد تجد: 1) GPO تُطبق passwords ضعيفة 2) GPO تُنشئ scheduled tasks 3) GPO تُعدل ACLs. إذا استطعت تعديل GPO، تستطيع امتلاك أي جهاز تُطبق عليه.</p>
+                </div>
+
+                <h3>🌍 Domain Trusts</h3>
+                <div class="command-box" onclick="copyCommand(this)">adfind -trustdmp</div>
+                <p>يستخرج جميع Trust Relationships بين Domains.</p>
+
+                <div class="command-box" onclick="copyCommand(this)">adfind -f "objectcategory=trustedDomain" cn trustDirection trustType</div>
+                <p>يُظهر تفاصيل الـ trusts: Incoming, Outgoing, أو Bidirectional.</p>
+
+                <div class="technical-box">
+                    <strong>🛠️ TIP:</strong> Trust Direction: 1 = Incoming (هم يثقون بنا), 2 = Outgoing (نحن نثق بهم), 3 = Bidirectional. للمهاجم، Incoming يعني: إذا اخترقنا هذا Domain، نستطيع الوصول لـ our Domain.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==== قسم التصدير والتحليل ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 📊 التصدير وتحليل النتائج
+            </h2>
+            <div class="section-content hidden">
+                <h3>📄 التصدير لـ LDIF</h3>
+                <div class="command-box" onclick="copyCommand(this)">adfind -f "objectcategory=person" -ldif > users.ldif</div>
+                <p>LDIF (LDAP Data Interchange Format) يحتفظ بكل attributes بما فيها binary.</p>
+
+                <h3>📊 التصدير لـ CSV</h3>
+                <div class="command-box" onclick="copyCommand(this)">adfind -f "objectcategory=person" -csv cn mail pwdLastSet > users.csv</div>
+
+                <div class="self-question">
+                    <h4>🤔 LDIF vs CSV - متى تستخدم كل منهما؟</h4>
+                    <p><strong>الجواب:</strong> LDIF يحتفظ بـ binary data (SIDs, GUIDs, certificates) ويمكن استيراده لـ LDAP server آخر. CSV للتحليل في Excel أو PowerBI. LDIF للـ backup/restore، CSV للـ reporting.</p>
+                </div>
+
+                <h3>🔍 البحث في النتائج</h3>
+                <div class="command-box" onclick="copyCommand(this)">adfind -f "objectcategory=person" | findstr "Admin"</div>
+                <p>يُرسل النتائج لـ findstr للبحث عن "Admin".</p>
+
+                <div class="example-box">
+                    <strong>💡 Pipeline:</strong> adfind -f "objectcategory=person" -csv | ConvertFrom-Csv | Where-Object {$_.pwdLastSet -lt "20230101"} | Export-Csv old-passwords.csv
+                </div>
+            </div>
+        </div>
+
+        <!-- ==== زر الامتحان ==== -->
+        <div class="section fade-in" style="text-align: center; padding: 40px;">
+            <button class="exam-button" onclick="startExam()">🎮 بدء الامتحان التفاعلي (20 سؤال)</button>
+            <p style="margin-top: 15px; color: #aaa;">5 أسئلة سهلة (3 خيارات) • 9 أسئلة صعبة (5 خيارات) • 6 أسئلة خبير (6 خيارات)</p>
+            <p style="color: #ffaa00; font-size: 0.9em;">⚠️ الإجابات موزعة عشوائياً في كل مرة!</p>
+        </div>
+
+        <!-- ==== حاوية الامتحان ==== -->
+        <div id="examContainer" class="hidden"></div>
+
+    </div>
+
+    <script>
+        // ==== دوال الدليل التوضيحي ====
+        function toggleSection(element) {
+            const content = element.nextElementSibling;
+            const icon = element.querySelector('.expand-icon');
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.innerHTML = '▼';
+            } else {
+                content.classList.add('hidden');
+                icon.innerHTML = '▶';
+            }
+        }
+
+        function copyCommand(element) {
+            const text = element.textContent.trim().replace('$ ', '');
+            navigator.clipboard.writeText(text).then(() => {
+                element.style.background = '#00ff88';
+                element.style.color = '#0d0d1a';
+                setTimeout(() => {
+                    element.style.background = '#0d0d1a';
+                    element.style.color = '#00ff88';
+                }, 500);
+            });
+        }
+
+        // ==== بيانات الامتحان (20 سؤال) ====
+        let currentLesson = 1;
+        let score = 0;
+        let mistakes = [];
+        let examStarted = false;
+
+        const examQuestions = [
+            // --- 5 أسئلة سهلة (3 خيارات) ---
+            {
+                difficulty: "easy",
+                question: "ما هو AdFind؟",
+                options: [
+                    { text: "أداة سطر أوامر لاستعلام Active Directory عبر LDAP", correct: true },
+                    { text: "أداة فحص ثغرات الشبكات", correct: false },
+                    { text: "برنامج لإدارة قواعد البيانات SQL", correct: false }
+                ],
+                correctExplanation: "AdFind هو أداة command-line لاستعلام Active Directory عبر LDAP. طورها Joe Richards.",
+                wrongExplanation: "AdFind ليس لفحص الشبكات (هذا Nessus) ولا لـ SQL. هو للـ LDAP enumeration.",
+                consequences: "إذا لم تفهم الغرض، ستستخدمه بشكل خاطئ."
+            },
+            {
+                difficulty: "easy",
+                question: "ما هو الـ switch -default في AdFind؟",
+                options: [
+                    { text: "يستخدم default naming context للـ domain", correct: true },
+                    { text: "يعرض الإعدادات الافتراضية فقط", correct: false },
+                    { text: "يُعيد تعيين الإعدادات", correct: false }
+                ],
+                correctExplanation: "-default يُخبر AdFind باستخدام default naming context تلقائياً بدلاً من كتابة -b 'dc=domain,dc=com'.",
+                wrongExplanation: "-default ليس لعرض الإعدادات أو إعادة التعيين. هو لتحديد الـ search base.",
+                consequences: "استخدامه بشكل خاطئ قد يعطي نتائج فارغة."
+            },
+            {
+                difficulty: "easy",
+                question: "أي صيغة تصدير يدعمها AdFind؟",
+                options: [
+                    { text: "LDIF و CSV", correct: true },
+                    { text: "PDF فقط", correct: false },
+                    { text: "JSON فقط", correct: false }
+                ],
+                correctExplanation: "AdFind يدعم LDIF (LDAP Data Interchange Format), CSV, TSV, وغيرها.",
+                wrongExplanation: "AdFind لا يُصدّر PDF. JSON مدعوم عبر -bloodhound لكن ليس التصدير الأساسي.",
+                consequences: "اختيار صيغة خاطئة يمنعك من استخدام البيانات في أدوات أخرى."
+            },
+            {
+                difficulty: "easy",
+                question: "ما هو الـ OID :1.2.840.113556.1.4.803:؟",
+                options: [
+                    { text: "LDAP_MATCHING_RULE_BIT_AND لفحص bitmasks", correct: true },
+                    { text: "معرف المستخدم في Active Directory", correct: false },
+                    { text: "رقم إصدار AdFind", correct: false }
+                ],
+                correctExplanation: "هذا OID يُستخدم مع userAccountControl لفحص bits محددة (مثل 512 للـ NORMAL_ACCOUNT).",
+                wrongExplanation: "ليس معرف مستخدم أو رقم إصدار. هو matching rule للـ LDAP.",
+                consequences: "بدونه، لا تستطيع فحص flags في userAccountControl بشكل صحيح."
+            },
+            {
+                difficulty: "easy",
+                question: "ما هو BloodHound؟",
+                options: [
+                    { text: "أداة لتحليل العلاقات في Active Directory وإظهار مسارات الهجوم", correct: true },
+                    { text: "أداة لفحص البرامج الضارة", correct: false },
+                    { text: "برنامج لإدارة الشبكات", correct: false }
+                ],
+                correctExplanation: "BloodHound يُحلل ACLs والعلاقات في AD ويُظهر attack paths بصرياً.",
+                wrongExplanation: "BloodHound ليس antivirus أو network manager. هو لـ AD security analysis.",
+                consequences: "عدم الفهم يمنعك من استخدامه مع AdFind لتحليل البيانات."
+            },
+
+            // --- 9 أسئلة صعبة (5 خيارات) ---
+            {
+                difficulty: "hard",
+                question: "لماذا AdFind مدرج في MITRE ATT&CK؟",
+                options: [
+                    { text: "يُستخدم بشكل شائع في الهجمات لـ AD enumeration", correct: true },
+                    { text: "هو برنامج ضار بحد ذاته", correct: false },
+                    { text: "يُخترق Active Directory تلقائياً", correct: false },
+                    { text: "ينشر البرامج الضارة", correct: false },
+                    { text: "لا يمكن استخدامه لأغراض قانونية", correct: false }
+                ],
+                correctExplanation: "AdFind أداة مشروعة لكنها تُستخدم في الهجمات (TA0007: Discovery). MITRE تُدرج الأدوات المستخدمة في الهجمات.",
+                wrongExplanation: "AdFind ليس malware. لا يُخترق تلقائياً. لا ينشر malware. يمكن استخدامه قانونياً.",
+                consequences: "فهم السياق مهم للـ Blue Team لاكتشاف استخدامه الضار."
+            },
+            {
+                difficulty: "hard",
+                question: "ما هو الفرق بين dsquery و AdFind؟",
+                options: [
+                    { text: "AdFind أسرع ويدعم filters معقدة وتصدير متعدد", correct: true },
+                    { text: "dsquery أسرع دائماً", correct: false },
+                    { text: "dsquery يدعم LDAP filters الأكثر تقدماً", correct: false },
+                    { text: "لا فرق بينهما", correct: false },
+                    { text: "AdFind لا يعمل على Windows", correct: false }
+                ],
+                correctExplanation: "AdFind أسرع (C++ vs VBScript)، يدعم bit masks، يُصدّر LDIF/CSV، ويتعامل مع binary attributes.",
+                wrongExplanation: "dsquery ليس أسرع. dsquery لا يدعم filters المعقدة. هناك فرق كبير. AdFind يعمل على Windows.",
+                consequences: "استخدام dsquery في Pentest يُبطئك ويحد من قدراتك."
+            },
+            {
+                difficulty: "hard",
+                question: "لماذا Kerberoasting يستهدف accounts بـ SPNs؟",
+                options: [
+                    { text: "لأنها تتطلب TGS tickets يمكن تكسيرها offline", correct: true },
+                    { text: "لأنها دائماً تكون Domain Admins", correct: false },
+                    { text: "لأنها لا تستخدم Kerberos", correct: false },
+                    { text: "لأن passwordsها ضعيفة دائماً", correct: false },
+                    { text: "لأنها غير مشفرة", correct: false }
+                ],
+                correctExplanation: "Service accounts بـ SPNs تحتاج Kerberos. TGS ticket مشفر بـ password. يمكن تكسيره offline.",
+                wrongExplanation: "ليسوا دائماً Admins. يستخدمون Kerberos. ليسوا دائماً ضعفاء. التشفير موجود لكن قابل للـ cracking.",
+                consequences: "عدم الفهم يمنعك من اكتشاف أهداف Kerberoasting."
+            },
+            {
+                difficulty: "hard",
+                question: "ما هو Unconstrained Delegation ولماذا خطير؟",
+                options: [
+                    { text: "يسمح للـ service بانتحال هوية أي مستخدم يتصل به", correct: true },
+                    { text: "يُعطل Kerberos", correct: false },
+                    { text: "يُسرق passwords فقط", correct: false },
+                    { text: "يعمل فقط مع Local Admin", correct: false },
+                    { text: "لا يعمل في Active Directory", correct: false }
+                ],
+                correctExplanation: "Unconstrained Delegation (TRUSTED_FOR_DELEGATION) تسمح للـ service باستخدام TGT للمستخدم لأي service آخر.",
+                wrongExplanation: "لا يُعطل Kerberos. لا يُسرق passwords فقط. لا يقتصر على Local Admin. يعمل في AD.",
+                consequences: "هذا أخطر إعداد في AD. اكتشافه يتطلب فحص userAccountControl بـ bit 524288."
+            },
+            {
+                difficulty: "hard",
+                question: "كيف يُساعد AdFind في اكتشاف AdminSDHolder abuse؟",
+                options: [
+                    { text: "يجد accounts بـ adminCount=1 المحمية تلقائياً", correct: true },
+                    { text: "يُعطل AdminSDHolder", correct: false },
+                    { text: "يُعدل ACLs مباشرة", correct: false },
+                    { text: "لا يمكنه فحص AdminSDHolder", correct: false },
+                    { text: "يُنشئ Admin accounts جديدة", correct: false }
+                ],
+                correctExplanation: "adminCount=1 يعني الـ account محمي بـ AdminSDHolder. AdFind يجدها بسهولة.",
+                wrongExplanation: "AdFind لا يُعطل. لا يُعدل ACLs. يمكنه الفحص. لا يُنشئ accounts.",
+                consequences: "AdminSDHolder abuse شائع. عدم الفحص يفوتك ثغرات خطيرة."
+            },
+            {
+                difficulty: "hard",
+                question: "ما هو الفائدة من -bloodhound في AdFind؟",
+                options: [
+                    { text: "تصدير بيانات JSON لتحليل BloodHound", correct: true },
+                    { text: "تشغيل BloodHound تلقائياً", correct: false },
+                    { text: "إنشاء رسومات بيانية مباشرة", correct: false },
+                    { text: "فحص البرامج الضارة", correct: false },
+                    { text: "لا فائدة", correct: false }
+                ],
+                correctExplanation: "-bloodhound يُنتج JSON format يفهمه BloodHound لتحليل attack paths.",
+                wrongExplanation: "لا يشغل BloodHound. لا ينشئ رسومات. لا يفحص malware. له فائدة كبيرة.",
+                consequences: "بدونه، تحتاج لـ SharpHound أو أدوات أخرى لجمع بيانات BloodHound."
+            },
+            {
+                difficulty: "hard",
+                question: "لماذا Trust Direction مهم في Domain Trusts؟",
+                options: [
+                    { text: "يُحدد من يمكنه الوصول لموارد من Domain آخر", correct: true },
+                    { text: "لا يهم في الهجمات", correct: false },
+                    { text: "يُشفر الاتصالات فقط", correct: false },
+                    { text: "يعمل فقط مع External trusts", correct: false },
+                    { text: "يُعطل Domain Controllers", correct: false }
+                ],
+                correctExplanation: "Incoming (1) = هم يثقون بنا. Outgoing (2) = نحن نثق بهم. Bidirectional (3) = كلاهما.",
+                wrongExplanation: "Trust Direction مهم جداً. لا يُشفر. يعمل مع كل الأنواع. لا يُعطل DCs.",
+                consequences: "فهم خاطئ يمنعك من استغلال trusts للـ lateral movement."
+            },
+            {
+                difficulty: "hard",
+                question: "ما هو الفرق بين Constrained و Unconstrained Delegation؟",
+                options: [
+                    { text: "Constrained محددة بـ services معينة، Unconstrained لأي service", correct: true },
+                    { text: "Constrained أقل أماناً", correct: false },
+                    { text: "Unconstrained لا تعمل في Windows", correct: false },
+                    { text: "لا فرق بينهما", correct: false },
+                    { text: "Constrained تتطلب Domain Admin", correct: false }
+                ],
+                correctExplanation: "Constrained (msDS-AllowedToDelegateTo) محددة. Unconstrained (TRUSTED_FOR_DELEGATION) لأي service.",
+                wrongExplanation: "Constrained أكثر أماناً. Unconstrained تعمل. هناك فرق كبير. لا تتطلب Domain Admin.",
+                consequences: "Unconstrained Delegation أخطر بكثير. يجب اكتشافها وفهم الفرق."
+            },
+            {
+                difficulty: "hard",
+                question: "كيف يمكن اكتشاف استخدام AdFind الضار؟",
+                options: [
+                    { text: "مراقبة LDAP queries المكثفة غير العادية", correct: true },
+                    { text: "حظر جميع أدوات LDAP", correct: false },
+                    { text: "تعطيل Active Directory", correct: false },
+                    { text: "لا يمكن اكتشافه", correct: false },
+                    { text: "استخدام antivirus فقط", correct: false }
+                ],
+                correctExplanation: "AdFind يُنشئ LDAP queries مكثفة. SIEM يمكنه اكتشاف patterns مثل استعلامات لـ all users أو all GPOs.",
+                wrongExplanation: "حظر LDAP يُعطل AD. تعطيل AD كارثة. يمكن اكتشافه. AV لا يكفي.",
+                consequences: "Blue Team يحتاج لفهم LDAP query patterns للكشف عن الـ enumeration."
+            },
+
+            // --- 6 أسئلة خبير (6 خيارات) ---
+            {
+                difficulty: "expert",
+                question: "ما هي استراتيجية 'Targeted Kerberoasting' باستخدام AdFind؟",
+                options: [
+                    { text: "البحث عن SPNs لـ accounts قديمة ثم طلب TGS", correct: true },
+                    { text: "طلب TGS لكل account في Domain", correct: false },
+                    { text: "تكسير TGTs مباشرة", correct: false },
+                    { text: "استخدام Brute Force على passwords", correct: false },
+                    { text: "لا يمكن استهداف accounts محددة", correct: false },
+                    { text: "يتطلب Domain Admin دائماً", correct: false }
+                ],
+                correctExplanation: "AdFind يجد SPNs. Rubeus أو GetUserSPNs.py يطلب TGS. Impacket يُرسل hash لـ Hashcat.",
+                wrongExplanation: "ليس لكل account. لا نكسر TGTs. ليس Brute Force. يمكن الاستهداف. لا يتطلب Domain Admin.",
+                consequences: "استراتيجية خاطئة تُضيع وقتك أو تُثير أنظمة الكشف."
+            },
+            {
+                difficulty: "expert",
+                question: "كيف يُستخدم AdFind في 'ACL Abuse' attacks؟",
+                options: [
+                    { text: "البحث عن ACLs ضعيفة مثل GenericAll ثم استغلالها", correct: true },
+                    { text: "تعديل ACLs مباشرة بـ AdFind", correct: false },
+                    { text: "حذف جميع ACLs", correct: false },
+                    { text: "إنشاء ACLs جديدة فقط", correct: false },
+                    { text: "لا يمكن فحص ACLs", correct: false },
+                    { text: "يحتاج WriteDacl على Domain فقط", correct: false }
+                ],
+                correctExplanation: "AdFind يجد misconfigurations. BloodHound يُحللها. PowerView يستغلها (Add-DomainObjectAcl).",
+                wrongExplanation: "AdFind لا يُعدل ACLs. لا يحذف. لا ينشئ. يمكنه الفحص. لا يحتاج WriteDacl للفحص.",
+                consequences: "ACL Abuse من أقوى هجمات AD. عدم الفهم يمنعك من اكتشافها."
+            },
+            {
+                difficulty: "expert",
+                question: "ما هي العلاقة بين AdFind و DCSync attack؟",
+                options: [
+                    { text: "AdFind يجد accounts بـ Replicating Directory Changes", correct: true },
+                    { text: "AdFind ينفذ DCSync مباشرة", correct: false },
+                    { text: "لا علاقة بينهما", correct: false },
+                    { text: "AdFind يمنع DCSync", correct: false },
+                    { text: "DCSync يتطلب AdFind", correct: false },
+                    { text: "AdFind يُشفر DCSync traffic", correct: false }
+                ],
+                correctExplanation: "AdFind يجد accounts بـ 'Replicating Directory Changes' rights (DS-Replication-Get-Changes). هذه أهداف DCSync.",
+                wrongExplanation: "AdFind لا ينفذ DCSync. هناك علاقة. لا يمنع. DCSync لا يتطلب AdFind. لا يُشفر.",
+                consequences: "اكتشاف accounts بـ replication rights ضروري لمنع DCSync."
+            },
+            {
+                difficulty: "expert",
+                question: "لماذا قد يفشل AdFind في العثور على بعض الكائنات؟",
+                options: [
+                    { text: "الكائنات محذوفة (tombstoned) أو في Recycle Bin", correct: true },
+                    { text: "AdFind به خطأ برمجي", correct: false },
+                    { text: "Active Directory معطل", correct: false },
+                    { text: "الكائنات مشفرة", correct: false },
+                    { text: "AdFind لا يعمل مع Windows Server 2019", correct: false },
+                    { text: "الـ network بطيء", correct: false }
+                ],
+                correctExplanation: "Deleted objects تُنقل لـ Deleted Objects container. AdFind يحتاج -showdel للوصول لها.",
+                wrongExplanation: "ليس خطأ برمجي. AD ليس معطل. ليست مشفرة. يعمل مع 2019. الشبكة لا تؤثر.",
+                consequences: "Deleted objects قد تحتوي على معلومات حساسة. يجب فحصها أيضاً."
+            },
+            {
+                difficulty: "expert",
+                question: "كيف يُستخدم AdFind مع PowerView لـ 'Shadow Admin' detection؟",
+                options: [
+                    { text: "AdFind يستخرج ACLs، PowerView يحللها للـ hidden admins", correct: true },
+                    { text: "AdFind ينشئ Shadow Admins مباشرة", correct: false },
+                    { text: "PowerView لا يعمل مع AdFind", correct: false },
+                    { text: "Shadow Admins لا يمكن اكتشافهم", correct: false },
+                    { text: "يتطلب Domain Admin للفحص", correct: false },
+                    { text: "AdFind يُعدل ACLs لإنشاء Shadow Admins", correct: false }
+                ],
+                correctExplanation: "Shadow Admin = account ليست في Domain Admins لكنها تملك ACLs تسمح بالوصول. AdFind يجد ACLs، PowerView يُحللها.",
+                wrongExplanation: "AdFind لا ينشئ. PowerView يعمل معه. يمكن اكتشافهم. لا يتطلب Domain Admin. لا يُعدل ACLs.",
+                consequences: "Shadow Admins خطر كبير. عدم الكشف عنهم يترك backdoors خفية."
+            },
+            {
+                difficulty: "expert",
+                question: "ما هو أفضل workflow لـ AD enumeration باستخدام AdFind؟",
+                options: [
+                    { text: "AdFind للـ data gathering، BloodHound للتحليل، PowerView للاستغلال", correct: true },
+                    { text: "AdFind فقط لكل شيء", correct: false },
+                    { text: "BloodHound فقط بدون AdFind", correct: false },
+                    { text: "PowerView للـ gathering فقط", correct: false },
+                    { text: "لا داعي لـ BloodHound", correct: false },
+                    { text: "AdFind للاستغلال المباشر", correct: false }
+                ],
+                correctExplanation: "AdFind سريع للـ gathering. BloodHound يُحلل العلاقات. PowerView يستغل الـ misconfigurations.",
+                wrongExplanation: "AdFind وحده غير كافٍ. BloodHound يحتاج بيانات. PowerView للاستغلال. BloodHound ضروري. AdFind ليس للاستغلال.",
+                consequences: "Workflow خاطئ يُضيع الوقت أو يفوتك attack paths حرجة."
+            }
+        ];
+
+        // ==== دوال الامتحان ====
+        function startExam() {
+            examStarted = true;
+            currentLesson = 1;
+            score = 0;
+            mistakes = [];
+            
+            document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+            document.querySelector('.exam-button').classList.add('hidden');
+            
+            renderExam();
+        }
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function renderExam() {
+            const container = document.getElementById('examContainer');
+            container.classList.remove('hidden');
+            
+            const q = examQuestions[currentLesson-1];
+            const progress = (currentLesson / examQuestions.length) * 100;
+            
+            // خلط الخيارات بشكل كامل
+            const shuffledOptions = shuffleArray(q.options);
+            const correctIndex = shuffledOptions.findIndex(o => o.correct);
+            
+            container.innerHTML = `
+                <div class="header">
+                    <h1>🎮 الامتحان التفاعلي</h1>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${progress}%"></div>
+                    </div>
+                    <div class="progress-text">التقدم: ${Math.round(progress)}% (${currentLesson} من ${examQuestions.length} أسئلة)</div>
+                </div>
+
+                <div class="lesson-card fade-in" id="question${currentLesson}">
+                    <h2 class="lesson-title">
+                        السؤال رقم ${currentLesson}: 
+                        <span class="difficulty-badge difficulty-${q.difficulty}">
+                            ${q.difficulty === 'easy' ? 'سهل' : 
+                              q.difficulty === 'medium' ? 'متوسط' : 
+                              q.difficulty === 'hard' ? 'صعب' : 'خبير'}
+                        </span>
+                        <span style="font-size: 0.6em; color: #aaa; margin-right: 10px;">
+                            (${shuffledOptions.length} خيارات)
+                        </span>
+                    </h2>
+                    
+                    <div class="lesson-content">
+                        <p><strong>${q.question}</strong></p>
+                    </div>
+
+                    <div class="quiz-section">
+                        <div class="quiz-question">🎯 اختر الإجابة الصحيحة:</div>
+                        <div class="quiz-options" id="options${currentLesson}">
+                            ${shuffledOptions.map((opt, idx) => `
+                                <div class="quiz-option" data-correct="${idx === correctIndex}" onclick="checkAnswer(this)">
+                                    ${opt.text}
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="feedback" id="feedback${currentLesson}"></div>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button class="btn" ${currentLesson === 1 ? 'disabled' : ''} onclick="previousQuestion()">← السابق</button>
+                        <button class="btn" id="nextBtn" disabled onclick="nextQuestion()">
+                            ${currentLesson === examQuestions.length ? 'عرض النتائج النهائية' : 'التالي →'}
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function checkAnswer(element) {
+            const isCorrect = element.dataset.correct === "true";
+            const feedback = document.getElementById(`feedback${currentLesson}`);
+            const nextBtn = document.getElementById('nextBtn');
+            
+            document.querySelectorAll(`#options${currentLesson} .quiz-option`).forEach(opt => {
+                opt.classList.add('disabled');
+                if (opt.dataset.correct === "true") {
+                    opt.classList.add('correct');
+                } else {
+                    opt.classList.add('incorrect');
+                }
+            });
+
+            feedback.style.display = 'block';
+            feedback.classList.add(isCorrect ? 'correct' : 'incorrect');
+            
+            const q = examQuestions[currentLesson-1];
+            
+            if (isCorrect) {
+                feedback.innerHTML = `
+                    <strong>✅ إجابة صحيحة!</strong><br>
+                    ${q.correctExplanation}
+                `;
+                score++;
+            } else {
+                feedback.innerHTML = `
+                    <strong>❌ إجابة خاطئة!</strong><br>
+                    ${q.wrongExplanation}
+                    <div class="consequences-box">
+                        <strong>⚠️ تبعات الخطأ في الواقع:</strong><br>
+                        ${q.consequences}
+                    </div>
+                `;
+                
+                mistakes.push({
+                    question: q.question,
+                    wrongAnswer: element.textContent.trim(),
+                    correctAnswer: q.options.find(o => o.correct).text
+                });
+            }
+            
+            nextBtn.disabled = false;
+        }
+
+        function nextQuestion() {
+            if (currentLesson === examQuestions.length) {
+                showFinalResults();
+                return;
+            }
+            
+            currentLesson++;
+            renderExam();
+        }
+
+        function previousQuestion() {
+            if (currentLesson > 1) {
+                currentLesson--;
+                renderExam();
+            }
+        }
+
+        function showFinalResults() {
+            const container = document.getElementById('examContainer');
+            const scorePercent = (score / examQuestions.length) * 100;
+            
+            let message = "";
+            let level = "";
+            
+            if (scorePercent >= 90) {
+                level = "خبير AdFind";
+                message = "🎉 ممتاز! أنت جاهز لـ Active Directory enumeration الاحترافي.";
+            } else if (scorePercent >= 70) {
+                level = "متقدم";
+                message = "👍 جيد جداً! لكن راجع الأخطاء المتقدمة قبل الاستخدام الحقيقي.";
+            } else if (scorePercent >= 50) {
+                level = "متوسط";
+                message = "⚠️ جيد، لكن تحتاج مزيداً من التدريب على LDAP filters والـ delegation.";
+            } else {
+                level = "مبتدئ";
+                message = "❌ تحتاج لقراءة الدليل مرة أخرى. الأخطاء قد تكون كارثية.";
+            }
+            
+            container.innerHTML = `
+                <div class="lesson-card fade-in">
+                    <h2 class="lesson-title">🎊 النتائج النهائية</h2>
+                    
+                    <div style="text-align: center; margin: 30px 0;">
+                        <div style="font-size: 3em; color: ${scorePercent >= 70 ? '#00ff88' : '#ffaa00'}; margin-bottom: 20px;">
+                            ${score} من ${examQuestions.length}
+                        </div>
+                        <div style="font-size: 1.5em; color: #00d4ff; margin-bottom: 10px;">
+                            ${level}
+                        </div>
+                        <div style="font-size: 1.1em; color: #aaa;">
+                            ${message}
+                        </div>
+                    </div>
+
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${scorePercent}%"></div>
+                    </div>
+
+                    ${mistakes.length > 0 ? `
+                        <div style="margin-top: 30px;">
+                            <h3 style="color: #ffaa00; margin-bottom: 20px;">📚 مراجعة الأخطاء:</h3>
+                            ${mistakes.map((m, idx) => `
+                                <div class="example-box" style="margin-bottom: 15px;">
+                                    <h4 style="color: #ff6666;">❌ خطأ ${idx + 1}:</h4>
+                                    <p><strong>السؤال:</strong> ${m.question}</p>
+                                    <p><strong>إجابتك الخاطئة:</strong> <span style="color: #ff6666;">${m.wrongAnswer}</span></p>
+                                    <p><strong>الإجابة الصحيحة:</strong> <span style="color: #00ff88;">${m.correctAnswer}</span></p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : `
+                        <div class="example-box" style="margin-top: 30px; text-align: center;">
+                            <h3 style="color: #00ff88;">🎉 لا أخطاء! أداء مثالي.</h3>
+                        </div>
+                    `}
+
+                    <div class="nav-buttons" style="margin-top: 30px;">
+                        <button class="btn" onclick="location.reload()">🔄 إعادة التعلم من البداية</button>
+                        <button class="btn btn-success" onclick="window.open('http://www.joeware.net/freetools/tools/adfind/')">📖 موقع AdFind الرسمي</button>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
