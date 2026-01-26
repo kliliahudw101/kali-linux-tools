@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل Amass الشامل مع الامتحان التفاعلي</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Tahoma', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e6e6e6;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .signature {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 0.7em;
+            font-family: monospace;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(25, 25, 45, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header h1 {
+            color: #00ff88;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .section {
+            background: rgba(30, 30, 50, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .section:hover { border-color: #00d4ff; box-shadow: 0 0 15px rgba(0, 212, 255, 0.2); }
+
+        .section h2 {
+            color: #f78166;
+            border-right: 4px solid #f78166;
+            padding-right: 16px;
+            margin: 32px 0 16px 0;
+            cursor: pointer;
+            font-size: 1.5em;
+            transition: all 0.2s ease;
+        }
+
+        .section h2:hover { color: #58a6ff; border-right-color: #58a6ff; }
+
+        .section h3 { color: #7ee787; margin: 24px 0 12px 0; font-size: 1.2em; }
+
+        .section-content { transition: all 0.3s ease; }
+
+        .expand-icon { display: inline-block; margin-right: 8px; transition: transform 0.2s ease; }
+
+        .command-box {
+            background: #0d0d1a;
+            border: 1px solid #00ff88;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 12px 0;
+            font-family: monospace;
+            color: #00ff88;
+            direction: ltr;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .command-box::before { content: "$ "; color: #f78166; }
+
+        .example-box {
+            background: rgba(126, 231, 135, 0.1);
+            border-left: 4px solid #7ee787;
+            padding: 16px;
+            margin: 12px 0;
+            border-radius: 6px;
+        }
+
+        .warning-box {
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid #ff0000;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .technical-box {
+            background: rgba(88, 166, 255, 0.1);
+            border-left: 4px solid #58a6ff;
+            padding: 16px;
+            margin: 12px 0;
+            border-radius: 6px;
+        }
+
+        .self-question {
+            background: rgba(255, 170, 0, 0.1);
+            border-right: 4px solid #ffaa00;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .self-question h4 { color: #ffaa00; margin-bottom: 10px; }
+
+        .option-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+        }
+
+        .option-table th {
+            background: #0d0d1a;
+            color: #58a6ff;
+            padding: 12px;
+            text-align: right;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .option-table td { padding: 10px; border-bottom: 1px solid #30363d; }
+
+        .option-table tr:hover { background: rgba(88, 166, 255, 0.05); }
+
+        .tool-image {
+            width: 100%;
+            max-width: 800px;
+            border-radius: 10px;
+            margin: 20px auto;
+            display: block;
+            border: 2px solid #333;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .image-caption {
+            text-align: center;
+            color: #aaa;
+            font-size: 0.9em;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .exam-button {
+            background: linear-gradient(45deg, #ff6b00, #ffaa00);
+            color: #0d0d1a;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.3em;
+            margin: 30px auto;
+            display: block;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.4);
+        }
+
+        .exam-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 0, 0.6);
+        }
+
+        .lesson-card {
+            background: rgba(30, 30, 50, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .lesson-title {
+            color: #00d4ff;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            border-right: 5px solid #00d4ff;
+            padding-right: 15px;
+        }
+
+        .quiz-section {
+            background: rgba(40, 40, 60, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #444;
+        }
+
+        .quiz-question {
+            color: #ffaa00;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .quiz-options { display: grid; gap: 10px; margin-bottom: 20px; }
+
+        .quiz-option {
+            background: #2a2a3a;
+            border: 2px solid #555;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1em;
+        }
+
+        .quiz-option:hover { border-color: #00d4ff; background: rgba(0, 212, 255, 0.1); }
+
+        .quiz-option.correct { border-color: #00ff88; background: rgba(0, 255, 136, 0.2); }
+
+        .quiz-option.incorrect { border-color: #ff0000; background: rgba(255, 0, 0, 0.2); }
+
+        .quiz-option.disabled { cursor: not-allowed; opacity: 0.6; }
+
+        .feedback {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: rgba(0, 255, 136, 0.1);
+            border-left: 4px solid #00ff88;
+            color: #00ff88;
+        }
+
+        .feedback.incorrect {
+            background: rgba(255, 0, 0, 0.1);
+            border-left: 4px solid #ff0000;
+            color: #ff6666;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            color: #0d0d1a;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4); }
+
+        .btn:disabled { background: #555; cursor: not-allowed; }
+
+        .btn-success { background: linear-gradient(45deg, #00ff88, #008800); }
+
+        .difficulty-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .difficulty-easy { background: #00ff88; color: #000; }
+        .difficulty-medium { background: #ffaa00; color: #000; }
+        .difficulty-hard { background: #ff6b00; color: #fff; }
+        .difficulty-expert { background: #ff0000; color: #fff; }
+
+        .consequences-box {
+            background: rgba(255, 0, 0, 0.15);
+            border-left: 4px solid #ff0000;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 6px;
+        }
+
+        .hidden { display: none !important; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in { animation: fadeIn 0.5s ease; }
+
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            .header h1 { font-size: 1.8em; }
+            .lesson-title { font-size: 1.4em; }
+            .nav-buttons { flex-direction: column; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="signature">Kali@~linux</div>
+    <div class="container">
+        <!-- ==== رأس الصفحة ==== -->
+        <div class="header">
+            <h1>دليل Amass الشامل مع الامتحان التفاعلي</h1>
+            <p style="color: #00d4ff; font-size: 1.2em;">دليل شامل مع اختبار تفاعلي تدريجي من المبتدئ إلى الخبير</p>
+        </div>
+
+        <!-- ==== تحذير قانوني ==== -->
+        <div class="warning-box">
+            <h3>⚠️ تحذير قانوني وأخلاقي</h3>
+            <p>هذا التطبيق للتعليم فقط. استخدام Amass على أهداف دون إذن صريح قد يُعتبر مسحاً غير مصرح به.</p>
+        </div>
+
+        <!-- ==== قسم مقدمة Amass ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🔍 ما هو Amass؟
+            </h2>
+            <div class="section-content hidden">
+                <p><strong>Amass</strong> هو أداة متقدمة لاكتشاف النطاقات الفرعية (Subdomain Enumeration) والتعرف على سطح الهجوم الخارجي (Attack Surface Mapping). طورتها OWASP وهي مكتوبة بلغة Go مما يجعلها سريعة جداً.</p>
+                
+                <img src="https://kimi-web-img.moonshot.cn/img/miro.medium.com/a882815153ab6d6102febe8ba60ea6d5c267f19b.png" alt="Amass Logo" class="tool-image">
+                <div class="image-caption">شعار Amass عند التشغيل</div>
+
+                <h3>🎯 ما يميز Amass عن غيره</h3>
+                <ul>
+                    <li>✅ <strong>87 مصدر بيانات (Data Sources):</strong> أكثر من أي أداة أخرى</li>
+                    <li>✅ <strong>5 أوضاع تشغيل:</strong> intel, enum, viz, track, db</li>
+                    <li>✅ <strong>Passive + Active:</strong> يجمع OSINT ويُجري DNS queries</li>
+                    <li>✅ <strong>Graph Database:</strong> يخزن العلاقات بين الأصول</li>
+                    <li>✅ <strong>Visualization:</strong> يُنتج رسومات بيانية للتحليل</li>
+                </ul>
+
+                <div class="self-question">
+                    <h4>🤔 لماذا Amass أفضل من Subfinder؟</h4>
+                    <p><strong>الجواب:</strong> Subfinder يستخدم 45 مصدراً فقط ويركز على السرعة. Amass يستخدم 87 مصدراً ويُركز على العمق. Subfinder يعطيك قائمة نطاقات، Amass يعطيك خريطة كاملة للبنية التحتية: النطاقات، الـ IPs، الـ ASNs، الـ Netblocks، والعلاقات بينها. Subfinder للسرعة، Amass للاستخبارات الشاملة.</p>
+                </div>
+
+                <div class="example-box">
+                    <strong>💡 مثال عملي:</strong> Subfinder يجد 500 نطاق في 30 ثانية. Amass يجد 400 نطاق في 90 دقيقة لكنه يُعطيك أيضاً: أي نطاقات تنتمي لنفس الـ IP، أي نطاقات قديمة في Web Archives، وعلاقات ASN. للـ Bug Bounty الشامل، Amass أفضل. للـ Quick scan، Subfinder أفضل.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==== قسم الأوضاع الخمسة ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🎛️ الأوضاع الخمسة لـ Amass
+            </h2>
+            <div class="section-content hidden">
+                <h3>1️⃣ intel - جمع الاستخبارات</h3>
+                <p>يُستخدم لاكتشاف أهداف جديدة قبل بدء الـ enumeration:</p>
+                <div class="command-box" onclick="copyCommand(this)">amass intel -d owasp.org -whois</div>
+                <div class="command-box" onclick="copyCommand(this)">amass intel -asn 15139</div>
+                
+                <div class="self-question">
+                    <h4>🤔 لماذا نستخدم intel قبل enum؟</h4>
+                    <p><strong>الجواب:</strong> intel يجد root domains إضافية تابعة لنفس الشركة. مثلاً: تبحث عن google.com، intel يجد googleapis.com, googletagmanager.com, withgoogle.com. هذه نطاقات رئيسية قد تحتوي على ثغرات لكنها ليست واضحة. enum يبدأ من نطاق واحد، intel يُوسع نطاق البحث.</p>
+                </div>
+
+                <h3>2️⃣ enum - التعداد والفحص</h3>
+                <p>الوضع الرئيسي لاكتشاف النطاقات الفرعية:</p>
+                <div class="command-box" onclick="copyCommand(this)">amass enum -d example.com</div>
+                <div class="command-box" onclick="copyCommand(this)">amass enum -d example.com -active -brute -w wordlist.txt</div>
+
+                <h3>3️⃣ viz - التصور البصري</h3>
+                <p>يُنشئ رسومات بيانية للعلاقات:</p>
+                <div class="command-box" onclick="copyCommand(this)">amass viz -d3</div>
+                
+                <img src="https://kimi-web-img.moonshot.cn/img/raw.githubusercontent.com/0ace8f5fd2604506056dbfad1fa3663b906b45ed.png" alt="Amass Maltego Graph" class="tool-image">
+                <div class="image-caption">استيراد بيانات Amass إلى Maltego للتحليل البصري</div>
+
+                <h3>4️⃣ track - التتبع والمقارنة</h3>
+                <p>يُقارن بين فحوصات مختلفة لرؤية التغييرات:</p>
+                <div class="command-box" onclick="copyCommand(this)">amass track -d example.com</div>
+
+                <h3>5️⃣ db - قاعدة البيانات</h3>
+                <p>للتعامل مع graph database:</p>
+                <div class="command-box" onclick="copyCommand(this)">amass db -list</div>
+            </div>
+        </div>
+
+        <!-- ==== قسم Passive vs Active ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🕵️ Passive vs Active Enumeration
+            </h2>
+            <div class="section-content hidden">
+                <h3>🔍 Passive Mode</h3>
+                <p>يجمع معلومات من مصادر OSINT دون الاتصال بالهدف مباشرة:</p>
+                <div class="command-box" onclick="copyCommand(this)">amass enum -passive -d example.com</div>
+                
+                <p><strong>المصادر:</strong> Certificate Transparency logs (crt.sh), VirusTotal, Shodan, Censys, Web Archives, GitHub, Search Engines.</p>
+
+                <div class="self-question">
+                    <h4>🤔 لماذا Passive لا يُعطي 100% دقة؟</h4>
+                    <p><strong>الجواب:</strong> لأنها تعتمد على بيانات تاريخية. نطاق قد يكون موجوداً في crt.sh لكنه offline الآن. أو نطاق قد يكون قديماً وتم حذفه. Passive يجد "ما كان موجوداً" ليس بالضرورة "ما هو موجود الآن".</p>
+                </div>
+
+                <h3>⚡ Active Mode</h3>
+                <p>يُجري DNS queries مباشرة للتحقق:</p>
+                <div class="command-box" onclick="copyCommand(this)">amass enum -active -d example.com</div>
+
+                <div class="warning-box">
+                    <p>⚠️ <strong>Active mode يُرسل DNS queries إلى خوادم الهدف.</strong> هذا قد يُسجل في logs ويُعتبر "مسحاً نشطاً". استخدمه فقط مع إذن صريح.
+                </p></div>
+
+                <h3>💥 Brute Force Mode</h3>
+                <p>يُجرب كلمات من قائمة (wordlist):</p>
+                <div class="command-box" onclick="copyCommand(this)">amass enum -brute -w /usr/share/wordlists/subdomains.txt -d example.com</div>
+
+                <div class="self-question">
+                    <h4>🤔 لماذا Brute Force بطيء جداً؟</h4>
+                    <p><strong>الجواب:</strong> لأنه يُجرب آلاف الكلمات. كل محاولة تتطلب DNS query. إذا كان لديك 10,000 كلمة وكل query تأخذ 100ms، هذا 1000 ثانية (16 دقيقة) لنطاق واحد. لكنه يجد نطاقات لا تظهر في أي مصدر OSINT (مثل admin-test-2023.example.com).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==== قسم التكوين المتقدم ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> ⚙️ التكوين المتقدم وAPI Keys
+            </h2>
+            <div class="section-content hidden">
+                <h3>🔑 لماذا API Keys مهمة؟</h3>
+                <p>بدون API keys، Amass يستخدم المصادر العامة فقط. مع API keys، يصل إلى:</p>
+                <ul>
+                    <li>✅ Shodan - بيانات ports وservices</li>
+                    <li>✅ Censys - Certificate fingerprints</li>
+                    <li>✅ VirusTotal - بيانات DNS history</li>
+                    <li>✅ SecurityTrails - DNS history شامل</li>
+                    <li>✅ GitHub - بحث في repositories</li>
+                </ul>
+
+                <div class="command-box" onclick="copyCommand(this)">amass enum -config config.ini -d example.com</div>
+
+                <div class="self-question">
+                    <h4>🤔 ما هو الفرق في النتائج مع وبدون API keys؟</h4>
+                    <p><strong>الجواب:</strong> بدون API keys: ~40 مصدر فقط، نتائج أساسية. مع API keys: ~87 مصدر، نتائج شاملة تشمل historical data, internal IPs (من Shodan), ونطاقات من GitHub repos خاصة. الفرق قد يكون 200 نطاق vs 2000 نطاق.</p>
+                </div>
+
+                <h3>📁 ملف الإعدادات (config.ini)</h3>
+                <div class="technical-box">
+                    <pre style="color: #00ff88;">
+[shodan]
+apikey = your_shodan_key
+
+[censys]
+apikey = your_censys_key
+secret = your_censys_secret
+
+[virustotal]
+apikey = your_vt_key
+
+[securitytrails]
+apikey = your_st_key
+                    </pre>
+                </div>
+
+                <div class="warning-box">
+                    <p>⚠️ <strong>لا تُرفع config.ini إلى GitHub!</strong> احتفظ به في ~/.config/amass/ مع صلاحيات 600.
+                </p></div>
+            </div>
+        </div>
+
+        <!-- ==== قسم DNS Resolvers ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🌐 DNS Resolvers والأداء
+            </h2>
+            <div class="section-content hidden">
+                <h3>🎯 لماذا نحتاج resolvers مخصصة؟</h3>
+                <p>الـ resolvers الافتراضية قد تُحظر أو تكون بطيئة:</p>
+                <div class="command-box" onclick="copyCommand(this)">amass enum -rf resolvers.txt -d example.com</div>
+
+                <div class="self-question">
+                    <h4>🤔 لماذا Google DNS (8.8.8.8) قد يُحظرك؟</h4>
+                    <p><strong>الجواب:</strong> Google DNS لديه rate limiting. إذا أرسلت 1000 query في دقيقة، قد يتوقف عن الاستجابة لمدة ساعة. استخدام مجموعة من resolvers (Cloudflare, Quad9, OpenDNS, وخوادم محلية) يوزع الحمل ويمنع الحظر.</p>
+                </div>
+
+                <h3>📄 مثال resolvers.txt</h3>
+                <div class="technical-box">
+                    <pre style="color: #00ff88;">
+1.1.1.1
+1.0.0.1
+8.8.8.8
+8.8.4.4
+9.9.9.9
+149.112.112.112
+208.67.222.222
+208.67.220.220
+                    </pre>
+                </div>
+
+                <div class="example-box">
+                    <strong>💡 نصيحة:</strong> استخدم <code>-timeout 10</code> لتجنب الانتظار الطويل للـ resolvers البطيئة. و<code>-rate-limit 100</code> لتجنب rate limiting.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==== قسم استخراج البيانات ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 📊 استخراج وتحليل النتائج
+            </h2>
+            <div class="section-content hidden">
+                <h3>🎯 استخراج FQDNs فقط</h3>
+                <div class="command-box" onclick="copyCommand(this)">cat output.txt | grep '(FQDN)' | cut -d " " -f1 | sort -u</div>
+
+                <h3>🎯 استخراج IPv4</h3>
+                <div class="command-box" onclick="copyCommand(this)">cat output.txt | grep '(IPAddress)' | grep -oP '\d+\.\d+\.\d+\.\d+' | sort -u</div>
+
+                <h3>🎯 استخراج Netblocks</h3>
+                <div class="command-box" onclick="copyCommand(this)">cat output.txt | grep '(Netblock)' | cut -d " " -f1 | sort -u</div>
+
+                <div class="self-question">
+                    <h4>🤔 لماذا نحتاج Netblocks؟</h4>
+                    <p><strong>الجواب:</strong> Netblock (مثل 192.168.1.0/24) يُظهر نطاق IP كامل. إذا وجدت أن company.com يستخدم 192.168.1.0/24، يمكنك فحص كل IPs في هذا النطاق لخدمات إضافية. هذا يُوسع سطح الهجوم بشكل كبير.</p>
+                </div>
+
+                <h3>📈 التصدير إلى JSON</h3>
+                <div class="command-box" onclick="copyCommand(this)">amass enum -d example.com -json output.json</div>
+                <p>JSON يحتفظ بكل البيانات: المصدر، نوع السجل، الـ timestamp.</p>
+            </div>
+        </div>
+
+        <!-- ==== زر الامتحان ==== -->
+        <div class="section fade-in" style="text-align: center; padding: 40px;">
+            <button class="exam-button" onclick="startExam()">🎮 بدء الامتحان التفاعلي (20 سؤال)</button>
+            <p style="margin-top: 15px; color: #aaa;">5 أسئلة سهلة (3 خيارات) • 9 أسئلة صعبة (5 خيارات) • 6 أسئلة خبير (6 خيارات)</p>
+            <p style="color: #ffaa00; font-size: 0.9em;">⚠️ الإجابات موزعة عشوائياً في كل مرة!</p>
+        </div>
+
+        <!-- ==== حاوية الامتحان ==== -->
+        <div id="examContainer" class="hidden"></div>
+
+    </div>
+
+    <script>
+        // ==== دوال الدليل التوضيحي ====
+        function toggleSection(element) {
+            const content = element.nextElementSibling;
+            const icon = element.querySelector('.expand-icon');
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.innerHTML = '▼';
+            } else {
+                content.classList.add('hidden');
+                icon.innerHTML = '▶';
+            }
+        }
+
+        function copyCommand(element) {
+            const text = element.textContent.trim().replace('$ ', '');
+            navigator.clipboard.writeText(text).then(() => {
+                element.style.background = '#00ff88';
+                element.style.color = '#0d0d1a';
+                setTimeout(() => {
+                    element.style.background = '#0d0d1a';
+                    element.style.color = '#00ff88';
+                }, 500);
+            });
+        }
+
+        // ==== بيانات الامتحان (20 سؤال) ====
+        let currentLesson = 1;
+        let score = 0;
+        let mistakes = [];
+        let examStarted = false;
+
+        const examQuestions = [
+            // --- 5 أسئلة سهلة (3 خيارات) ---
+            {
+                difficulty: "easy",
+                question: "ما هو الغرض الأساسي من Amass؟",
+                options: [
+                    { text: "اكتشاف النطاقات الفرعية والتعرف على سطح الهجوم", correct: true },
+                    { text: "فحص ثغرات تطبيقات الويب", correct: false },
+                    { text: "تكسير كلمات المرور", correct: false }
+                ],
+                correctExplanation: "Amass هو أداة لاكتشاف النطاقات الفرعية (subdomain enumeration) وخريطة سطح الهجوم (attack surface mapping).",
+                wrongExplanation: "Amass لا يفحص ثغرات الويب (هذا Acunetix) ولا يُستخدم للـ password cracking.",
+                consequences: "إذا استخدمت Amass بشكل خاطئ، لن تحصل على النتائج المرجوة."
+            },
+            {
+                difficulty: "easy",
+                question: "كم وضع تشغيل رئيسي يدعمه Amass؟",
+                options: [
+                    { text: "5 أوضاع: intel, enum, viz, track, db", correct: true },
+                    { text: "3 أوضاع فقط", correct: false },
+                    { text: "وضع واحد فقط", correct: false }
+                ],
+                correctExplanation: "Amass يدعم 5 أوضاع: intel (جمع استخبارات), enum (التعداد), viz (التصور), track (التتبع), db (قاعدة البيانات).",
+                wrongExplanation: "Amass ليس 3 أوضاع أو وضع واحد. هو 5 أوضاع متخصصة.",
+                consequences: "إذا لم تعرف الأوضاع الخمسة، ستستخدم الأداة بشكل غير كامل."
+            },
+            {
+                difficulty: "easy",
+                question: "ما هو الفرق بين Passive و Active في Amass؟",
+                options: [
+                    { text: "Passive يستخدم OSINT فقط، Active يُجري DNS queries", correct: true },
+                    { text: "Passive أسرع دائماً", correct: false },
+                    { text: "لا فرق بينهما", correct: false }
+                ],
+                correctExplanation: "Passive يجمع من مصادر عامة (OSINT) دون الاتصال بالهدف. Active يُجري DNS queries للتحقق.",
+                wrongExplanation: "Passive ليس دائماً أسرع. وهناك فرق جوهري في طريقة العمل.",
+                consequences: "إذا لم تفهم الفرق، قد تُستخدم Active بدون إذن وتُسبب مشاكل قانونية."
+            },
+            {
+                difficulty: "easy",
+                question: "أي أمر يُستخدم لاكتشاف النطاقات الفرعية؟",
+                options: [
+                    { text: "amass enum -d example.com", correct: true },
+                    { text: "amass intel -d example.com", correct: false },
+                    { text: "amass viz -d example.com", correct: false }
+                ],
+                correctExplanation: "enum هو وضع التعداد الرئيسي. intel للاستخبارات الأولية، viz للتصور.",
+                wrongExplanation: "intel يجد root domains إضافية، viz يُنشئ رسومات. enum هو للـ subdomain enumeration.",
+                consequences: "استخدام الأمر الخاطئ سيُعطيك نتائج غير متوقعة."
+            },
+            {
+                difficulty: "easy",
+                question: "لماذا نستخدم ملف config.ini؟",
+                options: [
+                    { text: "لتخزين API keys للوصول لمصادر بيانات إضافية", correct: true },
+                    { text: "لتشفير النتائج", correct: false },
+                    { text: "لزيادة سرعة الفحص", correct: false }
+                ],
+                correctExplanation: "config.ini يحتوي على API keys لـ Shodan, Censys, VirusTotal وغيرها.",
+                wrongExplanation: "config.ini لا يشفر النتائج ولا يزيد السرعة مباشرة. هو للوصول لمصادر إضافية.",
+                consequences: "بدون API keys، ستفوتك 50% من المصادر والنتائج ستكون فقيرة."
+            },
+
+            // --- 9 أسئلة صعبة (5 خيارات) ---
+            {
+                difficulty: "hard",
+                question: "ما هو الفرق الرئيسي بين Amass و Subfinder؟",
+                options: [
+                    { text: "Subfinder أسرع لكن Amass أعمق وأشمل", correct: true },
+                    { text: "Subfinder يستخدم أكثر مصادر", correct: false },
+                    { text: "Amass لا يدعم Passive mode", correct: false },
+                    { text: "Subfinder يُنشئ رسومات بيانية", correct: false },
+                    { text: "لا فرق، نفس الأداة", correct: false }
+                ],
+                correctExplanation: "Amass: 87 مصدر، عمق شامل، graph database. Subfinder: 45 مصدر، سرعة فائقة، قائمة نطاقات فقط.",
+                wrongExplanation: "Subfinder ليس أكثر مصادر. Amass يدعم Passive. Subfinder لا يُنشئ رسومات. هما مختلفتان تماماً.",
+                consequences: "إذا اخترت الأداة الخاطئة للمهمة، ستضيع وقتك أو تحصل على نتائج غير كافية."
+            },
+            {
+                difficulty: "hard",
+                question: "لماذا قد يُعطي Passive mode نطاقات غير موجودة حالياً؟",
+                options: [
+                    { text: "لأنه يعتمد على بيانات تاريخية من OSINT", correct: true },
+                    { text: "لأن Amass به خطأ برمجي", correct: false },
+                    { text: "لأن DNS servers غير دقيقة", correct: false },
+                    { text: "لأن النطاقات مُشفرة", correct: false },
+                    { text: "لأن الاتصال بطيء", correct: false }
+                ],
+                correctExplanation: "Passive يستخدم crt.sh, archives, إلخ. نطاق قد يكون موجوداً في 2020 لكنه محذوف في 2024.",
+                wrongExplanation: "ليس خطأ برمجياً. DNS servers دقيقة. التشفير لا علاقة له. السرعة لا تؤثر على وجود النطاق.",
+                consequences: "إذا لم تتحقق من النتائج، ستفحث نطاقات قديمة وتضيع وقتك."
+            },
+            {
+                difficulty: "hard",
+                question: "ما هي مشكلة استخدام Google DNS (8.8.8.8) فقط؟",
+                options: [
+                    { text: "قد يُحظرك بعد عدد كبير من الـ queries", correct: true },
+                    { text: "لا يدعم IPv6", correct: false },
+                    { text: "بطيء جداً دائماً", correct: false },
+                    { text: "لا يعمل مع Amass", correct: false },
+                    { text: "غير آمن", correct: false }
+                ],
+                correctExplanation: "Google DNS لديه rate limiting. 1000 query/دقيقة قد تُسبب حظراً مؤقتاً.",
+                wrongExplanation: "Google DNS يدعم IPv6. ليس بطيئاً دائماً. يعمل مع Amass. هو آمن.",
+                consequences: "إذا استخدمت resolver واحد، قد يتوقف الفحص فجأة وتفقد ساعات من العمل."
+            },
+            {
+                difficulty: "hard",
+                question: "ما هو الغرض من وضع intel في Amass؟",
+                options: [
+                    { text: "اكتشاف root domains إضافية تابعة للشركة نفسها", correct: true },
+                    { text: "فحص النطاقات الفرعية", correct: false },
+                    { text: "إنشاء رسومات بيانية", correct: false },
+                    { text: "تكسير كلمات المرور", correct: false },
+                    { text: "تشفير النتائج", correct: false }
+                ],
+                correctExplanation: "intel يجد نطاقات رئيسية إضافية (مثل googleapis.com لـ google.com) قبل بدء enum.",
+                wrongExplanation: "intel لا يفحث subdomains، لا ينشئ رسومات، لا يكسر passwords، لا يشفر.",
+                consequences: "بدون intel، قد تفوتك نطاقات رئيسية تحتوي على أصول حرجة."
+            },
+            {
+                difficulty: "hard",
+                question: "لماذا Brute Force mode بطيء جداً؟",
+                options: [
+                    { text: "لأنه يُجرب آلاف الكلمات مع DNS query لكل واحدة", correct: true },
+                    { text: "لأن Amass مبرمج بلغة بطيئة", correct: false },
+                    { text: "لأن الإنترنت بطيء", correct: false },
+                    { text: "لأن النتائج كثيرة", correct: false },
+                    { text: "لأن الـ wordlist صغيرة", correct: false }
+                ],
+                correctExplanation: "كل كلمة تتطلب DNS query. 10,000 كلمة × 100ms = 16 دقيقة.",
+                wrongExplanation: "Amass مكتوب بـ Go (سريع). الإنترنت ليس السبب. كثرة النتائج لا تُبطئ. الـ wordlist قد تكون كبيرة.",
+                consequences: "بدون فهم السبب، قد تظن أن Amass معطل وتوقفه قبل الانتهاء."
+            },
+            {
+                difficulty: "hard",
+                question: "ما هو الفائدة من استخدام API keys في Amass؟",
+                options: [
+                    { text: "الوصول لـ 87 مصدراً بدلاً من ~40 فقط", correct: true },
+                    { text: "زيادة سرعة الفحص فقط", correct: false },
+                    { text: "تشفير النتائج", correct: false },
+                    { text: "تقليل عدد النتائج", correct: false },
+                    { text: "إنشاء رسومات تلقائياً", correct: false }
+                ],
+                correctExplanation: "API keys تفتح Shodan, Censys, VirusTotal, إلخ. الفرق قد يكون 2000 نطاق vs 200.",
+                wrongExplanation: "السرعة ليست الفائدة الرئيسية. لا تشفير. لا تقليل للنتائج. لا علاقة بالرسومات.",
+                consequences: "بدون API keys، ستفوتك 50% من النطاقات والبيانات الاستخباراتية."
+            },
+            {
+                difficulty: "hard",
+                question: "كيف يُخزن Amass العلاقات بين الأصول؟",
+                options: [
+                    { text: "في graph database تُظهر الارتباطات", correct: true },
+                    { text: "في ملف نصي عادي", correct: false },
+                    { text: "لا يخزنها", correct: false },
+                    { text: "في قاعدة بيانات SQL", correct: false },
+                    { text: "في الذاكرة فقط", correct: false }
+                ],
+                correctExplanation: "Amass يستخدم graph database (BadgerDB) لتخزين العلاقات: نطاق ← IP ← ASN ← Netblock.",
+                wrongExplanation: "ليس ملف نصي. يخزنها. ليس SQL. ليس في الذاكرة فقط (تُحفظ في ~/.config/amass/).",
+                consequences: "بدون فهم الـ graph database، لن تستفيد من viz وtrack modes."
+            },
+            {
+                difficulty: "hard",
+                question: "ما هو وضع viz في Amass؟",
+                options: [
+                    { text: "إنشاء رسومات بيانية للعلاقات (D3, Gephi, Maltego)", correct: true },
+                    { text: "فحص النطاقات بسرعة", correct: false },
+                    { text: "تشفير النتائج", correct: false },
+                    { text: "جمع استخبارات", correct: false },
+                    { text: "تكسير كلمات المرور", correct: false }
+                ],
+                correctExplanation: "viz يُصدّر البيانات لـ D3.js, Gephi, Maltego لرؤية العلاقات بصرياً.",
+                wrongExplanation: "viz ليس للسرعة، التشفير، الاستخبارات، أو cracking. هو للـ visualization.",
+                consequences: "بدون viz، ستفوتك الرؤية البصرية للبنية التحتية التي تُساعد في تحديد أهداف مهمة."
+            },
+            {
+                difficulty: "hard",
+                question: "لماذا قد نستخدم وضع track؟",
+                options: [
+                    { text: "لمقارنة فحوصات مختلفة ورؤية التغييرات في سطح الهجوم", correct: true },
+                    { text: "لتسريع الفحص", correct: false },
+                    { text: "لتشفير النتائج", correct: false },
+                    { text: "لجمع استخبارات أولية", correct: false },
+                    { text: "لإنشاء رسومات", correct: false }
+                ],
+                correctExplanation: "track يُقارن بين enumerations ليُظهر: أي نطاقات جديدة ظهرت؟ أيها اختفت؟",
+                wrongExplanation: "track لا يسرع، لا يشفر، لا يجمع استخبارات، لا ينشئ رسومات. هو للـ monitoring.",
+                consequences: "بدون track، لن تلاحظ التغييرات في البنية التحتية للهدف عبر الوقت."
+            },
+
+            // --- 6 أسئلة خبير (6 خيارات) ---
+            {
+                difficulty: "expert",
+                question: "ما هي مشكلة استخدام Brute Force بدون wordlist مناسب؟",
+                options: [
+                    { text: "قد يستغرق أياماً إذا كانت القائمة ضخمة", correct: false },
+                    { text: "قد يفوتك نطاقات إذا كانت القائمة صغيرة", correct: false },
+                    { text: "كلاهما (الوقت الطويل أو النتائج الفقيرة)", correct: true },
+                    { text: "لا مشكلة، Amass يختار تلقائياً", correct: false },
+                    { text: "سيتوقف Amass عن العمل", correct: false },
+                    { text: "ستُحظر من DNS تلقائياً", correct: false }
+                ],
+                correctExplanation: "Wordlist كبيرة جداً = وقت طويل. Wordlist صغيرة = نتائج فقيرة. التوازن هو المفتاح.",
+                wrongExplanation: "Amass لا يختار تلقائياً. لن يتوقف. الحظر ليس تلقائياً. المشكلة هي التوازن.",
+                consequences: "اختيار wordlist خاطئ يعني إما إضاعة أيام أو فقدان نطاقات حرجة."
+            },
+            {
+                difficulty: "expert",
+                question: "كيف يمكن استخدام Netblocks المكتشفة في Pentest؟",
+                options: [
+                    { text: "فحص كل IPs في النطاق لخدمات إضافية", correct: true },
+                    { text: "تجاهلها لأنها قديمة", correct: false },
+                    { text: "استخدامها فقط للإحصائيات", correct: false },
+                    { text: "تشفيرها", correct: false },
+                    { text: "حذفها من النتائج", correct: false },
+                    { text: "لا فائدة منها", correct: false }
+                ],
+                correctExplanation: "Netblock (مثل /24) يُظهر نطاق IP كامل. يمكن فحصه بـ Nmap لاكتشاف services إضافية.",
+                wrongExplanation: "لا تتجاهلها. ليست للإحصائيات فقط. لا تشفير. لا حذف. لها فائدة كبيرة.",
+                consequences: "تجاهل Netblocks يعني فقدان فرص اكتشاف أصول حرجة في نفس النطاق."
+            },
+            {
+                difficulty: "expert",
+                question: "ما هي استراتيجية 'Incremental Enumeration' في Amass؟",
+                options: [
+                    { text: "فحص التغييرات فقط بين فحوصات مختلفة", correct: true },
+                    { text: "فحص كامل كل مرة", correct: false },
+                    { text: "استخدام wordlist أصغر", correct: false },
+                    { text: "تجاهل النتائج القديمة", correct: false },
+                    { text: "زيادة سرعة الفحص", correct: false },
+                    { text: "تقليل عدد المصادر", correct: false }
+                ],
+                correctExplanation: "باستخدام track، يمكنك معرفة ما تغير فقط وإعادة فحثه. هذا يُوفّر 90% من الوقت.",
+                wrongExplanation: "ليست فحص كامل. ليست wordlist أصغر. لا تتجاهل القديم. لا تزيد السرعة. لا تقلل المصادر.",
+                consequences: "بدون Incremental، ستضيع ساعات في إعادة فحث نطاقات لم تتغير."
+            },
+            {
+                difficulty: "expert",
+                question: "لماذا قد يفشل Amass في اكتشاف نطاق معين رغم وجوده؟",
+                options: [
+                    { text: "النطاق جديد ولم يُفهرس بعد في OSINT", correct: false },
+                    { text: "النطاق يستخدم DNS داخلي فقط", correct: false },
+                    { text: "النطاق محمي بـ Cloudflare ولا يظهر IP حقيقي", correct: false },
+                    { text: "كل ما سبق", correct: true },
+                    { text: "Amass به خطأ برمجي", correct: false },
+                    { text: "الإنترنت بطيء", correct: false }
+                ],
+                correctExplanation: "نطاق جديد = ليس في archives. DNS داخلي = لا يظهر في public DNS. Cloudflare = يخفي الـ origin.",
+                wrongExplanation: "ليس دائماً خطأ برمجي. الإنترنت ليس السبب. هناك أسباب تقنية مشروعة.",
+                consequences: "إذا افترضت أن Amass كامل، ستفوتك نطاقات تتطلب techniques إضافية للاكتشاف."
+            },
+            {
+                difficulty: "expert",
+                question: "كيف تتعامل مع rate limiting أثناء Brute Force؟",
+                options: [
+                    { text: "استخدام multiple resolvers وتوزيع الحمل", correct: true },
+                    { text: "زيادة سرعة الـ queries", correct: false },
+                    { text: "استخدام resolver واحد فقط", correct: false },
+                    { text: "تجاهل الأخطاء", correct: false },
+                    { text: "إيقاف الفحص", correct: false },
+                    { text: "استخدام wordlist أصغر", correct: false }
+                ],
+                correctExplanation: "توزيع الـ queries على 10-20 resolvers مختلفين يمنع حظر أي واحد منهم.",
+                wrongExplanation: "زيادة السرعة تُسبب حظراً. resolver واحد يُحظر. تجاهل الأخطاء يفقد نتائج. الإيقاف ليس حلاً. wordlist أصغر لا يحل المشكلة.",
+                consequences: "بدون توزيع الحمل، ستُحظر وستفقد ساعات من الفحص."
+            },
+            {
+                difficulty: "expert",
+                question: "ما هي أفضل ممارسة لاستخدام Amass في Bug Bounty؟",
+                options: [
+                    { text: "intel أولاً للتوسع، ثم enum مع API keys، ثم track للمتابعة", correct: true },
+                    { text: "enum مباشرة بدون intel", correct: false },
+                    { text: "استخدام Passive فقط", correct: false },
+                    { text: "تجاهل viz وtrack", correct: false },
+                    { text: "عدم استخدام API keys", correct: false },
+                    { text: "فحص نطاق واحد فقط", correct: false }
+                ],
+                correctExplanation: "intel يُوسع النطاق. API keys يعطي عمق. track يتابع التغييرات. viz يرى العلاقات.",
+                wrongExplanation: "enum بدون intel يفوت نطاقات. Passive فقط يفوت active data. تجاهل viz/track يفوت insights. بدون API keys يفوت 50% من البيانات. نطاق واحد يحد من الفرص.",
+                consequences: "بدون workflow كامل، ستفوتك نطاقات وثغرات قد تكون بآلاف الدولارات."
+            }
+        ];
+
+        // ==== دوال الامتحان ====
+        function startExam() {
+            examStarted = true;
+            currentLesson = 1;
+            score = 0;
+            mistakes = [];
+            
+            document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+            document.querySelector('.exam-button').classList.add('hidden');
+            
+            renderExam();
+        }
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function renderExam() {
+            const container = document.getElementById('examContainer');
+            container.classList.remove('hidden');
+            
+            const q = examQuestions[currentLesson-1];
+            const progress = (currentLesson / examQuestions.length) * 100;
+            
+            // خلط الخيارات بشكل كامل
+            const shuffledOptions = shuffleArray(q.options);
+            const correctIndex = shuffledOptions.findIndex(o => o.correct);
+            
+            container.innerHTML = `
+                <div class="header">
+                    <h1>🎮 الامتحان التفاعلي</h1>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${progress}%"></div>
+                    </div>
+                    <div class="progress-text">التقدم: ${Math.round(progress)}% (${currentLesson} من ${examQuestions.length} أسئلة)</div>
+                </div>
+
+                <div class="lesson-card fade-in" id="question${currentLesson}">
+                    <h2 class="lesson-title">
+                        السؤال رقم ${currentLesson}: 
+                        <span class="difficulty-badge difficulty-${q.difficulty}">
+                            ${q.difficulty === 'easy' ? 'سهل' : 
+                              q.difficulty === 'medium' ? 'متوسط' : 
+                              q.difficulty === 'hard' ? 'صعب' : 'خبير'}
+                        </span>
+                        <span style="font-size: 0.6em; color: #aaa; margin-right: 10px;">
+                            (${shuffledOptions.length} خيارات)
+                        </span>
+                    </h2>
+                    
+                    <div class="lesson-content">
+                        <p><strong>${q.question}</strong></p>
+                    </div>
+
+                    <div class="quiz-section">
+                        <div class="quiz-question">🎯 اختر الإجابة الصحيحة:</div>
+                        <div class="quiz-options" id="options${currentLesson}">
+                            ${shuffledOptions.map((opt, idx) => `
+                                <div class="quiz-option" data-correct="${idx === correctIndex}" onclick="checkAnswer(this)">
+                                    ${opt.text}
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="feedback" id="feedback${currentLesson}"></div>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button class="btn" ${currentLesson === 1 ? 'disabled' : ''} onclick="previousQuestion()">← السابق</button>
+                        <button class="btn" id="nextBtn" disabled onclick="nextQuestion()">
+                            ${currentLesson === examQuestions.length ? 'عرض النتائج النهائية' : 'التالي →'}
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function checkAnswer(element) {
+            const isCorrect = element.dataset.correct === "true";
+            const feedback = document.getElementById(`feedback${currentLesson}`);
+            const nextBtn = document.getElementById('nextBtn');
+            
+            document.querySelectorAll(`#options${currentLesson} .quiz-option`).forEach(opt => {
+                opt.classList.add('disabled');
+                if (opt.dataset.correct === "true") {
+                    opt.classList.add('correct');
+                } else {
+                    opt.classList.add('incorrect');
+                }
+            });
+
+            feedback.style.display = 'block';
+            feedback.classList.add(isCorrect ? 'correct' : 'incorrect');
+            
+            const q = examQuestions[currentLesson-1];
+            
+            if (isCorrect) {
+                feedback.innerHTML = `
+                    <strong>✅ إجابة صحيحة!</strong><br>
+                    ${q.correctExplanation}
+                `;
+                score++;
+            } else {
+                feedback.innerHTML = `
+                    <strong>❌ إجابة خاطئة!</strong><br>
+                    ${q.wrongExplanation}
+                    <div class="consequences-box">
+                        <strong>⚠️ تبعات الخطأ في الواقع:</strong><br>
+                        ${q.consequences}
+                    </div>
+                `;
+                
+                mistakes.push({
+                    question: q.question,
+                    wrongAnswer: element.textContent.trim(),
+                    correctAnswer: q.options.find(o => o.correct).text
+                });
+            }
+            
+            nextBtn.disabled = false;
+        }
+
+        function nextQuestion() {
+            if (currentLesson === examQuestions.length) {
+                showFinalResults();
+                return;
+            }
+            
+            currentLesson++;
+            renderExam();
+        }
+
+        function previousQuestion() {
+            if (currentLesson > 1) {
+                currentLesson--;
+                renderExam();
+            }
+        }
+
+        function showFinalResults() {
+            const container = document.getElementById('examContainer');
+            const scorePercent = (score / examQuestions.length) * 100;
+            
+            let message = "";
+            let level = "";
+            
+            if (scorePercent >= 90) {
+                level = "خبير Amass";
+                message = "🎉 ممتاز! أنت جاهز لاستخدام Amass بشكل احترافي في Bug Bounty و Pentest.";
+            } else if (scorePercent >= 70) {
+                level = "متقدم";
+                message = "👍 جيد جداً! لكن راجع الأخطاء المتقدمة قبل الاستخدام الحقيقي.";
+            } else if (scorePercent >= 50) {
+                level = "متوسط";
+                message = "⚠️ جيد، لكن تحتاج مزيداً من التدريب على الأوضاع المتقدمة.";
+            } else {
+                level = "مبتدئ";
+                message = "❌ تحتاج لقراءة الدليل مرة أخرى. الأخطاء قد تكلفك في بيئة عمل حقيقية.";
+            }
+            
+            container.innerHTML = `
+                <div class="lesson-card fade-in">
+                    <h2 class="lesson-title">🎊 النتائج النهائية</h2>
+                    
+                    <div style="text-align: center; margin: 30px 0;">
+                        <div style="font-size: 3em; color: ${scorePercent >= 70 ? '#00ff88' : '#ffaa00'}; margin-bottom: 20px;">
+                            ${score} من ${examQuestions.length}
+                        </div>
+                        <div style="font-size: 1.5em; color: #00d4ff; margin-bottom: 10px;">
+                            ${level}
+                        </div>
+                        <div style="font-size: 1.1em; color: #aaa;">
+                            ${message}
+                        </div>
+                    </div>
+
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${scorePercent}%"></div>
+                    </div>
+
+                    ${mistakes.length > 0 ? `
+                        <div style="margin-top: 30px;">
+                            <h3 style="color: #ffaa00; margin-bottom: 20px;">📚 مراجعة الأخطاء:</h3>
+                            ${mistakes.map((m, idx) => `
+                                <div class="example-box" style="margin-bottom: 15px;">
+                                    <h4 style="color: #ff6666;">❌ خطأ ${idx + 1}:</h4>
+                                    <p><strong>السؤال:</strong> ${m.question}</p>
+                                    <p><strong>إجابتك الخاطئة:</strong> <span style="color: #ff6666;">${m.wrongAnswer}</span></p>
+                                    <p><strong>الإجابة الصحيحة:</strong> <span style="color: #00ff88;">${m.correctAnswer}</span></p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : `
+                        <div class="example-box" style="margin-top: 30px; text-align: center;">
+                            <h3 style="color: #00ff88;">🎉 لا أخطاء! أداء مثالي.</h3>
+                        </div>
+                    `}
+
+                    <div class="nav-buttons" style="margin-top: 30px;">
+                        <button class="btn" onclick="location.reload()">🔄 إعادة التعلم من البداية</button>
+                        <button class="btn btn-success" onclick="window.open('https://github.com/OWASP/Amass')">📖 مستودع Amass الرسمي</button>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
