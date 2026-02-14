@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل WebExtractor الشامل مع الامتحان التفاعلي</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Tahoma', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e6e6e6;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .signature {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 0.7em;
+            font-family: monospace;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(25, 25, 45, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header h1 {
+            color: #00ff88;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .section {
+            background: rgba(30, 30, 50, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .section:hover { border-color: #00d4ff; box-shadow: 0 0 15px rgba(0, 212, 255, 0.2); }
+
+        .section h2 {
+            color: #f78166;
+            border-right: 4px solid #f78166;
+            padding-right: 16px;
+            margin: 32px 0 16px 0;
+            cursor: pointer;
+            font-size: 1.5em;
+            transition: all 0.2s ease;
+        }
+
+        .section h2:hover { color: #58a6ff; border-right-color: #58a6ff; }
+
+        .section h3 { color: #7ee787; margin: 24px 0 12px 0; font-size: 1.2em; }
+
+        .section-content { 
+            transition: all 0.3s ease;
+            display: none;
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
+        .expand-icon { display: inline-block; margin-right: 8px; transition: transform 0.2s ease; }
+
+        .command-box {
+            background: #0d0d1a;
+            border: 1px solid #00ff88;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 12px 0;
+            font-family: monospace;
+            color: #00ff88;
+            direction: ltr;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .command-box::before { content: "$ "; color: #f78166; }
+
+        .example-box {
+            background: rgba(126, 231, 135, 0.1);
+            border-left: 4px solid #7ee787;
+            padding: 16px;
+            margin: 12px 0;
+            border-radius: 6px;
+        }
+
+        .warning-box {
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid #ff0000;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .technical-box {
+            background: rgba(88, 166, 255, 0.1);
+            border-left: 4px solid #58a6ff;
+            padding: 16px;
+            margin: 12px 0;
+            border-radius: 6px;
+        }
+
+        .self-question {
+            background: rgba(255, 170, 0, 0.1);
+            border-right: 4px solid #ffaa00;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .self-question h4 { color: #ffaa00; margin-bottom: 10px; }
+
+        .tool-image {
+            width: 100%;
+            max-width: 800px;
+            border-radius: 10px;
+            margin: 20px auto;
+            display: block;
+            border: 2px solid #333;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .image-caption {
+            text-align: center;
+            color: #aaa;
+            font-size: 0.9em;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .exam-button {
+            background: linear-gradient(45deg, #ff6b00, #ffaa00);
+            color: #0d0d1a;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.3em;
+            margin: 30px auto;
+            display: block;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.4);
+        }
+
+        .exam-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 0, 0.6);
+        }
+
+        .lesson-card {
+            background: rgba(30, 30, 50, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .lesson-title {
+            color: #00d4ff;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            border-right: 5px solid #00d4ff;
+            padding-right: 15px;
+        }
+
+        .quiz-section {
+            background: rgba(40, 40, 60, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #444;
+        }
+
+        .quiz-question {
+            color: #ffaa00;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .quiz-options { display: grid; gap: 10px; margin-bottom: 20px; }
+
+        .quiz-option {
+            background: #2a2a3a;
+            border: 2px solid #555;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1em;
+        }
+
+        .quiz-option:hover { border-color: #00d4ff; background: rgba(0, 212, 255, 0.1); }
+
+        .quiz-option.correct { border-color: #00ff88; background: rgba(0, 255, 136, 0.2); }
+
+        .quiz-option.incorrect { border-color: #ff0000; background: rgba(255, 0, 0, 0.2); }
+
+        .quiz-option.disabled { cursor: not-allowed; opacity: 0.6; }
+
+        .feedback {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: rgba(0, 255, 136, 0.1);
+            border-left: 4px solid #00ff88;
+            color: #00ff88;
+        }
+
+        .feedback.incorrect {
+            background: rgba(255, 0, 0, 0.1);
+            border-left: 4px solid #ff0000;
+            color: #ff6666;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            color: #0d0d1a;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4); }
+
+        .btn:disabled { background: #555; cursor: not-allowed; }
+
+        .btn-success { background: linear-gradient(45deg, #00ff88, #008800); }
+
+        .difficulty-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .difficulty-easy { background: #00ff88; color: #000; }
+        .difficulty-medium { background: #ffaa00; color: #000; }
+        .difficulty-hard { background: #ff6b00; color: #fff; }
+        .difficulty-expert { background: #ff0000; color: #fff; }
+
+        .consequences-box {
+            background: rgba(255, 0, 0, 0.15);
+            border-left: 4px solid #ff0000;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 6px;
+        }
+
+        .hidden { display: none !important; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in { animation: fadeIn 0.5s ease; }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88, #00d4ff);
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            color: #aaa;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            .header h1 { font-size: 1.8em; }
+            .lesson-title { font-size: 1.4em; }
+            .nav-buttons { flex-direction: column; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="signature">Kali@~linux</div>
+    <div class="container">
+        <!-- ==== رأس الصفحة ==== -->
+        <div class="header">
+            <h1>دليل WebExtractor الشامل مع الامتحان التفاعلي</h1>
+            <p style="color: #00d4ff; font-size: 1.2em;">دليل شامل مع اختبار تفاعلي تدريجي من المبتدئ إلى الخبير</p>
+        </div>
+
+        <!-- ==== تحذير قانوني ==== -->
+        <div class="warning-box">
+            <h3>⚠️ تحذير قانوني وأخلاقي</h3>
+            <p>هذا التطبيق للتعليم فقط. استخدام WebExtractor على مواقع دون إذن صريح يعتبر جريمة إلكترونية. الأداة مخصصة لـ OSINT والتدقيق الأمني على مواقعك الخاصة فقط.</p>
+        </div>
+
+        <!-- ==== قسم مقدمة WebExtractor ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🔍 ما هو WebExtractor؟
+            </h2>
+            <div class="section-content">
+                <p><strong>WebExtractor</strong> هو أداة OSINT مكتوبة بلغة Python لاستخراج المعلومات من المواقع الإلكترونية. تُستخدم في <strong>Reconnaissance</strong> لجمع Emails، أرقام الهواتف، الروابط، والبيانات المتاحة علنياً.</p>
+                
+                <img src="https://opengraph.githubassets.com/1/s-r-e-e-r-a-j/WebExtractor" alt="WebExtractor GitHub Repository" class="tool-image">
+                <div class="image-caption">مستودع WebExtractor على GitHub - أداة OSINT مفتوحة المصدر</div>
+
+                <h3>🎯 ما يميز WebExtractor</h3>
+                <ul>
+                    <li>✅ <strong>سهولة الاستخدام:</strong> واجهة سطر أوامر بسيطة</li>
+                    <li>✅ <strong>استخراج متعدد:</strong> Emails، Phones، Links، وغيرها</li>
+                    <li>✅ <strong>Web Scraping فعال:</strong> يستخدم مكتبات Python القوية</li>
+                    <li>✅ <strong>كشف البصمة الرقمية:</strong> يُظهر ما تكشفه مواقعك</li>
+                    <li>✅ <strong>مفتوح المصدر:</strong> متاح على GitHub للتعديل والتطوير</li>
+                </ul>
+
+                <div class="self-question">
+                    <h4>🤔 لماذا WebExtractor مهم لاختبار الاختراق؟</h4>
+                    <p><strong>الجواب:</strong> في مرحلة Information Gathering، تحتاج لجمع أكبر قدر من البيانات عن الهدف. WebExtractor يُسرّع هذه العملية باستخراج معلومات الاتصال (Emails, Phones) التي قد تُستخدم في هجمات Phishing أو Social Engineering. كما يكشف الروابط الداخلية التي قد تحتوي على معلومات حساسة.</p>
+                </div>
+
+                <div class="example-box">
+                    <strong>💡 مثال عملي:</strong> عند اختبار موقع شركة، قد تجد في footer بريداً إلكترونياً للدعم (support@company.com). WebExtractor يستخرجه تلقائياً، وقد تستخدمه لاختبار هجوم Spear Phishing على فريق الدعم.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==== قسم التثبيت والأساسيات ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🔧 التثبيت والأوامر الأساسية
+            </h2>
+            <div class="section-content">
+                <h3>📥 التثبيت</h3>
+                <p>WebExtractor يتطلب Python 3.x. يمكن تثبيته عبر:</p>
+                <div class="command-box" onclick="copyCommand(this)">git clone https://github.com/s-r-e-e-r-a-j/WebExtractor.git</div>
+                <div class="command-box" onclick="copyCommand(this)">cd WebExtractor && pip install -r requirements.txt</div>
+
+                <img src="https://raw.githubusercontent.com/s-r-e-e-r-a-j/WebExtractor/main/webextractor.png" alt="WebExtractor Tool Interface" class="tool-image" onerror="this.src='https://via.placeholder.com/800x400/1a1a2e/00ff88?text=WebExtractor+Interface'">
+                <div class="image-caption">واجهة أداة WebExtractor أثناء عملية الاستخراج</div>
+
+                <h3>🎯 الأوامر الأساسية</h3>
+                <div class="command-box" onclick="copyCommand(this)">python webextractor.py -u https://example.com</div>
+                <p>يقوم بفحص الموقع واستخراج جميع أنواع البيانات المتاحة.</p>
+
+                <div class="self-question">
+                    <h4>🤔 ما هو الفرق بين Web Scraping و Web Crawling؟</h4>
+                    <p><strong>الجواب:</strong> Web Scraping يستخرج بيانات محددة من صفحة واحدة (مثل Emails). Web Crawling يتنقل بين الصفحات ويجمع روابط. WebExtractor يجمع بينهما: يزحف للروابط ويستخرج البيانات من كل صفحة.</p>
+                </div>
+
+                <h3>🔍 خيارات الاستخدام</h3>
+                <div class="command-box" onclick="copyCommand(this)">python webextractor.py -u https://example.com --emails</div>
+                <p>يستخرج البريد الإلكتروني فقط.</p>
+
+                <div class="command-box" onclick="copyCommand(this)">python webextractor.py -u https://example.com --phones --depth 2</div>
+                <p>يستخرج أرقام الهواتف مع التعمق في مستويين من الروابط.</p>
+            </div>
+        </div>
+
+        <!-- ==== قسم أنواع البيانات المستخرجة ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 📊 أنواع البيانات المستخرجة
+            </h2>
+            <div class="section-content">
+                <h3>🎯 Emails</h3>
+                <p>يستخدم Regex patterns للعثور على عناوين البريد الإلكتروني:</p>
+                <div class="command-box" onclick="copyCommand(this)">python webextractor.py -u https://example.com --emails -o emails.txt</div>
+
+                <img src="https://www.kaspersky.com/content/en-global/images/repository/isc/2017-images/email-security-tips-1.jpg" alt="Email Extraction" class="tool-image" onerror="this.src='https://via.placeholder.com/800x400/1a1a2e/00d4ff?text=Email+Extraction+Process'">
+                <div class="image-caption">عملية استخراج عناوين البريد الإلكتروني من صفحات الويب</div>
+
+                <div class="self-question">
+                    <h4>🤔 لماذا Emails المستخرجة قد تكون خطرة؟</h4>
+                    <p><strong>الجواب:</strong> Emails تُستخدم في: 1) هجمات Phishing المستهدفة 2) البحث عن تسريبات البيانات (HaveIBeenPwned) 3) ربط الهويات عبر منصات مختلفة 4) هجمات Credential Stuffing إذا كان البريد مستخدماً كـ username.</p>
+                </div>
+
+                <h3>📱 Phone Numbers</h3>
+                <div class="command-box" onclick="copyCommand(this)">python webextractor.py -u https://example.com --phones</div>
+                <p>يستخرج أرقام الهواتف بتنسيقات مختلفة (+1-234-567-8900, (234) 567-8900, إلخ).</p>
+
+                <h3>🔗 Links</h3>
+                <div class="command-box" onclick="copyCommand(this)">python webextractor.py -u https://example.com --links --external</div>
+                <p>يستخرج الروابط الخارجية (External Links) التي قد تُشير إلى شركاء أو خدمات طرف ثالث.</p>
+
+                <div class="technical-box">
+                    <strong>🛠️ نصيحة:</strong> استخدم --internal للروابط الداخلية فقط لرسم خريطة الموقع (Sitemap).
+                </div>
+            </div>
+        </div>
+
+        <!-- ==== قسم Web Scraping التقني ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🕷️ تقنيات Web Scraping المتقدمة
+            </h2>
+            <div class="section-content">
+                <h3>📜 مكتبات Python المستخدمة</h3>
+                <ul>
+                    <li><strong>requests:</strong> لإرسال HTTP requests</li>
+                    <li><strong>BeautifulSoup:</strong> لتحليل HTML واستخراج البيانات</li>
+                    <li><strong>re (Regex):</strong> للبحث عن Patterns معينة</li>
+                    <li><strong>urllib:</strong> لمعالجة الروابط</li>
+                </ul>
+
+                <img src="https://www.crummy.com/software/BeautifulSoup/bs4/doc/_images/6.1.jpg" alt="BeautifulSoup HTML Parsing" class="tool-image" onerror="this.src='https://via.placeholder.com/800x400/1a1a2e/f78166?text=HTML+Parsing+with+BeautifulSoup'">
+                <div class="image-caption">BeautifulSoup يحلل هيكل HTML لاستخراج البيانات المنظمة</div>
+
+                <div class="self-question">
+                    <h4>🤔 كيف يتعامل WebExtractor مع حماية المواقع؟</h4>
+                    <p><strong>الجواب:</strong> يمكن استخدام: 1) User-Agent headers للتمويه كمتصفح حقيقي 2) Delay بين الطلبات لتجنب Rate Limiting 3) Proxy轮换 لتغيير IP 4) التعامل مع JavaScript عبر Selenium (إذا كان الموقع ديناميكياً).</p>
+                </div>
+
+                <h3>🎯 استخراج Metadata</h3>
+                <div class="command-box" onclick="copyCommand(this)">python webextractor.py -u https://example.com --metadata</div>
+                <p>يستخرج: Meta descriptions، Keywords، Author names، Generator (CMS used)، وOpen Graph tags.</p>
+
+                <div class="example-box">
+                    <strong>💡 سيناريو:</strong> Metadata قد تكشف: "Generator: WordPress 5.8.1" → تبحث عن ثغرات هذا الإصدار. أو "Author: John Doe" → تبحث عن معلومات John Doe في LinkedIn.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==== قسم OSINT Integration ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🌐 التكامل مع أدوات OSINT
+            </h2>
+            <div class="section-content">
+                <h3>📊 التكامل مع theHarvester</h3>
+                <p>تصدير نتائج WebExtractor لاستخدامها في theHarvester:</p>
+                
+                <div class="command-box" onclick="copyCommand(this)">python webextractor.py -u example.com --emails -o emails.txt && theHarvester -d example.com -f results.html</div>
+
+                <div class="self-question">
+                    <h4>🤔 ما هو theHarvester وكيف يُكمل WebExtractor؟</h4>
+                    <p><strong>الجواب:</strong> theHarvester يجمع Emails من محركات البحث (Google, Bing) وShodan, Crt.sh. WebExtractor يجمع من الموقع نفسه. الجمع بينهما يعطي صورة شاملة: البيانات المنشورة على الموقع + البيانات المفهرسة في محركات البحث.</p>
+                </div>
+
+                <h3>🎯 التكامل مع Maltego</h3>
+                <div class="command-box" onclick="copyCommand(this)">python webextractor.py -u https://example.com --maltego -o maltego.csv</div>
+                <p>يُنتج ملف CSV يمكن استيراده لـ Maltego لإنشاء Graph بصري للعلاقات.</p>
+
+                <img src="https://www.paterva.com/web7/images/maltego/maltego-transforms.png" alt="Maltego OSINT Graph" class="tool-image" onerror="this.src='https://via.placeholder.com/800x400/1a1a2e/7ee787?text=Maltego+OSINT+Visualization'">
+                <div class="image-caption">Maltego يُظهر العلاقات بين الكيانات المستخرجة بصرياً</div>
+
+                <div class="technical-box">
+                    <strong>🛠️ TIP:</strong> استخدم WebExtractor للـ Data Gathering، Maltego للـ Visualization، وRecon-ng للـ Automation.
+                </div>
+            </div>
+        </div>
+
+        <!-- ==== قسم الأمان والحماية ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🛡️ حماية موقعك من Web Scraping
+            </h2>
+            <div class="section-content">
+                <h3>🔒 تقنيات الحماية</h3>
+                <ul>
+                    <li><strong>robots.txt:</strong> طلب احترامي للزاحفين (لكن ليس إلزامياً)</li>
+                    <li><strong>Rate Limiting:</strong> تقييد عدد الطلبات من نفس IP</li>
+                    <li><strong>CAPTCHA:</strong> اختبارات Turing لمنع البوتات</li>
+                    <li><strong>User-Agent Filtering:</strong> حظر User-Agents مشبوهة</li>
+                    <li><strong>Honeypot Links:</strong> روابط خفية للإمساك بالزاحفين</li>
+                </ul>
+
+                <img src="https://www.cloudflare.com/img/learning/bots/what-is-bot-management/captcha-challenge.png" alt="CAPTCHA Bot Protection" class="tool-image" onerror="this.src='https://via.placeholder.com/800x400/1a1a2e/ff0000?text=CAPTCHA+Protection'">
+                <div class="image-caption">CAPTCHA Challenge لمنع أدوات Scraping الآلية</div>
+
+                <div class="self-question">
+                    <h4>🤔 هل robots.txt يمنع WebExtractor فعلاً؟</h4>
+                    <p><strong>الجواب:</strong> لا. robots.txt هو دليل إرشادي (Advisory) وليس قانونياً. أدوات Scraping يمكنها تجاهله. الحماية الحقيقية تكون عبر: Rate limiting، WAF (Web Application Firewall)، وتحليل سلوك المستخدم (Behavior Analysis).</p>
+                </div>
+
+                <h3>🎯 Obfuscation للبيانات الحساسة</h3>
+                <div class="command-box" onclick="copyCommand(this)"># بدلاً من: contact@example.com
+# استخدم: contact [at] example [dot] com</div>
+                <p>أو استخدم صوراً للـ Emails بدلاً من النص (لكن هذا يضر بـ Accessibility).</p>
+
+                <div class="warning-box">
+                    <p>⚠️ <strong>ملاحظة أخلاقية:</strong> إذا كنت تختبر موقعاً، تأكد من أن WebExtractor يحترم robots.txt ولا يُثقل load على السيرفر.
+                </p></div>
+            </div>
+        </div>
+
+        <!-- ==== قسم الاستخدامات المتقدمة ==== -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🚀 استخدامات متقدمة و Automation
+            </h2>
+            <div class="section-content">
+                <h3>📜 سكربتات Bash للـ Automation</h3>
+                <div class="command-box" onclick="copyCommand(this)">#!/bin/bash
+for domain in $(cat domains.txt); do
+    python webextractor.py -u https://$domain --emails -o results/$domain.txt
+done</div>
+                <p>فحص قائمة كاملة من المواقع تلقائياً.</p>
+
+                <div class="self-question">
+                    <h4>🤔 كيف يمكن جدولة WebExtractor لمراقبة موقع دورياً؟</h4>
+                    <p><strong>الجواب:</strong> استخدم cron jobs (Linux) أو Task Scheduler (Windows). مثال: تشغيل WebExtractor كل يوم الساعة 3 صباحاً لمقارنة النتائج مع اليوم السابق واكتشاف التغييرات (مثل إضافة Emails جديدة).</p>
+                </div>
+
+                <h3>🎯 التصدير لـ JSON</h3>
+                <div class="command-box" onclick="copyCommand(this)">python webextractor.py -u https://example.com --json -o data.json</div>
+                <p>يُنتج ملف JSON منظم يمكن معالجته برمجياً:</p>
+
+                <div class="example-box">
+                    <strong>💡 Pipeline:</strong> WebExtractor → JSON → Python Script → Slack Notification عند العثور على Emails جديدة.
+                </div>
+
+                <h3>🔍 فحص SSL/TLS Certificates</h3>
+                <div class="command-box" onclick="copyCommand(this)">python webextractor.py -u https://example.com --ssl-info</div>
+                <p>يستخرج معلومات الشهادة: Issuer، Expiry Date، Subject Alternative Names (SANs) التي قد تكشف Subdomains.</p>
+            </div>
+        </div>
+
+        <!-- ==== زر الامتحان ==== -->
+        <div class="section fade-in" style="text-align: center; padding: 40px;" id="examStartSection">
+            <button class="exam-button" onclick="startExam()">🎮 بدء الامتحان التفاعلي (20 سؤال)</button>
+            <p style="margin-top: 15px; color: #aaa;">5 أسئلة سهلة (3 خيارات) • 9 أسئلة صعبة (5 خيارات) • 6 أسئلة خبير (6 خيارات)</p>
+            <p style="color: #ffaa00; font-size: 0.9em;">⚠️ الإجابات موزعة عشوائياً في كل مرة!</p>
+        </div>
+
+        <!-- ==== حاوية الامتحان ==== -->
+        <div id="examContainer" class="hidden"></div>
+
+    </div>
+
+    <script>
+        // ==== دوال الدليل التوضيحي ====
+        function toggleSection(element) {
+            const content = element.nextElementSibling;
+            const icon = element.querySelector('.expand-icon');
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                icon.innerHTML = '▶';
+            } else {
+                content.classList.add('active');
+                icon.innerHTML = '▼';
+            }
+        }
+
+        function copyCommand(element) {
+            const text = element.textContent.trim().replace('$ ', '');
+            navigator.clipboard.writeText(text).then(() => {
+                element.style.background = '#00ff88';
+                element.style.color = '#0d0d1a';
+                setTimeout(() => {
+                    element.style.background = '#0d0d1a';
+                    element.style.color = '#00ff88';
+                }, 500);
+            });
+        }
+
+        // ==== بيانات الامتحان (20 سؤال) ====
+        let currentLesson = 1;
+        let score = 0;
+        let mistakes = [];
+        let examStarted = false;
+
+        const examQuestions = [
+            // --- 5 أسئلة سهلة (3 خيارات) ---
+            {
+                difficulty: "easy",
+                question: "ما هو WebExtractor؟",
+                options: [
+                    { text: "أداة Python لاستخراج Emails و Phones من المواقع", correct: true },
+                    { text: "أداة فحص ثغرات SQL Injection", correct: false },
+                    { text: "برنامج لإدارة قواعد البيانات MySQL", correct: false }
+                ],
+                correctExplanation: "WebExtractor هو أداة OSINT مكتوبة بـ Python لاستخراج البيانات من المواقع عبر Web Scraping.",
+                wrongExplanation: "WebExtractor ليس لفحص SQL Injection (هذا SQLMap) ولا لإدارة MySQL. هو للـ Web Scraping.",
+                consequences: "إذا لم تفهم الغرض، ستستخدمه بشكل خاطئ أو تتوقع قدرات لا يملكها."
+            },
+            {
+                difficulty: "easy",
+                question: "ما هي لغة البرمجة المستخدمة في WebExtractor؟",
+                options: [
+                    { text: "Python", correct: true },
+                    { text: "Java", correct: false },
+                    { text: "C++", correct: false }
+                ],
+                correctExplanation: "WebExtractor مكتوب بلغة Python ويستخدم مكتبات مثل requests و BeautifulSoup.",
+                wrongExplanation: "WebExtractor ليس مكتوباً بـ Java أو C++. Python هي اللغة الأساسية.",
+                consequences: "فهم اللغة مهم لتعديل الكود أو إضافة ميزات جديدة."
+            },
+            {
+                difficulty: "easy",
+                question: "أي نوع من البيانات يستخرجه WebExtractor؟",
+                options: [
+                    { text: "Emails، أرقام الهواتف، والروابط", correct: true },
+                    { text: "كلمات المرور فقط", correct: false },
+                    { text: "ملفات PDF فقط", correct: false }
+                ],
+                correctExplanation: "WebExtractor يستخرج Emails، Phone Numbers، Links، وMetadata من صفحات الويب.",
+                wrongExplanation: "WebExtractor لا يستخرج Passwords (هذا غير قانوني) ولا يقتصر على PDFs.",
+                consequences: "توقعات خاطئة قد تُضيع وقتك في البحث عن بيانات لا يستطيع الأداة استخراجها."
+            },
+            {
+                difficulty: "easy",
+                question: "ما هو GitHub في سياق WebExtractor؟",
+                options: [
+                    { text: "منصة استضافة الكود المصدري للأداة", correct: true },
+                    { text: "أداة اختراق أخرى", correct: false },
+                    { text: "لغة برمجة", correct: false }
+                ],
+                correctExplanation: "GitHub هو موقع لاستضافة الكود المصدري (Source Code). WebExtractor متاح هناك مجاناً.",
+                wrongExplanation: "GitHub ليس أداة اختراق ولا لغة برمجة. هو منصة للمطورين.",
+                consequences: "عدم فهم GitHub يمنعك من تحميل الأداة أو المساهمة في تطويرها."
+            },
+            {
+                difficulty: "easy",
+                question: "ما هو OSINT؟",
+                options: [
+                    { text: "جمع المعلومات من المصادر المفتوحة والمتاحة علنياً", correct: true },
+                    { text: "اختراق الأنظمة عبر الثغرات", correct: false },
+                    { text: "تشفير البيانات السرية", correct: false }
+                ],
+                correctExplanation: "OSINT (Open Source Intelligence) هو جمع المعلومات من المصادر العلنية: مواقع، شبكات اجتماعية، سجلات عامة.",
+                wrongExplanation: "OSINT ليس اختراقاً (Hacking) ولا تشفيراً (Encryption). هو جمع معلومات.",
+                consequences: "الخلط بين OSINT والاختراق قد يُعرّضك لمخالفات قانونية."
+            },
+
+            // --- 9 أسئلة صعبة (5 خيارات) ---
+            {
+                difficulty: "hard",
+                question: "لماذا يستخدم WebExtractor مكتبة BeautifulSoup؟",
+                options: [
+                    { text: "لتحليل HTML واستخراج البيانات المنظمة", correct: true },
+                    { text: "لإرسال رسائل البريد الإلكتروني", correct: false },
+                    { text: "لتشفير الاتصالات HTTPS", correct: false },
+                    { text: "لإنشاء قواعد بيانات SQL", correct: false },
+                    { text: "لرسم البيانات بيانياً", correct: false }
+                ],
+                correctExplanation: "BeautifulSoup تُحلل HTML/XML وتُسهّل البحث عن Elements (Tags, Classes, IDs).",
+                wrongExplanation: "BeautifulSoup لا ترسل Emails، لا تشفر، لا تُنشئ DBs، ولا ترسم رسومات.",
+                consequences: "عدم فهم دور المكتبات يمنعك من تخصيص الأداة لاحتياجاتك."
+            },
+            {
+                difficulty: "hard",
+                question: "ما هو الفرق بين Web Scraping و Web Crawling؟",
+                options: [
+                    { text: "Scraping يستخرج بيانات، Crawling يتنقل بين الروابط", correct: true },
+                    { text: "لا فرق بينهما", correct: false },
+                    { text: "Scraping غير قانوني، Crawling قانوني", correct: false },
+                    { text: "Crawling أسرع دائماً", correct: false },
+                    { text: "Scraping يعمل فقط مع JavaScript", correct: false }
+                ],
+                correctExplanation: "Scraping: استخراج بيانات محددة. Crawling: التنقل وزيارة روابط متعددة. WebExtractor يجمع بينهما.",
+                wrongExplanation: "هناك فرق واضح. القانونية تعتمد على الاستخدام. السرعة نسبية. Scraping لا يقتصر على JS.",
+                consequences: "استخدام المصطلحات بشكل خاطئ يُظهر عدم احترافيتك في المجال."
+            },
+            {
+                difficulty: "hard",
+                question: "كيف يمكن لموقع حماية نفسه من WebExtractor؟",
+                options: [
+                    { text: "Rate Limiting و CAPTCHA و User-Agent Filtering", correct: true },
+                    { text: "حذف الموقع من الإنترنت", correct: false },
+                    { text: "استخدام HTML فقط دون CSS", correct: false },
+                    { text: "منع جميع زوار الموقع", correct: false },
+                    { text: "كتابة Emails بالعربية فقط", correct: false }
+                ],
+                correctExplanation: "الحماية الفعالة: Rate Limiting (تقييد السرعة)، CAPTCHA (اختبارات بشرية)، WAF (جدار حماية).",
+                wrongExplanation: "حذف الموقع ليس حلاً. CSS لا علاقة له. منع الزوار يُضر بالعمل. اللغة لا تمنع الاستخراج.",
+                consequences: "كمسؤول أمن، عدم فهم الحماية يترك موقعك عرضة لجمع البيانات."
+            },
+            {
+                difficulty: "hard",
+                question: "ما هي مخاطر استخراج Emails من موقع الشركة؟",
+                options: [
+                    { text: "استخدامها في هجمات Phishing المستهدفة", correct: true },
+                    { text: "زيادة سرعة الموقع", correct: false },
+                    { text: "تحسين SEO تلقائياً", correct: false },
+                    { text: "تشفير البيانات", correct: false },
+                    { text: "لا توجد مخاطر", correct: false }
+                ],
+                correctExplanation: "Emails تُستخدم في: Spear Phishing، Social Engineering، Credential Stuffing، وSelling to spammers.",
+                wrongExplanation: "استخراج Emails لا يُحسّن السرعة أو SEO. لا يشفر البيانات. المخاطر حقيقية.",
+                consequences: "تجاهل المخاطر يُعرّض موظفيك لهجمات إلكترونية خطيرة."
+            },
+            {
+                difficulty: "hard",
+                question: "لماذا يستخدم WebExtractor Regex (Regular Expressions)؟",
+                options: [
+                    { text: "للبحث عن Patterns محددة مثل Emails و Phones", correct: true },
+                    { text: "لتصميم واجهة المستخدم", correct: false },
+                    { text: "لإدارة قواعد البيانات", correct: false },
+                    { text: "لتشفير البيانات", correct: false },
+                    { text: "لإرسال طلبات HTTP", correct: false }
+                ],
+                correctExplanation: "Regex تُستخدم للبحث عن Patterns: Emails (.*@.*\\..*), Phones (\\d{3}-\\d{3}-\\d{4}).",
+                wrongExplanation: "Regex لا تصمم UI، لا تدير DBs، لا تشفر، ولا ترسل HTTP requests.",
+                consequences: "عدم فهم Regex يمنعك من كتابة Patterns مخصصة لاستخراج بيانات غير معتادة."
+            },
+            {
+                difficulty: "hard",
+                question: "ما هو robots.txt وهل يمنع WebExtractor؟",
+                options: [
+                    { text: "ملف إرشادي (Advisory) لا يمنع الزاحفين الأشرار", correct: true },
+                    { text: "جدار ناري (Firewall) يمنع جميع الزوار", correct: false },
+                    { text: "قانون دولي ملزم", correct: false },
+                    { text: "برتوكول تشفير HTTPS", correct: false },
+                    { text: "نوع من أنواع الفيروسات", correct: false }
+                ],
+                correctExplanation: "robots.txt يطلب احترامياً من الزاحفين عدم الزحف لأقسام معينة، لكنه غير قابل للإنفاذ.",
+                wrongExplanation: "ليس Firewall. ليس قانوناً ملزماً. ليس HTTPS. ليس فيروساً.",
+                consequences: "الاعتماد على robots.txt كحماية وهمية يترك موقعك عرضة للزحف."
+            },
+            {
+                difficulty: "hard",
+                question: "كيف يمكن استخدام WebExtractor في Bug Bounty؟",
+                options: [
+                    { text: "اكتشاف معلومات حساسة منسية في المواقع", correct: true },
+                    { text: "اختراق قواعد البيانات مباشرة", correct: false },
+                    { text: "تعطيل المواقع (DDoS)", correct: false },
+                    { text: "سرقة كلمات المرور", correct: false },
+                    { text: "لا يمكن استخدامه في Bug Bounty", correct: false }
+                ],
+                correctExplanation: "في Bug Bounty، يُستخدم لاكتشاف: Emails للموظفين، API Keys منسية، روابط حساسة (Admin Panels).",
+                wrongExplanation: "WebExtractor لا يخترق DBs، لا يُنفذ DDoS، ولا يسرق Passwords. يجمع معلومات فقط.",
+                consequences: "استخدامه بشكل خاطئ قد يُبطل مشاركتك في Bug Bounty أو يُعرّضك للمساءلة."
+            },
+            {
+                difficulty: "hard",
+                question: "ما هو الفرق بين Internal Links و External Links؟",
+                options: [
+                    { text: "Internal داخل الموقع، External تؤدي لمواقع أخرى", correct: true },
+                    { text: "Internal مشفرة، External غير مشفرة", correct: false },
+                    { text: "Internal أسرع، External أبطأ", correct: false },
+                    { text: "لا فرق بينهما", correct: false },
+                    { text: "Internal خطيرة، External آمنة", correct: false }
+                ],
+                correctExplanation: "Internal: نفس النطاق (example.com/page). External: نطاقات أخرى (facebook.com).",
+                wrongExplanation: "العلاقة بالتشفير أو السرعة غير صحيحة. هناك فرق واضح. الخطورة نسبية.",
+                consequences: "في Reconnaissance، External Links تكشف عن شركاء أو خدمات طرف ثالث."
+            },
+            {
+                difficulty: "hard",
+                question: "لماذا قد يفشل WebExtractor في استخراج بيانات من موقع؟",
+                options: [
+                    { text: "الموقع يستخدم JavaScript heavily (Single Page Application)", correct: true },
+                    { text: "الموقع يستخدم HTML", correct: false },
+                    { text: "الموقع متاح على الإنترنت", correct: false },
+                    { text: "الموقع يحتوي على نصوص", correct: false },
+                    { text: "WebExtractor لا يفشل أبداً", correct: false }
+                ],
+                correctExplanation: "المواقع الديناميكية (React, Angular) تحتاج Selenium لأن البيانات تُحمل عبر JavaScript.",
+                wrongExplanation: "HTML أساسي للـ Scraping. كون الموقع متاحاً أو يحتوي على نصوص لا يمنع الاستخراج.",
+                consequences: "عدم فهم القيود يُضيع وقتك في محاولة استخراج بيانات من مواقع ديناميكية دون الأدوات المناسبة."
+            },
+
+            // --- 6 أسئلة خبير (6 خيارات) ---
+            {
+                difficulty: "expert",
+                question: "ما هي استراتيجية 'Footprinting' باستخدام WebExtractor؟",
+                options: [
+                    { text: "جمع كل البيانات المتاحة ثم تحليل العلاقات بينها", correct: true },
+                    { text: "اختراق الموقع مباشرة", correct: false },
+                    { text: "تعطيل الموقع لمدة 24 ساعة", correct: false },
+                    { text: "سرقة قاعدة البيانات كاملة", correct: false },
+                    { text: "لا يوجد استراتيجية محددة", correct: false },
+                    { text: "استخدام Brute Force على جميع الصفحات", correct: false }
+                ],
+                correctExplanation: "Footprinting: جمع Emails → ربطها بـ LinkedIn → العثور على Subdomains → تحليل Technologies المستخدمة.",
+                wrongExplanation: "Footprinting ليس اختراقاً، تعطيلاً، سرقة، أو Brute Force. هو جمع معلومات منظّم.",
+                consequences: "استراتيجية خاطئة تُضيع وقتك أو تُثير أنظمة الكشف (IDS/IPS)."
+            },
+            {
+                difficulty: "expert",
+                question: "كيف يُستخدم WebExtractor مع theHarvester لـ Reconnaissance شامل؟",
+                options: [
+                    { text: "WebExtractor للموقع نفسه، theHarvester لمحركات البحث والسجلات", correct: true },
+                    { text: "الأداتان تفعلان نفس الشيء", correct: false },
+                    { text: "WebExtractor يستبدل theHarvester", correct: false },
+                    { text: "theHarvester يستخرج فقط من المواقع المباشرة", correct: false },
+                    { text: "لا يمكن استخدامهما معاً", correct: false },
+                    { text: "WebExtractor يعمل فقط مع الشبكات الداخلية", correct: false }
+                ],
+                correctExplanation: "WebExtractor: البيانات المنشورة على الموقع. theHarvester: Google, Bing, Shodan, Crt.sh, PGP servers.",
+                wrongExplanation: "كل أداة لها مجال. لا يستبدلان بعضهما. يمكن استخدامهما معاً. WebExtractor يعمل على الإنترنت.",
+                consequences: "استخدام أداة واحدة فقط يترك فجوات في جمع المعلومات."
+            },
+            {
+                difficulty: "expert",
+                question: "ما هو 'Information Disclosure' وكيف يكتشفه WebExtractor؟",
+                options: [
+                    { text: "كشف معلومات حساسة منسية مثل API Keys في HTML Comments", correct: true },
+                    { text: "تشفير جميع بيانات الموقع", correct: false },
+                    { text: "منع الوصول للموقع", correct: false },
+                    { text: "إخفاء الموقع من Google", correct: false },
+                    { text: "لا يمكن اكتشافه", correct: false },
+                    { text: "يتطلب دستور إلى الموقع", correct: false }
+                ],
+                correctExplanation: "Information Disclosure: API Keys، Database Credentials، Internal IPs في Comments أو Meta tags.",
+                wrongExplanation: "ليس تشفيراً، منعاً، إخفاءً، أو يتطلب دستور. يمكن اكتشافه بـ WebExtractor.",
+                consequences: "Information Disclosure قد يُؤدي إلى اختراق كامل للبنية التحتية."
+            },
+            {
+                difficulty: "expert",
+                question: "لماذا قد يستخدم المهاجم User-Agent مخصص مع WebExtractor؟",
+                options: [
+                    { text: "للتمويه كمتصفح حقيقي وتجنب الحظر", correct: true },
+                    { text: "لتشفير الاتصال", correct: false },
+                    { text: "لزيادة سرعة الاستخراج", correct: false },
+                    { text: "لإنشاء حسابات مستخدمين", correct: false },
+                    { text: "لحذف البيانات من الموقع", correct: false },
+                    { text: "لا فائدة من تغيير User-Agent", correct: false }
+                ],
+                correctExplanation: "User-Agent: 'Mozilla/5.0...' يبدو كزائر حقيقي. الافتراضي 'Python-requests/2.25.1' يُكشف كـ Bot.",
+                wrongExplanation: "لا يشفر، لا يُسرّع، لا ينشئ accounts، لا يحذف. التغيير مهم للتخفي.",
+                consequences: "استخدام User-Agent افتراضي يُسهّل كشفك ومنعك من قبل WAF."
+            },
+            {
+                difficulty: "expert",
+                question: "كيف يُستخدم WebExtractor في 'Subdomain Enumeration' غير المباشر؟",
+                options: [
+                    { text: "تحليل External Links لاكتشاف Subdomains المذكورة", correct: true },
+                    { text: "اختراق DNS Server", correct: false },
+                    { text: "تخمين أسماء Subdomains عشوائياً", correct: false },
+                    { text: "شراء النطاقات الفرعية", correct: false },
+                    { text: "لا يمكن استخدامه لذلك", correct: false },
+                    { text: "يتطلب صلاحيات Root على السيرفر", correct: false }
+                ],
+                correctExplanation: "موقع example.com قد يحتوي على رابط لـ blog.example.com أو api.example.com في External Links.",
+                wrongExplanation: "لا يخترق DNS، لا يخمن عشوائياً، لا يشتري، يمكن استخدامه، لا يحتاج Root.",
+                consequences: "Subdomains قد تحتوي على نسخ تجريبية (Staging) غير مؤمنة."
+            },
+            {
+                difficulty: "expert",
+                question: "ما هو أفضل workflow لـ OSINT باستخدام WebExtractor؟",
+                options: [
+                    { text: "WebExtractor للبيانات المباشرة، theHarvester للسجلات، Maltego للتحليل البصري", correct: true },
+                    { text: "WebExtractor فقط لكل شيء", correct: false },
+                    { text: "theHarvester فقط بدون WebExtractor", correct: false },
+                    { text: "Maltego للـ Gathering فقط", correct: false },
+                    { text: "لا داعي لـ theHarvester", correct: false },
+                    { text: "WebExtractor للاستغلال المباشر", correct: false }
+                ],
+                correctExplanation: "WebExtractor: البيانات على الموقع. theHarvester: البيانات المفهرسة. Maltego: رسم العلاقات.",
+                wrongExplanation: "WebExtractor وحده غير كافٍ. theHarvester وحده يفوت البيانات المباشرة. Maltego للتحليل. كلاهما ضروري. WebExtractor ليس للاستغلال.",
+                consequences: "Workflow خاطئ يُضيع الوقت أو يفوتك معلومات حرجة."
+            }
+        ];
+
+        // ==== دوال الامتحان ====
+        function startExam() {
+            examStarted = true;
+            currentLesson = 1;
+            score = 0;
+            mistakes = [];
+            
+            // إخفاء جميع الأقسام
+            document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+            document.getElementById('examStartSection').style.display = 'none';
+            
+            renderExam();
+        }
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function renderExam() {
+            const container = document.getElementById('examContainer');
+            container.classList.remove('hidden');
+            
+            const q = examQuestions[currentLesson-1];
+            const progress = (currentLesson / examQuestions.length) * 100;
+            
+            // خلط الخيارات بشكل كامل
+            const shuffledOptions = shuffleArray(q.options);
+            const correctIndex = shuffledOptions.findIndex(o => o.correct);
+            
+            container.innerHTML = `
+                <div class="header">
+                    <h1>🎮 الامتحان التفاعلي</h1>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${progress}%"></div>
+                    </div>
+                    <div class="progress-text">التقدم: ${Math.round(progress)}% (${currentLesson} من ${examQuestions.length} أسئلة)</div>
+                </div>
+
+                <div class="lesson-card fade-in" id="question${currentLesson}">
+                    <h2 class="lesson-title">
+                        السؤال رقم ${currentLesson}: 
+                        <span class="difficulty-badge difficulty-${q.difficulty}">
+                            ${q.difficulty === 'easy' ? 'سهل' : 
+                              q.difficulty === 'medium' ? 'متوسط' : 
+                              q.difficulty === 'hard' ? 'صعب' : 'خبير'}
+                        </span>
+                        <span style="font-size: 0.6em; color: #aaa; margin-right: 10px;">
+                            (${shuffledOptions.length} خيارات)
+                        </span>
+                    </h2>
+                    
+                    <div class="lesson-content">
+                        <p><strong>${q.question}</strong></p>
+                    </div>
+
+                    <div class="quiz-section">
+                        <div class="quiz-question">🎯 اختر الإجابة الصحيحة:</div>
+                        <div class="quiz-options" id="options${currentLesson}">
+                            ${shuffledOptions.map((opt, idx) => `
+                                <div class="quiz-option" data-correct="${idx === correctIndex}" onclick="checkAnswer(this)">
+                                    ${opt.text}
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="feedback" id="feedback${currentLesson}"></div>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button class="btn" ${currentLesson === 1 ? 'disabled' : ''} onclick="previousQuestion()">← السابق</button>
+                        <button class="btn" id="nextBtn" disabled onclick="nextQuestion()">
+                            ${currentLesson === examQuestions.length ? 'عرض النتائج النهائية' : 'التالي →'}
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function checkAnswer(element) {
+            const isCorrect = element.dataset.correct === "true";
+            const feedback = document.getElementById(`feedback${currentLesson}`);
+            const nextBtn = document.getElementById('nextBtn');
+            
+            document.querySelectorAll(`#options${currentLesson} .quiz-option`).forEach(opt => {
+                opt.classList.add('disabled');
+                opt.onclick = null; // إزالة حدث النقر
+                if (opt.dataset.correct === "true") {
+                    opt.classList.add('correct');
+                } else if (opt === element && !isCorrect) {
+                    opt.classList.add('incorrect');
+                }
+            });
+
+            feedback.style.display = 'block';
+            feedback.classList.add(isCorrect ? 'correct' : 'incorrect');
+            
+            const q = examQuestions[currentLesson-1];
+            
+            if (isCorrect) {
+                feedback.innerHTML = `
+                    <strong>✅ إجابة صحيحة!</strong><br>
+                    ${q.correctExplanation}
+                `;
+                score++;
+            } else {
+                feedback.innerHTML = `
+                    <strong>❌ إجابة خاطئة!</strong><br>
+                    ${q.wrongExplanation}
+                    <div class="consequences-box">
+                        <strong>⚠️ تبعات الخطأ في الواقع:</strong><br>
+                        ${q.consequences}
+                    </div>
+                `;
+                
+                mistakes.push({
+                    question: q.question,
+                    wrongAnswer: element.textContent.trim(),
+                    correctAnswer: q.options.find(o => o.correct).text
+                });
+            }
+            
+            nextBtn.disabled = false;
+        }
+
+        function nextQuestion() {
+            if (currentLesson === examQuestions.length) {
+                showFinalResults();
+                return;
+            }
+            
+            currentLesson++;
+            renderExam();
+        }
+
+        function previousQuestion() {
+            if (currentLesson > 1) {
+                currentLesson--;
+                renderExam();
+            }
+        }
+
+        function showFinalResults() {
+            const container = document.getElementById('examContainer');
+            const scorePercent = (score / examQuestions.length) * 100;
+            
+            let message = "";
+            let level = "";
+            
+            if (scorePercent >= 90) {
+                level = "خبير OSINT";
+                message = "🎉 ممتاز! أنت جاهز لاستخدام WebExtractor بشكل احترافي.";
+            } else if (scorePercent >= 70) {
+                level = "متقدم";
+                message = "👍 جيد جداً! لكن راجع الأخطاء المتقدمة قبل الاستخدام الحقيقي.";
+            } else if (scorePercent >= 50) {
+                level = "متوسط";
+                message = "⚠️ جيد، لكن تحتاج مزيداً من التدريب على Web Scraping والـ OSINT.";
+            } else {
+                level = "مبتدئ";
+                message = "❌ تحتاج لقراءة الدليل مرة أخرى. الأخطاء قد تكون كارثية.";
+            }
+            
+            container.innerHTML = `
+                <div class="lesson-card fade-in">
+                    <h2 class="lesson-title">🎊 النتائج النهائية</h2>
+                    
+                    <div style="text-align: center; margin: 30px 0;">
+                        <div style="font-size: 3em; color: ${scorePercent >= 70 ? '#00ff88' : '#ffaa00'}; margin-bottom: 20px;">
+                            ${score} من ${examQuestions.length}
+                        </div>
+                        <div style="font-size: 1.5em; color: #00d4ff; margin-bottom: 10px;">
+                            ${level}
+                        </div>
+                        <div style="font-size: 1.1em; color: #aaa;">
+                            ${message}
+                        </div>
+                    </div>
+
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${scorePercent}%"></div>
+                    </div>
+
+                    ${mistakes.length > 0 ? `
+                        <div style="margin-top: 30px;">
+                            <h3 style="color: #ffaa00; margin-bottom: 20px;">📚 مراجعة الأخطاء:</h3>
+                            ${mistakes.map((m, idx) => `
+                                <div class="example-box" style="margin-bottom: 15px;">
+                                    <h4 style="color: #ff6666;">❌ خطأ ${idx + 1}:</h4>
+                                    <p><strong>السؤال:</strong> ${m.question}</p>
+                                    <p><strong>إجابتك الخاطئة:</strong> <span style="color: #ff6666;">${m.wrongAnswer}</span></p>
+                                    <p><strong>الإجابة الصحيحة:</strong> <span style="color: #00ff88;">${m.correctAnswer}</span></p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : `
+                        <div class="example-box" style="margin-top: 30px; text-align: center;">
+                            <h3 style="color: #00ff88;">🎉 لا أخطاء! أداء مثالي.</h3>
+                        </div>
+                    `}
+
+                    <div class="nav-buttons" style="margin-top: 30px;">
+                        <button class="btn" onclick="location.reload()">🔄 إعادة التعلم من البداية</button>
+                        <button class="btn btn-success" onclick="window.open('https://github.com/s-r-e-e-r-a-j/WebExtractor')">📖 موقع WebExtractor الرسمي</button>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
