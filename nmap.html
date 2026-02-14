@@ -8,17 +8,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Kufi+Arabic:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --neon-blue: #00f3ff;
-            --neon-green: #0aff00;
-            --neon-purple: #bc13fe;
-            --dark-bg: #050505;
+            --neon-blue: #0891b2;
+            --neon-green: #059669;
+            --neon-purple: #7c3aed;
+            --dark-bg: #0a0a0a;
             --glass: rgba(255, 255, 255, 0.03);
         }
         
         body {
             font-family: 'Noto Kufi Arabic', sans-serif;
             background: var(--dark-bg);
-            color: #fff;
+            color: #e5e7eb;
             overflow-x: hidden;
         }
         
@@ -39,48 +39,48 @@
         
         .star {
             position: absolute;
-            background: white;
+            background: rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             animation: twinkle var(--duration) ease-in-out infinite;
         }
         
         @keyframes twinkle {
             0%, 100% { opacity: 0; transform: scale(0.5); }
-            50% { opacity: 1; transform: scale(1.2); }
+            50% { opacity: 0.8; transform: scale(1); }
         }
         
-        /* Neon Effects */
+        /* Neon Effects - Reduced intensity */
         .neon-text {
-            text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue), 0 0 40px var(--neon-blue);
+            text-shadow: 0 0 5px rgba(8, 145, 178, 0.3), 0 0 10px rgba(8, 145, 178, 0.2);
         }
         
         .neon-border {
-            box-shadow: 0 0 10px var(--neon-blue), inset 0 0 10px var(--neon-blue);
+            box-shadow: 0 0 5px rgba(8, 145, 178, 0.2), inset 0 0 5px rgba(8, 145, 178, 0.1);
         }
         
         .neon-green-text {
-            text-shadow: 0 0 10px var(--neon-green), 0 0 20px var(--neon-green);
+            text-shadow: 0 0 5px rgba(5, 150, 105, 0.3), 0 0 10px rgba(5, 150, 105, 0.2);
         }
         
         /* Glassmorphism */
         .glass-panel {
             background: var(--glass);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.2);
         }
         
         /* Terminal Styles */
         .terminal {
-            background: #0c0c0c;
-            border: 1px solid #333;
+            background: #111;
+            border: 1px solid #222;
             border-radius: 8px;
             font-family: 'Courier New', monospace;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
         }
         
         .terminal-header {
-            background: linear-gradient(90deg, #2d2d2d, #1a1a1a);
+            background: linear-gradient(90deg, #1a1a1a, #111);
             padding: 8px 12px;
             border-radius: 8px 8px 0 0;
             display: flex;
@@ -95,7 +95,7 @@
         
         .terminal-body {
             padding: 16px;
-            color: #0aff00;
+            color: #10b981;
             min-height: 200px;
             overflow-y: auto;
             font-size: 14px;
@@ -105,7 +105,7 @@
         .terminal-input {
             background: transparent;
             border: none;
-            color: #0aff00;
+            color: #10b981;
             font-family: inherit;
             width: 100%;
             outline: none;
@@ -115,16 +115,17 @@
             display: inline-block;
             width: 10px;
             height: 18px;
-            background: #0aff00;
+            background: #10b981;
             animation: blink 1s infinite;
+            opacity: 0.7;
         }
         
         @keyframes blink {
-            0%, 50% { opacity: 1; }
+            0%, 50% { opacity: 0.7; }
             51%, 100% { opacity: 0; }
         }
         
-        /* Glowing Buttons */
+        /* Glowing Buttons - Reduced glow */
         .glow-btn {
             position: relative;
             overflow: hidden;
@@ -133,7 +134,7 @@
         
         .glow-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 30px var(--neon-blue);
+            box-shadow: 0 0 15px rgba(8, 145, 178, 0.3);
         }
         
         .glow-btn::before {
@@ -143,7 +144,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
             transition: 0.5s;
         }
         
@@ -171,17 +172,17 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 4px;
-            background: rgba(255,255,255,0.1);
+            height: 3px;
+            background: rgba(255,255,255,0.05);
             z-index: 1000;
         }
         
         .progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            background: linear-gradient(90deg, #0891b2, #7c3aed);
             width: 0%;
             transition: width 0.3s;
-            box-shadow: 0 0 10px var(--neon-blue);
+            opacity: 0.7;
         }
         
         /* Quiz Styles */
@@ -191,26 +192,26 @@
         }
         
         .quiz-option:hover {
-            background: rgba(0, 243, 255, 0.1);
-            border-color: var(--neon-blue);
+            background: rgba(8, 145, 178, 0.05);
+            border-color: rgba(8, 145, 178, 0.3);
         }
         
         .quiz-option.selected {
-            background: rgba(0, 243, 255, 0.2);
-            border-color: var(--neon-blue);
+            background: rgba(8, 145, 178, 0.1);
+            border-color: rgba(8, 145, 178, 0.5);
         }
         
         .quiz-option.correct {
-            background: rgba(10, 255, 0, 0.2);
-            border-color: var(--neon-green);
+            background: rgba(5, 150, 105, 0.15);
+            border-color: rgba(5, 150, 105, 0.5);
         }
         
         .quiz-option.wrong {
-            background: rgba(255, 0, 0, 0.2);
-            border-color: #ff0000;
+            background: rgba(220, 38, 38, 0.15);
+            border-color: rgba(220, 38, 38, 0.5);
         }
         
-        /* Company Logos */
+        /* Company Logos - Reduced glow */
         .company-link {
             position: relative;
             display: inline-block;
@@ -221,32 +222,32 @@
         }
         
         .almuhankreen {
-            color: var(--neon-green);
-            text-shadow: 0 0 20px var(--neon-green);
-            animation: pulse-green 2s infinite;
+            color: #059669;
+            text-shadow: 0 0 8px rgba(5, 150, 105, 0.3);
+            animation: pulse-green 3s infinite;
         }
         
         @keyframes pulse-green {
-            0%, 100% { text-shadow: 0 0 20px var(--neon-green), 0 0 40px var(--neon-green); }
-            50% { text-shadow: 0 0 30px var(--neon-green), 0 0 60px var(--neon-green), 0 0 80px var(--neon-green); }
+            0%, 100% { text-shadow: 0 0 8px rgba(5, 150, 105, 0.2), 0 0 15px rgba(5, 150, 105, 0.1); }
+            50% { text-shadow: 0 0 12px rgba(5, 150, 105, 0.3), 0 0 20px rgba(5, 150, 105, 0.15); }
         }
         
         .syriaware {
-            color: var(--neon-blue);
-            text-shadow: 0 0 20px var(--neon-blue);
-            animation: pulse-blue 2s infinite;
+            color: #0891b2;
+            text-shadow: 0 0 8px rgba(8, 145, 178, 0.3);
+            animation: pulse-blue 3s infinite;
         }
         
         @keyframes pulse-blue {
-            0%, 100% { text-shadow: 0 0 20px var(--neon-blue), 0 0 40px var(--neon-blue); }
-            50% { text-shadow: 0 0 30px var(--neon-blue), 0 0 60px var(--neon-blue), 0 0 80px var(--neon-blue); }
+            0%, 100% { text-shadow: 0 0 8px rgba(8, 145, 178, 0.2), 0 0 15px rgba(8, 145, 178, 0.1); }
+            50% { text-shadow: 0 0 12px rgba(8, 145, 178, 0.3), 0 0 20px rgba(8, 145, 178, 0.15); }
         }
         
         /* Holographic Card Effect */
         .holo-card {
-            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.1);
             position: relative;
             overflow: hidden;
         }
@@ -258,7 +259,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
             transform: rotate(45deg);
             transition: all 0.5s;
             opacity: 0;
@@ -271,18 +272,18 @@
         
         /* Navigation Dots */
         .nav-dot {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.2);
             cursor: pointer;
             transition: all 0.3s;
         }
         
         .nav-dot.active {
-            background: var(--neon-blue);
-            box-shadow: 0 0 10px var(--neon-blue);
-            transform: scale(1.3);
+            background: #0891b2;
+            box-shadow: 0 0 8px rgba(8, 145, 178, 0.3);
+            transform: scale(1.2);
         }
         
         /* Scan Line Animation */
@@ -292,10 +293,10 @@
             left: 0;
             width: 100%;
             height: 2px;
-            background: var(--neon-green);
-            box-shadow: 0 0 10px var(--neon-green);
+            background: #059669;
+            box-shadow: 0 0 8px rgba(5, 150, 105, 0.3);
             animation: scan 3s linear infinite;
-            opacity: 0.5;
+            opacity: 0.3;
         }
         
         @keyframes scan {
@@ -308,7 +309,7 @@
             position: relative;
             overflow: hidden;
             border-radius: 12px;
-            border: 1px solid rgba(0, 243, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .img-container img {
@@ -318,12 +319,12 @@
         }
         
         .img-container:hover img {
-            transform: scale(1.05);
+            transform: scale(1.02);
         }
         
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
-            width: 10px;
+            width: 8px;
         }
         
         ::-webkit-scrollbar-track {
@@ -331,12 +332,13 @@
         }
         
         ::-webkit-scrollbar-thumb {
-            background: var(--neon-blue);
-            border-radius: 5px;
+            background: #0891b2;
+            border-radius: 4px;
+            opacity: 0.5;
         }
         
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--neon-purple);
+            background: #0e7490;
         }
     </style>
 </head>
@@ -351,18 +353,18 @@
     <div class="stars" id="stars"></div>
 
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 glass-panel border-b border-white/10">
+    <nav class="fixed top-0 w-full z-50 glass-panel border-b border-white/5">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="orbitron text-2xl font-bold neon-text">NMAP 3000</div>
+            <div class="orbitron text-2xl font-bold text-cyan-600" style="text-shadow: 0 0 10px rgba(8, 145, 178, 0.2);">NMAP 3000</div>
             <div class="flex gap-4 text-sm">
-                <button onclick="showSection('intro')" class="nav-btn hover:text-cyan-400 transition">مقدمة</button>
-                <button onclick="showSection('basics')" class="nav-btn hover:text-cyan-400 transition">الأساسيات</button>
-                <button onclick="showSection('advanced')" class="nav-btn hover:text-cyan-400 transition">متقدم</button>
-                <button onclick="showSection('nse')" class="nav-btn hover:text-cyan-400 transition">NSE</button>
-                <button onclick="showSection('evasion')" class="nav-btn hover:text-cyan-400 transition">التخفي</button>
-                <button onclick="showSection('defense')" class="nav-btn hover:text-cyan-400 transition">الدفاع</button>
-                <button onclick="showSection('attack')" class="nav-btn hover:text-cyan-400 transition">الهجوم</button>
-                <button onclick="showSection('quiz')" class="nav-btn hover:text-cyan-400 transition text-red-400">الامتحان</button>
+                <button onclick="showSection('intro')" class="nav-btn hover:text-cyan-600 transition">مقدمة</button>
+                <button onclick="showSection('basics')" class="nav-btn hover:text-cyan-600 transition">الأساسيات</button>
+                <button onclick="showSection('advanced')" class="nav-btn hover:text-cyan-600 transition">متقدم</button>
+                <button onclick="showSection('nse')" class="nav-btn hover:text-cyan-600 transition">NSE</button>
+                <button onclick="showSection('evasion')" class="nav-btn hover:text-cyan-600 transition">التخفي</button>
+                <button onclick="showSection('defense')" class="nav-btn hover:text-cyan-600 transition">الدفاع</button>
+                <button onclick="showSection('attack')" class="nav-btn hover:text-cyan-600 transition">الهجوم</button>
+                <button onclick="showSection('quiz')" class="nav-btn hover:text-cyan-600 transition text-red-500">الامتحان</button>
             </div>
         </div>
     </nav>
@@ -373,18 +375,18 @@
         <!-- Section 1: Introduction -->
         <section id="intro" class="section active">
             <div class="text-center mb-12">
-                <h1 class="orbitron text-6xl font-black mb-4 neon-text">NMAP NETWORK SCANNER</h1>
-                <p class="text-xl text-gray-400">أداة استكشاف الشبكات وأمنها الأكثر تقدماً في العالم</p>
+                <h1 class="orbitron text-6xl font-black mb-4 text-cyan-600" style="text-shadow: 0 0 15px rgba(8, 145, 178, 0.2);">NMAP NETWORK SCANNER</h1>
+                <p class="text-xl text-gray-500">أداة استكشاف الشبكات وأمنها الأكثر تقدماً في العالم</p>
             </div>
 
             <div class="grid md:grid-cols-2 gap-8 mb-12">
                 <div class="glass-panel p-8 rounded-2xl">
-                    <h2 class="text-2xl font-bold mb-4 text-cyan-400">ما هو Nmap؟</h2>
-                    <p class="text-gray-300 leading-relaxed mb-4">
+                    <h2 class="text-2xl font-bold mb-4 text-cyan-600">ما هو Nmap؟</h2>
+                    <p class="text-gray-400 leading-relaxed mb-4">
                         Nmap (Network Mapper) هو أداة مفتوحة المصدر لاستكشاف الشبكات ومراقبة الأمان. تم إنشاؤها بواسطة Gordon Lyon (Fyodor) في عام 1997.
                     </p>
-                    <div class="bg-black/50 p-4 rounded-lg border border-cyan-500/30">
-                        <p class="text-cyan-300 font-mono text-sm">
+                    <div class="bg-black/30 p-4 rounded-lg border border-white/5">
+                        <p class="text-cyan-600 font-mono text-sm">
                             السؤال: لماذا نستخدم Nmap؟<br>
                             الإجابة: لاكتشاف الأجهزة على الشبكة، المنافذ المفتوحة، الخدمات العاملة، وأنظمة التشغيل.
                         </p>
@@ -394,7 +396,7 @@
                 <div class="img-container">
                     <img src="https://kimi-web-img.moonshot.cn/img/nmap.org/7106886928314be289029dea1b5304088c7faaf7.png" alt="Nmap Zenmap GUI">
                     <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                        <p class="text-sm text-center">واجهة Zenmap الرسومية لـ Nmap</p>
+                        <p class="text-sm text-center text-gray-400">واجهة Zenmap الرسومية لـ Nmap</p>
                     </div>
                 </div>
             </div>
@@ -402,15 +404,15 @@
             <!-- Interactive Terminal -->
             <div class="terminal mb-8">
                 <div class="terminal-header">
-                    <div class="terminal-btn bg-red-500"></div>
-                    <div class="terminal-btn bg-yellow-500"></div>
-                    <div class="terminal-btn bg-green-500"></div>
-                    <span class="ml-4 text-xs text-gray-400">root@kali:~</span>
+                    <div class="terminal-btn bg-red-600"></div>
+                    <div class="terminal-btn bg-yellow-600"></div>
+                    <div class="terminal-btn bg-green-600"></div>
+                    <span class="ml-4 text-xs text-gray-500">root@kali:~</span>
                 </div>
                 <div class="terminal-body" id="terminal1">
                     <div id="output1"></div>
                     <div class="flex items-center mt-2">
-                        <span class="text-green-500 mr-2">root@kali:~#</span>
+                        <span class="text-green-600 mr-2">root@kali:~#</span>
                         <input type="text" class="terminal-input" id="input1" placeholder="اكتب: nmap --version" onkeypress="handleCommand(event, 1)">
                         <span class="cursor"></span>
                     </div>
@@ -418,7 +420,7 @@
             </div>
 
             <div class="flex justify-center">
-                <button onclick="showSection('basics')" class="glow-btn bg-cyan-600 hover:bg-cyan-500 text-white px-8 py-3 rounded-full font-bold text-lg">
+                <button onclick="showSection('basics')" class="glow-btn bg-cyan-700 hover:bg-cyan-600 text-white px-8 py-3 rounded-full font-bold text-lg">
                     التالي: الأساسيات →
                 </button>
             </div>
@@ -426,36 +428,36 @@
 
         <!-- Section 2: Basics -->
         <section id="basics" class="section">
-            <h2 class="orbitron text-4xl font-bold mb-8 text-center neon-text">الفحص الأساسي</h2>
+            <h2 class="orbitron text-4xl font-bold mb-8 text-center text-cyan-600" style="text-shadow: 0 0 10px rgba(8, 145, 178, 0.15);">الفحص الأساسي</h2>
             
             <div class="grid md:grid-cols-3 gap-6 mb-8">
                 <div class="holo-card p-6 rounded-xl">
-                    <h3 class="text-xl font-bold mb-3 text-cyan-400">TCP Connect Scan</h3>
-                    <p class="text-sm text-gray-400 mb-3">الفحص الكامل للاتصال (sT)</p>
-                    <code class="block bg-black/50 p-3 rounded text-green-400 text-sm mb-3">nmap -sT target.com</code>
-                    <p class="text-xs text-gray-500">يكمل ثلاثية المصافحة (3-way handshake)</p>
+                    <h3 class="text-xl font-bold mb-3 text-cyan-600">TCP Connect Scan</h3>
+                    <p class="text-sm text-gray-500 mb-3">الفحص الكامل للاتصال (sT)</p>
+                    <code class="block bg-black/30 p-3 rounded text-green-600 text-sm mb-3">nmap -sT target.com</code>
+                    <p class="text-xs text-gray-600">يكمل ثلاثية المصافحة (3-way handshake)</p>
                 </div>
                 
                 <div class="holo-card p-6 rounded-xl">
-                    <h3 class="text-xl font-bold mb-3 text-cyan-400">SYN Stealth Scan</h3>
-                    <p class="text-sm text-gray-400 mb-3">الفحص الخفي (sS)</p>
-                    <code class="block bg-black/50 p-3 rounded text-green-400 text-sm mb-3">nmap -sS target.com</code>
-                    <p class="text-xs text-gray-500">لا يكمل الاتصال (أكثر سرية)</p>
+                    <h3 class="text-xl font-bold mb-3 text-cyan-600">SYN Stealth Scan</h3>
+                    <p class="text-sm text-gray-500 mb-3">الفحص الخفي (sS)</p>
+                    <code class="block bg-black/30 p-3 rounded text-green-600 text-sm mb-3">nmap -sS target.com</code>
+                    <p class="text-xs text-gray-600">لا يكمل الاتصال (أكثر سرية)</p>
                 </div>
                 
                 <div class="holo-card p-6 rounded-xl">
-                    <h3 class="text-xl font-bold mb-3 text-cyan-400">UDP Scan</h3>
-                    <p class="text-sm text-gray-400 mb-3">فحص UDP (sU)</p>
-                    <code class="block bg-black/50 p-3 rounded text-green-400 text-sm mb-3">nmap -sU target.com</code>
-                    <p class="text-xs text-gray-500">يفحص المنافذ UDP البطيئة</p>
+                    <h3 class="text-xl font-bold mb-3 text-cyan-600">UDP Scan</h3>
+                    <p class="text-sm text-gray-500 mb-3">فحص UDP (sU)</p>
+                    <code class="block bg-black/30 p-3 rounded text-green-600 text-sm mb-3">nmap -sU target.com</code>
+                    <p class="text-xs text-gray-600">يفحص المنافذ UDP البطيئة</p>
                 </div>
             </div>
 
             <div class="glass-panel p-6 rounded-2xl mb-8">
                 <h3 class="text-2xl font-bold mb-4">🔍 لماذا نختلف في أنواع الفحص؟</h3>
-                <div class="bg-black/30 p-4 rounded-lg mb-4">
-                    <p class="text-yellow-400 mb-2">السؤال: ما الفرق بين -sT و -sS؟</p>
-                    <p class="text-gray-300">الإجابة: -sS يرسل حزمة SYN فقط ولا يكمل الاتصال، مما يجعله أقل قابلية للاكتشاف في السجلات (Logs) مقارنة بـ -sT الذي يكمل الاتصال الكامل.</p>
+                <div class="bg-black/20 p-4 rounded-lg mb-4 border border-white/5">
+                    <p class="text-yellow-600 mb-2">السؤال: ما الفرق بين -sT و -sS؟</p>
+                    <p class="text-gray-400">الإجابة: -sS يرسل حزمة SYN فقط ولا يكمل الاتصال، مما يجعله أقل قابلية للاكتشاف في السجلات (Logs) مقارنة بـ -sT الذي يكمل الاتصال الكامل.</p>
                 </div>
             </div>
 
@@ -466,18 +468,18 @@
             <!-- Interactive Terminal -->
             <div class="terminal mb-8">
                 <div class="terminal-header">
-                    <div class="terminal-btn bg-red-500"></div>
-                    <div class="terminal-btn bg-yellow-500"></div>
-                    <div class="terminal-btn bg-green-500"></div>
-                    <span class="ml-4 text-xs text-gray-400">Basic Scanning Module</span>
+                    <div class="terminal-btn bg-red-600"></div>
+                    <div class="terminal-btn bg-yellow-600"></div>
+                    <div class="terminal-btn bg-green-600"></div>
+                    <span class="ml-4 text-xs text-gray-500">Basic Scanning Module</span>
                 </div>
                 <div class="terminal-body" id="terminal2">
                     <div id="output2" class="text-sm">
-                        <span class="text-blue-400">[*]</span> جاهز لفحص المنافذ الأساسية...<br>
-                        <span class="text-gray-500">جرب الأوامر: nmap -sS 192.168.1.1 أو nmap -sT -p 80,443 target.com</span><br><br>
+                        <span class="text-blue-500">[*]</span> جاهز لفحص المنافذ الأساسية...<br>
+                        <span class="text-gray-600">جرب الأوامر: nmap -sS 192.168.1.1 أو nmap -sT -p 80,443 target.com</span><br><br>
                     </div>
                     <div class="flex items-center">
-                        <span class="text-green-500 mr-2">root@kali:~#</span>
+                        <span class="text-green-600 mr-2">root@kali:~#</span>
                         <input type="text" class="terminal-input" id="input2" placeholder="أدخل أمر الفحص..." onkeypress="handleCommand(event, 2)">
                         <span class="cursor"></span>
                     </div>
@@ -486,25 +488,25 @@
 
             <div class="flex justify-between">
                 <button onclick="showSection('intro')" class="glow-btn bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded-full">← السابق</button>
-                <button onclick="showSection('advanced')" class="glow-btn bg-cyan-600 hover:bg-cyan-500 px-6 py-3 rounded-full">التالي →</button>
+                <button onclick="showSection('advanced')" class="glow-btn bg-cyan-700 hover:bg-cyan-600 px-6 py-3 rounded-full">التالي →</button>
             </div>
         </section>
 
         <!-- Section 3: Advanced Scanning -->
         <section id="advanced" class="section">
-            <h2 class="orbitron text-4xl font-bold mb-8 text-center neon-text">الفحص المتقدم</h2>
+            <h2 class="orbitron text-4xl font-bold mb-8 text-center text-cyan-600" style="text-shadow: 0 0 10px rgba(8, 145, 178, 0.15);">الفحص المتقدم</h2>
 
             <div class="grid md:grid-cols-2 gap-8 mb-8">
                 <div class="glass-panel p-6 rounded-2xl">
-                    <h3 class="text-2xl font-bold mb-4 text-purple-400">اكتشاف أنظمة التشغيل (OS Detection)</h3>
-                    <p class="text-gray-300 mb-4">يستخدم Nmap تقنية Fingerprinting لتحديد نظام التشغيل المستهدف عبر تحليل استجابات TCP/IP.</p>
+                    <h3 class="text-2xl font-bold mb-4 text-purple-500">اكتشاف أنظمة التشغيل (OS Detection)</h3>
+                    <p class="text-gray-400 mb-4">يستخدم Nmap تقنية Fingerprinting لتحديد نظام التشغيل المستهدف عبر تحليل استجابات TCP/IP.</p>
                     
-                    <div class="bg-black/50 p-4 rounded-lg mb-4">
-                        <p class="text-yellow-400 mb-2">السؤال: كيف يعرف Nmap نوع النظام؟</p>
-                        <p class="text-gray-300 text-sm">الإجابة: يحلل Nmap علامات TCP مثل window size, DF bit, TTL, وخيارات TCP لإنشاء بصمة فريدة (Fingerprint) ويقارنها بقاعدة البيانات.</p>
+                    <div class="bg-black/20 p-4 rounded-lg mb-4 border border-white/5">
+                        <p class="text-yellow-600 mb-2">السؤال: كيف يعرف Nmap نوع النظام؟</p>
+                        <p class="text-gray-400 text-sm">الإجابة: يحلل Nmap علامات TCP مثل window size, DF bit, TTL, وخيارات TCP لإنشاء بصمة فريدة (Fingerprint) ويقارنها بقاعدة البيانات.</p>
                     </div>
                     
-                    <code class="block bg-black/70 p-3 rounded text-green-400 text-sm">nmap -O --osscan-guess target.com</code>
+                    <code class="block bg-black/30 p-3 rounded text-green-600 text-sm">nmap -O --osscan-guess target.com</code>
                 </div>
 
                 <div class="img-container">
@@ -513,16 +515,16 @@
             </div>
 
             <div class="glass-panel p-6 rounded-2xl mb-8">
-                <h3 class="text-2xl font-bold mb-4 text-purple-400">فحص خدمات الإصدار (Version Detection)</h3>
+                <h3 class="text-2xl font-bold mb-4 text-purple-500">فحص خدمات الإصدار (Version Detection)</h3>
                 <div class="grid md:grid-cols-2 gap-4">
                     <div>
-                        <p class="text-gray-300 mb-3">الخيار -sV يقوم بإرسال probes خاصة لتحديد البرنامج والإصدار المشغل على كل منفذ.</p>
-                        <code class="block bg-black/50 p-3 rounded text-green-400 text-sm mb-2">nmap -sV --version-intensity 5 target.com</code>
-                        <p class="text-xs text-gray-500">شدة الفحص من 0 (خفيف) إلى 9 (عميق)</p>
+                        <p class="text-gray-400 mb-3">الخيار -sV يقوم بإرسال probes خاصة لتحديد البرنامج والإصدار المشغل على كل منفذ.</p>
+                        <code class="block bg-black/30 p-3 rounded text-green-600 text-sm mb-2">nmap -sV --version-intensity 5 target.com</code>
+                        <p class="text-xs text-gray-600">شدة الفحص من 0 (خفيف) إلى 9 (عميق)</p>
                     </div>
-                    <div class="bg-black/30 p-4 rounded border border-purple-500/30">
-                        <p class="text-yellow-400 mb-2">السؤال: لماذا نحتاج لمعرفة الإصدار؟</p>
-                        <p class="text-gray-300 text-sm">للبحث عن ثغرات (CVEs) خاصة بهذا الإصدار واستغلالها.</p>
+                    <div class="bg-black/20 p-4 rounded border border-white/5">
+                        <p class="text-yellow-600 mb-2">السؤال: لماذا نحتاج لمعرفة الإصدار؟</p>
+                        <p class="text-gray-400 text-sm">للبحث عن ثغرات (CVEs) خاصة بهذا الإصدار واستغلالها.</p>
                     </div>
                 </div>
             </div>
@@ -530,15 +532,15 @@
             <!-- Interactive Terminal -->
             <div class="terminal mb-8">
                 <div class="terminal-header">
-                    <div class="terminal-btn bg-red-500"></div>
-                    <div class="terminal-btn bg-yellow-500"></div>
-                    <div class="terminal-btn bg-green-500"></div>
-                    <span class="ml-4 text-xs text-gray-400">Advanced Scanning</span>
+                    <div class="terminal-btn bg-red-600"></div>
+                    <div class="terminal-btn bg-yellow-600"></div>
+                    <div class="terminal-btn bg-green-600"></div>
+                    <span class="ml-4 text-xs text-gray-500">Advanced Scanning</span>
                 </div>
                 <div class="terminal-body" id="terminal3">
                     <div id="output3"></div>
                     <div class="flex items-center mt-2">
-                        <span class="text-green-500 mr-2">root@kali:~#</span>
+                        <span class="text-green-600 mr-2">root@kali:~#</span>
                         <input type="text" class="terminal-input" id="input3" placeholder="جرب: nmap -O -sV 192.168.1.1" onkeypress="handleCommand(event, 3)">
                         <span class="cursor"></span>
                     </div>
@@ -547,41 +549,41 @@
 
             <div class="flex justify-between">
                 <button onclick="showSection('basics')" class="glow-btn bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded-full">← السابق</button>
-                <button onclick="showSection('nse')" class="glow-btn bg-cyan-600 hover:bg-cyan-500 px-6 py-3 rounded-full">التالي →</button>
+                <button onclick="showSection('nse')" class="glow-btn bg-cyan-700 hover:bg-cyan-600 px-6 py-3 rounded-full">التالي →</button>
             </div>
         </section>
 
         <!-- Section 4: NSE Scripts -->
         <section id="nse" class="section">
-            <h2 class="orbitron text-4xl font-bold mb-8 text-center neon-text">Nmap Scripting Engine (NSE)</h2>
+            <h2 class="orbitron text-4xl font-bold mb-8 text-center text-cyan-600" style="text-shadow: 0 0 10px rgba(8, 145, 178, 0.15);">Nmap Scripting Engine (NSE)</h2>
 
             <div class="glass-panel p-6 rounded-2xl mb-8">
-                <h3 class="text-2xl font-bold mb-4 text-yellow-400">ما هو NSE؟</h3>
-                <p class="text-gray-300 mb-4">
+                <h3 class="text-2xl font-bold mb-4 text-yellow-600">ما هو NSE؟</h3>
+                <p class="text-gray-400 mb-4">
                     محرك سكربتات Lua يتيح لك أتمتة مهام متنوعة: من اكتشاف الثغرات إلى استغلالها.
                 </p>
                 
                 <div class="grid md:grid-cols-3 gap-4 mb-6">
-                    <div class="bg-black/40 p-4 rounded border border-yellow-500/30">
-                        <h4 class="font-bold text-yellow-400 mb-2">vuln</h4>
-                        <p class="text-xs text-gray-400">فحص الثغرات الأمنية</p>
-                        <code class="text-xs text-green-400 block mt-2">--script=vuln</code>
+                    <div class="bg-black/20 p-4 rounded border border-white/5">
+                        <h4 class="font-bold text-yellow-600 mb-2">vuln</h4>
+                        <p class="text-xs text-gray-500">فحص الثغرات الأمنية</p>
+                        <code class="text-xs text-green-600 block mt-2">--script=vuln</code>
                     </div>
-                    <div class="bg-black/40 p-4 rounded border border-yellow-500/30">
-                        <h4 class="font-bold text-yellow-400 mb-2">safe</h4>
-                        <p class="text-xs text-gray-400">سكربتات آمنة غير مؤذية</p>
-                        <code class="text-xs text-green-400 block mt-2">--script=safe</code>
+                    <div class="bg-black/20 p-4 rounded border border-white/5">
+                        <h4 class="font-bold text-yellow-600 mb-2">safe</h4>
+                        <p class="text-xs text-gray-500">سكربتات آمنة غير مؤذية</p>
+                        <code class="text-xs text-green-600 block mt-2">--script=safe</code>
                     </div>
-                    <div class="bg-black/40 p-4 rounded border border-yellow-500/30">
-                        <h4 class="font-bold text-yellow-400 mb-2">exploit</h4>
-                        <p class="text-xs text-gray-400">استغلال الثغرات</p>
-                        <code class="text-xs text-green-400 block mt-2">--script=exploit</code>
+                    <div class="bg-black/20 p-4 rounded border border-white/5">
+                        <h4 class="font-bold text-yellow-600 mb-2">exploit</h4>
+                        <p class="text-xs text-gray-500">استغلال الثغرات</p>
+                        <code class="text-xs text-green-600 block mt-2">--script=exploit</code>
                     </div>
                 </div>
 
-                <div class="bg-black/50 p-4 rounded-lg mb-4">
-                    <p class="text-yellow-400 mb-2">السؤال: هل يمكن لـ NSE استغلال الثغرات فعلياً؟</p>
-                    <p class="text-gray-300">نعم! بعض السكربتات مثل http-shellshock أو smb-exec-targen يمكنها استغلال الثغرات مباشرة، لكنها تتطلب صلاحيات وحذر.</p>
+                <div class="bg-black/20 p-4 rounded-lg mb-4 border border-white/5">
+                    <p class="text-yellow-600 mb-2">السؤال: هل يمكن لـ NSE استغلال الثغرات فعلياً؟</p>
+                    <p class="text-gray-400">نعم! بعض السكربتات مثل http-shellshock أو smb-exec-targen يمكنها استغلال الثغرات مباشرة، لكنها تتطلب صلاحيات وحذر.</p>
                 </div>
             </div>
 
@@ -592,20 +594,20 @@
             <!-- Interactive Terminal -->
             <div class="terminal mb-8">
                 <div class="terminal-header">
-                    <div class="terminal-btn bg-red-500"></div>
-                    <div class="terminal-btn bg-yellow-500"></div>
-                    <div class="terminal-btn bg-green-500"></div>
-                    <span class="ml-4 text-xs text-gray-400">NSE Script Engine</span>
+                    <div class="terminal-btn bg-red-600"></div>
+                    <div class="terminal-btn bg-yellow-600"></div>
+                    <div class="terminal-btn bg-green-600"></div>
+                    <span class="ml-4 text-xs text-gray-500">NSE Script Engine</span>
                 </div>
                 <div class="terminal-body" id="terminal4">
                     <div id="output4">
-                        <span class="text-yellow-400">أمثلة على استخدام NSE:</span><br>
-                        <span class="text-gray-400">• nmap --script=http-enum target.com</span><br>
-                        <span class="text-gray-400">• nmap --script=dns-brute target.com</span><br>
-                        <span class="text-gray-400">• nmap --script=ssl-heartbleed target.com</span><br><br>
+                        <span class="text-yellow-600">أمثلة على استخدام NSE:</span><br>
+                        <span class="text-gray-600">• nmap --script=http-enum target.com</span><br>
+                        <span class="text-gray-600">• nmap --script=dns-brute target.com</span><br>
+                        <span class="text-gray-600">• nmap --script=ssl-heartbleed target.com</span><br><br>
                     </div>
                     <div class="flex items-center">
-                        <span class="text-green-500 mr-2">root@kali:~#</span>
+                        <span class="text-green-600 mr-2">root@kali:~#</span>
                         <input type="text" class="terminal-input" id="input4" placeholder="جرب: nmap --script=vuln localhost" onkeypress="handleCommand(event, 4)">
                         <span class="cursor"></span>
                     </div>
@@ -614,32 +616,32 @@
 
             <div class="flex justify-between">
                 <button onclick="showSection('advanced')" class="glow-btn bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded-full">← السابق</button>
-                <button onclick="showSection('evasion')" class="glow-btn bg-cyan-600 hover:bg-cyan-500 px-6 py-3 rounded-full">التالي →</button>
+                <button onclick="showSection('evasion')" class="glow-btn bg-cyan-700 hover:bg-cyan-600 px-6 py-3 rounded-full">التالي →</button>
             </div>
         </section>
 
         <!-- Section 5: Evasion Techniques -->
         <section id="evasion" class="section">
-            <h2 class="orbitron text-4xl font-bold mb-8 text-center neon-text">تقنيات التخفي والهروب</h2>
+            <h2 class="orbitron text-4xl font-bold mb-8 text-center text-cyan-600" style="text-shadow: 0 0 10px rgba(8, 145, 178, 0.15);">تقنيات التخفي والهروب</h2>
 
             <div class="grid md:grid-cols-2 gap-8 mb-8">
                 <div class="space-y-4">
-                    <div class="glass-panel p-6 rounded-2xl border border-red-500/30">
-                        <h3 class="text-xl font-bold mb-3 text-red-400">تجزئة الحزم (Fragmentation)</h3>
-                        <code class="block bg-black/50 p-3 rounded text-green-400 text-sm mb-2">nmap -f target.com</code>
-                        <p class="text-sm text-gray-400">تقسيم الحزم إلى أجزاء صغيرة لتجنب IDS</p>
+                    <div class="glass-panel p-6 rounded-2xl border border-red-500/20">
+                        <h3 class="text-xl font-bold mb-3 text-red-500">تجزئة الحزم (Fragmentation)</h3>
+                        <code class="block bg-black/30 p-3 rounded text-green-600 text-sm mb-2">nmap -f target.com</code>
+                        <p class="text-sm text-gray-500">تقسيم الحزم إلى أجزاء صغيرة لتجنب IDS</p>
                     </div>
 
-                    <div class="glass-panel p-6 rounded-2xl border border-red-500/30">
-                        <h3 class="text-xl font-bold mb-3 text-red-400">تزوير المصدر (Decoy)</h3>
-                        <code class="block bg-black/50 p-3 rounded text-green-400 text-sm mb-2">nmap -D RND:10 target.com</code>
-                        <p class="text-sm text-gray-400">إخفاء الفحص بين 10 عناوين وهمية عشوائية</p>
+                    <div class="glass-panel p-6 rounded-2xl border border-red-500/20">
+                        <h3 class="text-xl font-bold mb-3 text-red-500">تزوير المصدر (Decoy)</h3>
+                        <code class="block bg-black/30 p-3 rounded text-green-600 text-sm mb-2">nmap -D RND:10 target.com</code>
+                        <p class="text-sm text-gray-500">إخفاء الفحص بين 10 عناوين وهمية عشوائية</p>
                     </div>
 
-                    <div class="glass-panel p-6 rounded-2xl border border-red-500/30">
-                        <h3 class="text-xl font-bold mb-3 text-red-400">تعديل توقيت الفحص</h3>
-                        <code class="block bg-black/50 p-3 rounded text-green-400 text-sm mb-2">nmap -T2 --scan-delay 5s target.com</code>
-                        <p class="text-sm text-gray-400">إبطاء الفحص لتجنب اكتشاف الزمن الفعلي</p>
+                    <div class="glass-panel p-6 rounded-2xl border border-red-500/20">
+                        <h3 class="text-xl font-bold mb-3 text-red-500">تعديل توقيت الفحص</h3>
+                        <code class="block bg-black/30 p-3 rounded text-green-600 text-sm mb-2">nmap -T2 --scan-delay 5s target.com</code>
+                        <p class="text-sm text-gray-500">إبطاء الفحص لتجنب اكتشاف الزمن الفعلي</p>
                     </div>
                 </div>
 
@@ -648,28 +650,28 @@
                 </div>
             </div>
 
-            <div class="glass-panel p-6 rounded-2xl mb-8 bg-red-900/10 border-red-500/50">
-                <h3 class="text-2xl font-bold mb-4 text-red-400">⚠️ السؤال الأمني الهام</h3>
-                <p class="text-gray-300 mb-4">
-                    <span class="text-yellow-400">السؤال:</span> لماذا يعتبر استخدام تقنيات التخفي أخلاقياً في بعض الحالات وغير أخلاقي في أخرى؟
+            <div class="glass-panel p-6 rounded-2xl mb-8 bg-red-900/5 border-red-500/30">
+                <h3 class="text-2xl font-bold mb-4 text-red-500">⚠️ السؤال الأمني الهام</h3>
+                <p class="text-gray-400 mb-4">
+                    <span class="text-yellow-600">السؤال:</span> لماذا يعتبر استخدام تقنيات التخفي أخلاقياً في بعض الحالات وغير أخلاقي في أخرى؟
                 </p>
-                <p class="text-gray-300">
-                    <span class="text-green-400">الإجابة:</span> يعتمد ذلك على <span class="text-white font-bold">الترخيص</span>. إذا كنت تختبر اختراقاً بموافقة مكتوبة (Penetration Testing)، فهو قانوني وأخلاقي. أما بدون إذن، فهو جريمة إلكترونية.
+                <p class="text-gray-400">
+                    <span class="text-green-600">الإجابة:</span> يعتمد ذلك على <span class="text-white font-bold">الترخيص</span>. إذا كنت تختبر اختراقاً بموافقة مكتوبة (Penetration Testing)، فهو قانوني وأخلاقي. أما بدون إذن، فهو جريمة إلكترونية.
                 </p>
             </div>
 
             <!-- Interactive Terminal -->
             <div class="terminal mb-8">
                 <div class="terminal-header">
-                    <div class="terminal-btn bg-red-500"></div>
-                    <div class="terminal-btn bg-yellow-500"></div>
-                    <div class="terminal-btn bg-green-500"></div>
-                    <span class="ml-4 text-xs text-gray-400">Evasion & Stealth Mode</span>
+                    <div class="terminal-btn bg-red-600"></div>
+                    <div class="terminal-btn bg-yellow-600"></div>
+                    <div class="terminal-btn bg-green-600"></div>
+                    <span class="ml-4 text-xs text-gray-500">Evasion & Stealth Mode</span>
                 </div>
                 <div class="terminal-body" id="terminal5">
                     <div id="output5"></div>
                     <div class="flex items-center mt-2">
-                        <span class="text-green-500 mr-2">root@kali:~#</span>
+                        <span class="text-green-600 mr-2">root@kali:~#</span>
                         <input type="text" class="terminal-input" id="input5" placeholder="جرب: nmap -f -T2 -D RND:5 target.com" onkeypress="handleCommand(event, 5)">
                         <span class="cursor"></span>
                     </div>
@@ -678,41 +680,41 @@
 
             <div class="flex justify-between">
                 <button onclick="showSection('nse')" class="glow-btn bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded-full">← السابق</button>
-                <button onclick="showSection('defense')" class="glow-btn bg-cyan-600 hover:bg-cyan-500 px-6 py-3 rounded-full">التالي →</button>
+                <button onclick="showSection('defense')" class="glow-btn bg-cyan-700 hover:bg-cyan-600 px-6 py-3 rounded-full">التالي →</button>
             </div>
         </section>
 
         <!-- Section 6: Defense Perspective -->
         <section id="defense" class="section">
-            <h2 class="orbitron text-4xl font-bold mb-8 text-center neon-green-text text-green-400">منظور المدافع (الأزرق)</h2>
+            <h2 class="orbitron text-4xl font-bold mb-8 text-center text-green-600" style="text-shadow: 0 0 10px rgba(5, 150, 105, 0.15);">منظور المدافع (الأزرق)</h2>
 
-            <div class="glass-panel p-8 rounded-2xl mb-8 border border-green-500/30">
-                <h3 class="text-2xl font-bold mb-6 text-green-400">كيف يحمي Nmap المدافعين؟</h3>
+            <div class="glass-panel p-8 rounded-2xl mb-8 border border-green-500/20">
+                <h3 class="text-2xl font-bold mb-6 text-green-600">كيف يحمي Nmap المدافعين؟</h3>
                 
                 <div class="grid md:grid-cols-2 gap-6">
                     <div class="space-y-4">
-                        <div class="bg-black/40 p-4 rounded-lg border-l-4 border-green-500">
-                            <h4 class="font-bold text-green-400 mb-2">1. اكتشاف نقاط الضعف</h4>
-                            <p class="text-sm text-gray-300">فحص دوري للشبكة الداخلية لاكتشاف المنافذ المفتوحة غير الضرورية قبل المهاجمين.</p>
+                        <div class="bg-black/20 p-4 rounded-lg border-l-4 border-green-600">
+                            <h4 class="font-bold text-green-600 mb-2">1. اكتشاف نقاط الضعف</h4>
+                            <p class="text-sm text-gray-400">فحص دوري للشبكة الداخلية لاكتشاف المنافذ المفتوحة غير الضرورية قبل المهاجمين.</p>
                         </div>
                         
-                        <div class="bg-black/40 p-4 rounded-lg border-l-4 border-green-500">
-                            <h4 class="font-bold text-green-400 mb-2">2. مراقبة التغييرات</h4>
-                            <p class="text-sm text-gray-300">مقارنة نتائج الفحص مع Baseline سابق لاكتشاف الخدمات الجديدة غير المصرح بها.</p>
+                        <div class="bg-black/20 p-4 rounded-lg border-l-4 border-green-600">
+                            <h4 class="font-bold text-green-600 mb-2">2. مراقبة التغييرات</h4>
+                            <p class="text-sm text-gray-400">مقارنة نتائج الفحص مع Baseline سابق لاكتشاف الخدمات الجديدة غير المصرح بها.</p>
                         </div>
                         
-                        <div class="bg-black/40 p-4 rounded-lg border-l-4 border-green-500">
-                            <h4 class="font-bold text-green-400 mb-2">3. اختبار جدران الحماية</h4>
-                            <p class="text-sm text-gray-300">التأكد من أن القواعد تعمل بشكل صحيح وتمنع الوصول غير المصرح به.</p>
+                        <div class="bg-black/20 p-4 rounded-lg border-l-4 border-green-600">
+                            <h4 class="font-bold text-green-600 mb-2">3. اختبار جدران الحماية</h4>
+                            <p class="text-sm text-gray-400">التأكد من أن القواعد تعمل بشكل صحيح وتمنع الوصول غير المصرح به.</p>
                         </div>
                     </div>
 
-                    <div class="bg-black/30 p-6 rounded-lg">
-                        <h4 class="font-bold text-yellow-400 mb-4">السؤال: ما استراتيجية الدفاع الأمثل؟</h4>
-                        <p class="text-gray-300 mb-4">
-                            <span class="text-green-400">الإجابة:</span> مبدأ "الحد الأدنى من الامتيازات" (Least Privilege) + مراقبة مستمرة.
+                    <div class="bg-black/20 p-6 rounded-lg border border-white/5">
+                        <h4 class="font-bold text-yellow-600 mb-4">السؤال: ما استراتيجية الدفاع الأمثل؟</h4>
+                        <p class="text-gray-400 mb-4">
+                            <span class="text-green-600">الإجابة:</span> مبدأ "الحد الأدنى من الامتيازات" (Least Privilege) + مراقبة مستمرة.
                         </p>
-                        <ul class="text-sm text-gray-400 space-y-2 list-disc list-inside">
+                        <ul class="text-sm text-gray-500 space-y-2 list-disc list-inside">
                             <li>إغلاق جميع المنافذ غير الضرورية</li>
                             <li>تحديث النظم باستمرار</li>
                             <li>استخدام IDS/IPS لاكتشاف فحص Nmap</li>
@@ -728,54 +730,54 @@
 
             <div class="flex justify-between">
                 <button onclick="showSection('evasion')" class="glow-btn bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded-full">← السابق</button>
-                <button onclick="showSection('attack')" class="glow-btn bg-red-600 hover:bg-red-500 px-6 py-3 rounded-full">منظور المهاجم →</button>
+                <button onclick="showSection('attack')" class="glow-btn bg-red-700 hover:bg-red-600 px-6 py-3 rounded-full">منظور المهاجم →</button>
             </div>
         </section>
 
         <!-- Section 7: Attacker Perspective -->
         <section id="attack" class="section">
-            <h2 class="orbitron text-4xl font-bold mb-8 text-center text-red-500" style="text-shadow: 0 0 20px rgba(255,0,0,0.5);">منظور المهاجم (الأحمر)</h2>
+            <h2 class="orbitron text-4xl font-bold mb-8 text-center text-red-600" style="text-shadow: 0 0 10px rgba(220, 38, 38, 0.15);">منظور المهاجم (الأحمر)</h2>
 
-            <div class="glass-panel p-8 rounded-2xl mb-8 border border-red-500/30 bg-red-900/10">
-                <div class="bg-yellow-500/20 border border-yellow-500/50 p-4 rounded-lg mb-6">
-                    <p class="text-yellow-400 font-bold text-center">⚠️ تنبيه أخلاقي: هذه المعلومات للتعليم والاختبار المصرح به فقط</p>
+            <div class="glass-panel p-8 rounded-2xl mb-8 border border-red-500/20 bg-red-900/5">
+                <div class="bg-yellow-600/10 border border-yellow-600/30 p-4 rounded-lg mb-6">
+                    <p class="text-yellow-600 font-bold text-center">⚠️ تنبيه أخلاقي: هذه المعلومات للتعليم والاختبار المصرح به فقط</p>
                 </div>
 
-                <h3 class="text-2xl font-bold mb-6 text-red-400">كيف يستخدم Nmap في الهجوم؟</h3>
+                <h3 class="text-2xl font-bold mb-6 text-red-500">كيف يستخدم Nmap في الهجوم؟</h3>
                 
                 <div class="grid md:grid-cols-3 gap-4 mb-6">
-                    <div class="bg-black/50 p-4 rounded border border-red-500/30">
-                        <h4 class="font-bold text-red-400 mb-2">1. جمع المعلومات</h4>
-                        <p class="text-xs text-gray-400">اكتشاف البنية التحتية والخدمات قبل الهجوم</p>
-                        <code class="text-xs text-green-400 block mt-2">nmap -sS -sV -O target</code>
+                    <div class="bg-black/20 p-4 rounded border border-red-500/20">
+                        <h4 class="font-bold text-red-500 mb-2">1. جمع المعلومات</h4>
+                        <p class="text-xs text-gray-500">اكتشاف البنية التحتية والخدمات قبل الهجوم</p>
+                        <code class="text-xs text-green-600 block mt-2">nmap -sS -sV -O target</code>
                     </div>
-                    <div class="bg-black/50 p-4 rounded border border-red-500/30">
-                        <h4 class="font-bold text-red-400 mb-2">2. تحديد الثغرات</h4>
-                        <p class="text-xs text-gray-400">استخدام NSE للعثور على نقاط الضعف</p>
-                        <code class="text-xs text-green-400 block mt-2">nmap --script=vuln target</code>
+                    <div class="bg-black/20 p-4 rounded border border-red-500/20">
+                        <h4 class="font-bold text-red-500 mb-2">2. تحديد الثغرات</h4>
+                        <p class="text-xs text-gray-500">استخدام NSE للعثور على نقاط الضعف</p>
+                        <code class="text-xs text-green-600 block mt-2">nmap --script=vuln target</code>
                     </div>
-                    <div class="bg-black/50 p-4 rounded border border-red-500/30">
-                        <h4 class="font-bold text-red-400 mb-2">3. تجاوز الحماية</h4>
-                        <p class="text-xs text-gray-400">استخدام تقنيات التخفي لتجنب الاكتشاف</p>
-                        <code class="text-xs text-green-400 block mt-2">nmap -f -D RND:20 target</code>
+                    <div class="bg-black/20 p-4 rounded border border-red-500/20">
+                        <h4 class="font-bold text-red-500 mb-2">3. تجاوز الحماية</h4>
+                        <p class="text-xs text-gray-500">استخدام تقنيات التخفي لتجنب الاكتشاف</p>
+                        <code class="text-xs text-green-600 block mt-2">nmap -f -D RND:20 target</code>
                     </div>
                 </div>
 
-                <div class="bg-black/50 p-4 rounded-lg">
-                    <p class="text-yellow-400 mb-2">السؤال: ما الفرق بين المهاجم الأخلاقي وغير الأخلاقي؟</p>
-                    <p class="text-gray-300">
-                        <span class="text-red-400">الإجابة:</span> الإذن المسبق والتوقيع على اتفاقية NDA. المهاجم الأخلاقي يساعد في إصلاح الثغرات، أما غير الأخلاقي يستغلها للضرر.
+                <div class="bg-black/20 p-4 rounded-lg border border-white/5">
+                    <p class="text-yellow-600 mb-2">السؤال: ما الفرق بين المهاجم الأخلاقي وغير الأخلاقي؟</p>
+                    <p class="text-gray-400">
+                        <span class="text-red-500">الإجابة:</span> الإذن المسبق والتوقيع على اتفاقية NDA. المهاجم الأخلاقي يساعد في إصلاح الثغرات، أما غير الأخلاقي يستغلها للضرر.
                     </p>
                 </div>
             </div>
 
             <div class="glass-panel p-6 rounded-2xl mb-8">
-                <h3 class="text-xl font-bold mb-4 text-cyan-400">🔧 مخرجات Nmap للاستغلال اللاحق</h3>
+                <h3 class="text-xl font-bold mb-4 text-cyan-600">🔧 مخرجات Nmap للاستغلال اللاحق</h3>
                 <div class="grid md:grid-cols-2 gap-4">
-                    <div class="terminal-body bg-black/50 rounded">
-                        <span class="text-green-400"># حفظ النتائج بتنسيق XML</span><br>
+                    <div class="terminal-body bg-black/20 rounded border border-white/5">
+                        <span class="text-green-600"># حفظ النتائج بتنسيق XML</span><br>
                         nmap -oX scan-results.xml target.com<br><br>
-                        <span class="text-green-400"># استيرادها إلى Metasploit</span><br>
+                        <span class="text-green-600"># استيرادها إلى Metasploit</span><br>
                         db_import scan-results.xml
                     </div>
                     <div class="flex items-center justify-center">
@@ -785,7 +787,7 @@
             </div>
 
             <div class="flex justify-center mb-12">
-                <button onclick="showSection('quiz')" class="glow-btn bg-gradient-to-r from-red-600 to-purple-600 hover:from-red-500 hover:to-purple-500 text-white px-12 py-4 rounded-full font-bold text-xl animate-pulse">
+                <button onclick="showSection('quiz')" class="glow-btn bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white px-12 py-4 rounded-full font-bold text-xl">
                     🎯 بدء الامتحان النهائي
                 </button>
             </div>
@@ -797,7 +799,7 @@
 
         <!-- Section 8: Quiz -->
         <section id="quiz" class="section">
-            <h2 class="orbitron text-4xl font-bold mb-8 text-center neon-text">الامتحان النهائي</h2>
+            <h2 class="orbitron text-4xl font-bold mb-8 text-center text-cyan-600" style="text-shadow: 0 0 10px rgba(8, 145, 178, 0.15);">الامتحان النهائي</h2>
             
             <div class="max-w-4xl mx-auto">
                 <div id="quizContainer" class="space-y-6">
@@ -805,7 +807,7 @@
                 </div>
 
                 <div class="mt-8 text-center">
-                    <button onclick="submitQuiz()" id="submitBtn" class="glow-btn bg-green-600 hover:bg-green-500 text-white px-8 py-3 rounded-full font-bold text-lg">
+                    <button onclick="submitQuiz()" id="submitBtn" class="glow-btn bg-green-700 hover:bg-green-600 text-white px-8 py-3 rounded-full font-bold text-lg">
                         إنهاء الامتحان وعرض النتيجة
                     </button>
                 </div>
@@ -814,7 +816,7 @@
                     <h3 class="text-3xl font-bold mb-4">النتيجة النهائية</h3>
                     <div id="scoreDisplay" class="text-6xl font-bold mb-4 orbitron"></div>
                     <p id="feedback" class="text-xl mb-6"></p>
-                    <button onclick="location.reload()" class="glow-btn bg-cyan-600 hover:bg-cyan-500 px-6 py-3 rounded-full">
+                    <button onclick="location.reload()" class="glow-btn bg-cyan-700 hover:bg-cyan-600 px-6 py-3 rounded-full">
                         إعادة الامتحان
                     </button>
                 </div>
@@ -824,20 +826,20 @@
     </main>
 
     <!-- Footer -->
-    <footer class="glass-panel border-t border-white/10 mt-12 py-8">
+    <footer class="glass-panel border-t border-white/5 mt-12 py-8">
         <div class="container mx-auto px-6 text-center">
             <div class="flex justify-center items-center gap-8 mb-4 flex-wrap">
                 <a href="https://t.me/almohankeren_syria" target="_blank" class="company-link almuhankreen">
                     𝘈𝘭𝘮𝘶𝘩𝘢𝘯𝘬𝘳𝘦𝘦𝘯
                 </a>
                 
-                <span class="text-4xl text-gray-600">⚡</span>
+                <span class="text-4xl text-gray-700">⚡</span>
                 
                 <a href="https://t.me/addlist/1llAxcsN3LY2Zjk8" target="_blank" class="company-link syriaware">
                     SyriaWare
                 </a>
             </div>
-            <p class="text-gray-500 text-sm">© 2026 Nmap Masterclass - Developed for Educational Purposes</p>
+            <p class="text-gray-600 text-sm">© 2026 Nmap Masterclass - Developed for Educational Purposes</p>
         </div>
     </footer>
 
@@ -850,7 +852,7 @@
                 star.className = 'star';
                 star.style.left = Math.random() * 100 + '%';
                 star.style.top = Math.random() * 100 + '%';
-                star.style.width = Math.random() * 3 + 'px';
+                star.style.width = Math.random() * 2 + 'px';
                 star.style.height = star.style.width;
                 star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
                 starsContainer.appendChild(star);
@@ -915,13 +917,13 @@
                 const command = input.value.trim();
                 
                 if (command) {
-                    output.innerHTML += `<div class="text-green-500">root@kali:~# ${command}</div>`;
+                    output.innerHTML += `<div class="text-green-600">root@kali:~# ${command}</div>`;
                     
                     if (simulations[terminalNum] && simulations[terminalNum][command]) {
                         if (command === 'clear') {
                             output.innerHTML = '';
                         } else {
-                            output.innerHTML += `<div class="text-gray-300 mb-2">${simulations[terminalNum][command]}</div>`;
+                            output.innerHTML += `<div class="text-gray-400 mb-2">${simulations[terminalNum][command]}</div>`;
                         }
                     } else if (command === 'next') {
                         const currentIndex = sections.indexOf(currentSection);
@@ -929,7 +931,7 @@
                             showSection(sections[currentIndex + 1]);
                         }
                     } else {
-                        output.innerHTML += `<div class="text-red-400">Command not found. Type 'help' for available commands.</div>`;
+                        output.innerHTML += `<div class="text-red-500">Command not found. Type 'help' for available commands.</div>`;
                     }
                     
                     input.value = '';
@@ -1164,11 +1166,11 @@
             let html = '';
             
             quizData.forEach((q, index) => {
-                const levelColor = q.level === 'easy' ? 'text-green-400' : q.level === 'medium' ? 'text-yellow-400' : 'text-red-400';
+                const levelColor = q.level === 'easy' ? 'text-green-600' : q.level === 'medium' ? 'text-yellow-600' : 'text-red-600';
                 const levelText = q.level === 'easy' ? 'سهل' : q.level === 'medium' ? 'متوسط' : 'صعب';
                 
                 html += `
-                    <div class="glass-panel p-6 rounded-2xl border border-white/10">
+                    <div class="glass-panel p-6 rounded-2xl border border-white/5">
                         <div class="flex justify-between items-center mb-4">
                             <h3 class="text-lg font-bold">السؤال ${index + 1}: ${q.question}</h3>
                             <span class="${levelColor} text-sm font-bold border border-current px-3 py-1 rounded-full">${levelText}</span>
@@ -1178,9 +1180,9 @@
                 
                 q.options.forEach((opt, optIndex) => {
                     html += `
-                        <div class="quiz-option p-4 rounded-lg border border-white/20 bg-white/5" 
+                        <div class="quiz-option p-4 rounded-lg border border-white/10 bg-white/5" 
                              onclick="selectOption(${index}, ${optIndex}, this)">
-                            <span class="font-mono text-cyan-400 mr-2">${String.fromCharCode(65 + optIndex)}.</span>
+                            <span class="font-mono text-cyan-600 mr-2">${String.fromCharCode(65 + optIndex)}.</span>
                             ${opt}
                         </div>
                     `;
@@ -1236,23 +1238,23 @@
             
             if (percentage >= 90) {
                 grade = 'ممتاز';
-                color = 'text-green-400';
+                color = 'text-green-600';
             } else if (percentage >= 70) {
                 grade = 'جيد جداً';
-                color = 'text-cyan-400';
+                color = 'text-cyan-600';
             } else if (percentage >= 50) {
                 grade = 'مقبول';
-                color = 'text-yellow-400';
+                color = 'text-yellow-600';
             } else {
                 grade = 'يحتاج مراجعة';
-                color = 'text-red-400';
+                color = 'text-red-600';
             }
             
             document.getElementById('scoreDisplay').innerHTML = `<span class="${color}">${percentage}%</span>`;
             document.getElementById('feedback').innerHTML = `
                 <span class="${color} font-bold text-2xl">${grade}</span><br>
-                <span class="text-gray-400">الإجابات الصحيحة: ${correctCount} من ${totalQuestions}</span><br>
-                <span class="text-sm text-gray-500 mt-2">النقاط: ${score} / 30</span>
+                <span class="text-gray-500">الإجابات الصحيحة: ${correctCount} من ${totalQuestions}</span><br>
+                <span class="text-sm text-gray-600 mt-2">النقاط: ${score} / 30</span>
             `;
             
             resultsDiv.scrollIntoView({ behavior: 'smooth' });
